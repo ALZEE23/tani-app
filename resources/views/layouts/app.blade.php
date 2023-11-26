@@ -1,80 +1,109 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<!DOCTYPE html>
+<html lang="en" class=" ">
+
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- 
+         * @Package: Odis Mobile App 
+         * @Author: themepassion
+         * @Version: 1.0
+        -->
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Odis Mobile App: </title>
+  <meta content="Odis Mobile App" name="description" />
+  <meta content="themepassion" name="author" />
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+  <!-- App Icons -->
+  <link rel="apple-touch-icon" sizes="57x57" href="assets/images/icons/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="assets/images/icons/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="assets/images/icons/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="assets/images/icons/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="assets/images/icons/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="assets/images/icons/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="assets/images/icons/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="assets/images/icons/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/images/icons/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/images/icons/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="assets/images/icons/android-icon-512x512.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="assets/images/icons/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/images/icons/favicon-16x16.png">
+  <link rel="manifest" href="assets/images/icons/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="assets/images/icons/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
 
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
-    <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+
+
+
+
+  <!-- CORE CSS FRAMEWORK - START -->
+  {{-- <link href="{{asset('css/preloader.css')}}" type="text/css" rel="stylesheet" media="screen" /> --}}
+
+  <link href="{{asset('modules/materialize/materialize.min.css')}}" type="text/css" rel="stylesheet" media="screen" />
+  <link href="{{asset('modules/fonts/mdi/appicon/appicon.css')}}" type="text/css" rel="stylesheet" media="screen" />
+  <link href="{{asset('modules/fonts/mdi/materialdesignicons.min.css')}}" type="text/css" rel="stylesheet" media="screen" />
+  <link href="{{asset('modules/perfect-scrollbar/perfect-scrollbar.css')}}" type="text/css" rel="stylesheet" media="screen" />
+
+
+  <!-- CORE CSS FRAMEWORK - END -->
+
+  <!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - START -->
+    <!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - END -->
+
+  <!-- CORE CSS TEMPLATE - START -->
+
+  
+    <link href="{{asset('css/style.css')}}" type="text/css" rel="stylesheet" media="screen" id="main-style" />
+  <!-- CORE CSS TEMPLATE - END -->
+  
+
 </head>
-<body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+<!-- END HEAD -->
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
+<!-- BEGIN BODY -->
 
-                    </ul>
 
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
+<body class=" menu-full  isfullscreen  html"  data-header="light" data-footer="light"  data-header_align="app"  data-menu_type="left" data-menu="light" data-menu_icons="on" data-footer_type="left" data-site_mode="light" data-footer_menu="show" data-footer_menu_style="light"  >
 
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
+<div class="content-area">
+@yield('content')
+</div><!--.content-area-->
 
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
-            </div>
-        </nav>
 
-        <main class="py-4">
-            @yield('content')
-        </main>
-    </div>
+
+
+
+
+<script src="{{asset('assets/js/pwa.js')}}"></script>
+
+<!-- LOAD FILES AT PAGE END FOR FASTER LOADING -->
+
+<!-- CORE JS FRAMEWORK - START -->
+<script src="{{asset('modules/jquery/jquery-2.2.4.min.js')}}"></script>
+<script src="{{asset('modules/materialize/materialize.js')}}"></script>
+<script src="{{asset('modules/perfect-scrollbar/perfect-scrollbar.min.js')}}"></script>
+<script src="{{asset('assets/js/variables.js')}}"></script>
+<!-- CORE JS FRAMEWORK - END -->
+
+
+<!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - START -->
+<script src="{{asset('assets/js/common.js')}}"></script><!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - END -->
+
+
+<!-- CORE TEMPLATE JS - START -->
+<script src="{{asset('modules/app/init.js')}}"></script>
+<script src="{{asset('modules/app/settings.js')}}"></script>
+
+<script src="{{asset('modules/app/scripts.js')}}"></script>
+
+<!-- END CORE TEMPLATE JS - END -->
+
+
+<script src="{{asset('assets/js/preloader.js')}}"></script>
 </body>
+
 </html>

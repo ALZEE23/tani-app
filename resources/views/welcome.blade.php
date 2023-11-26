@@ -1,6 +1,3 @@
-
-
-
 <!DOCTYPE html>
 <html lang="en" class=" ">
 
@@ -70,36 +67,7 @@
 
 
 <body style="background-color: #66BB6A;" class=" menu-full  isfullscreen  html"  data-header="light" data-footer="light"  data-header_align="app"  data-menu_type="left" data-menu="light" data-menu_icons="on" data-footer_type="left" data-site_mode="light" data-footer_menu="show" data-footer_menu_style="light"  >
-    {{-- <div class="preloader-background">
-      <div class="preloader-wrapper">
-        <div class="loader">
-        </div>
-      </div>
-    </div> --}}
-  
 
-
-  <!-- SIDEBAR - START -->
-
-<!-- MAIN MENU - START -->
-
-
-
-<!-- MAIN MENU - END -->
-
-
-
-<!--  SIDEBAR - END --><!-- SIDEBAR - START -->
-
-<!-- MAIN MENU - START -->
-
-
-
-<!-- MAIN MENU - END -->
-
-
-
-<!--  SIDEBAR - END -->
 <div class="content-area">
 
 
@@ -122,7 +90,7 @@
 
 
       <div class="col s4 grid-item">
-        <a class="img-wrap round" href="jt-login_petani.html" data-fancybox="images"
+        <a class="img-wrap round" href="{{route('login')}}" data-fancybox="images"
           data-caption="Charming looking and young designs">
           <img alt="image" class="" style="width: 100%;" src="{{asset('images/menu-petani.png')}}">
         <h6 style="color:white" class="text-center">Petani</h6>
@@ -133,7 +101,7 @@
       </div>
 
       <div class="col s4 grid-item">
-        <a class="img-wrap round" href="jt-login_petani.html" data-fancybox="images"
+        <a class="img-wrap round" href="{{route('login')}}" data-fancybox="images"
           data-caption="Create unreal combinations at your work">
                     <img alt="image" class="" style="width: 100%;" src="{{asset('images/female.png')}}">
         <h6 style="color:white" class="text-center">Petugas</h6>
@@ -143,7 +111,7 @@
       </div>
 
       <div class="col s4 grid-item">
-        <a class="img-wrap round" href="jt-login_petani.html" data-fancybox="images"
+        <a class="img-wrap round" href="{{route('login')}}" data-fancybox="images"
           data-caption="You make your own looks stylish">
           <img alt="image" class="" style="width: 100%;" src="{{asset('images/officer.png')}}">
         <h6 style="color:white" class="text-center">Dinas</h6>
