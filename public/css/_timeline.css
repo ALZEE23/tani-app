@@ -1,0 +1,97 @@
+/*----------------------------------------
+  Timeline
+------------------------------------------*/
+
+.timeline {
+	position: relative;
+	display: inline-block;
+	width: 100%;
+}
+/* .timeline .verline {
+	position: absolute;
+	height: 100%;
+	width: 5px;
+	background-color: #dddddd;
+	left: 16%;
+} */
+.timeline .event {
+	position: relative;
+	display: inline-block;
+	width: 100%;
+}
+.timeline .event .date {
+	display: block;
+	float: left;
+	width: 70px;
+	height: 70px;
+	text-align: center;
+	position: absolute;
+	top: 20px;
+	background-color: rgba(var(--primary-rgb),0.1);
+	border-radius: var(--border-radius-50percent);
+	/* text-transform: uppercase; */
+}
+/* .timeline .event .date:after {
+	content: " ";
+	position: absolute;
+	width: 14px;
+	height: 14px;
+	border-radius: var(--border-radius-50percent);
+	right: -10px;
+	top: 50%;
+	margin-top: 0px;
+	background-color: rgba(var(--primary-rgb),0.1);
+	margin-top: -7px;
+} */
+.timeline .event .date:before {
+	content: " ";
+	position: absolute;
+	width: 50px;
+	height: 6px;
+	left: 70px;
+	top: 50%;
+	margin-top: 4px;
+	background-color: rgba(var(--primary-rgb),0.1);
+	margin-top: -3px;
+}
+.timeline .event .card-panel {
+	width: calc(100% - 100px);
+	position: relative;
+	margin-left: 100px;
+	float: left;
+	padding-bottom: 10px;
+}
+.timeline .event h4 {
+	margin: 2px 0 0 0px;
+
+}
+
+.timeline .card-panel.has-image{
+	padding: 0px 0 10px 0;
+}
+.timeline .card-panel.has-image img{
+	border-radius: var(--border-radius);
+}
+.timeline .card-panel.has-image .msg{
+	padding: 10px 15px 0px 15px;
+}
+.timeline .event .card-panel.has-image .user-actions{
+	padding: 0 15px;
+}
+
+.timeline .event .card-panel.white-text .user-actions a,
+.timeline .event .card-panel.white-text .user-actions a i{
+	color: #ffffff;
+}
+
+/*----------------------------------------
+  Site - Dark Mode - Timeline
+----------------------------------------*/
+[data-site_mode="dark"] .timeline .verline,
+[data-site_mode="dark"] .timeline .event .date:before,
+[data-site_mode="dark"] .timeline .event .date:after {
+	background-color: var(--dark-700);
+}
+[data-site_mode="dark"] .blue-grey.lighten-5 {
+	background-color: #607d8b !important;
+}

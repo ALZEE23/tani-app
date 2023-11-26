@@ -1,0 +1,133 @@
+/*----------------------------------------
+  Profile Page
+------------------------------------------*/
+.ui-profile{
+  background: var(--primary-color);
+  position: relative;
+  vertical-align: top;
+  padding-bottom: 70px;
+}
+.ui-profile .primg{
+  background-image: url("../images/profile.jpg");
+  background-size: cover;
+  height: 100px;
+  width: 100px;
+  margin: 70px 0 3px -50px;
+  display: inline-block;
+  position: relative;
+  left: 50%;
+  border-radius: var(--border-radius-50percent);
+}
+.profile-card .ui-profile .primg
+{
+  height: 100px;
+}
+.profile-card .ui-profile{
+padding-bottom: 24px;
+}
+.profile-card .ui-profile .primg{
+  margin-top: 50px;
+}
+/* .profile-card{
+  padding-bottom: 24px !important;
+} */
+.modal-content.profile-card{
+  padding-bottom: 0;
+}
+
+.ui-profile .primg img{
+  width: 100%;
+  z-index: 2;
+}
+.ui-profile .prinfo{
+  position: relative;
+  width: 100%;
+  padding: 5px 15px;  
+  margin: 0px;
+  display: inline-block;
+  z-index: 4;
+  text-align: center;
+  background: transparent;
+  box-shadow: none !important;
+  color: #ffffff;
+}
+.ui-profile .pos{
+  font-size: 90%;
+}
+.ui-profile .prinfo .count{
+  float: left; 
+  width: 33%;
+  text-align: center;
+  display: inline-block;
+}
+.ui-profile .profile-btn{
+  margin-bottom: 10px;
+}
+.ui-profile .prinfo .num, .ui-profile .prinfo .tit{ 
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin: 0px 0px 0px 0px;
+}
+.ui-profile .prinfo .tit{
+  font-size: 80%;
+}
+.ui-profile .prname{
+    position: relative;
+    /* margin: -170px 10% 70px 10%; */
+    z-index: 3;
+}
+.ui-profile .prname .name{
+  margin-bottom: 5px;
+  margin-top: 0;
+}
+.ui-profile .prname p{
+  margin-top: 15px;
+}
+.ui-profile .carousel-basic{
+  height: 200px;
+  /* margin-left: -70px; */
+  width: 100%;
+  overflow: visible;
+}
+.ui-profile .carousel-basic .carousel-item{
+  height: 167px;
+}
+.ui-profile .carousel-basic .indicators{
+  bottom: 20px;
+}
+.ui-profile .pr-ctit{
+    margin-top: -85px;
+    z-index: 2;
+    padding: 0px 0px 0px 15px;
+    position: relative;
+}
+.ui-profile .pr-ctit h6{
+  margin-bottom: 0px;
+}
+.primg{
+  display: inline-block;
+  position: relative;
+}
+.primg:after{
+  content: " ";
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: block;
+  top: 0px;
+  left: 0px;
+  z-index: 1;
+  border-radius: var(--border-radius-50percent);
+}
+
+.container.profile-content{
+  padding: 0 24px 24px 24px;
+  background: #fff;
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
+  margin-top: -60px;
+  z-index: 2;
+  position: relative;
+  margin-bottom: 0px;
+}

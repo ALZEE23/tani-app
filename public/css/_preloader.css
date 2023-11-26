@@ -1,0 +1,50 @@
+
+/*----------------------------------------
+  Preloader
+------------------------------------------*/
+
+/*----------------------------------------
+  type 5
+------------------------------------------*/
+
+.preloader-wrapper{
+  height: 90px;
+  width: 90px;
+}
+@keyframes loading {
+  0% {
+    width: 50pt;
+    height: 50pt;
+    margin-top: 0;
+  }
+  25% {
+    height: 4pt;
+    margin-top: 23pt;
+  }
+  50% {
+    width: 4pt;
+  }
+  75% {
+    width: 50pt;
+  }
+  100% {
+    width: 50pt;
+    height: 50pt;
+    margin-top: 0;
+  }
+}
+
+.preloader-wrapper .loader {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: var(--primary-color) 2px solid;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: transparent;
+  animation: loading 1s infinite;
+  position: relative;
+  top: 15px;
+}
+
+

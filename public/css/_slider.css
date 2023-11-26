@@ -1,0 +1,72 @@
+
+/*----------------------------------------
+  Slider
+------------------------------------------*/
+.slider .indicators{
+  bottom: 50px;
+  z-index: 2;
+}
+.slider .indicators .indicator-item{
+  height: 8px;
+  width: 8px;
+  margin: 5px;
+  border: none;
+  box-shadow: 2px 2px 2px rgba(33,33,33,.1);
+  border-radius: 50%;
+  opacity: 0.4;
+  background-color: rgba(230,230,230,0.8);
+}
+.slider .indicators .indicator-item.active {
+  background-color: rgba(230,230,230,0.8);
+    border: none;
+    height: 11px;
+    width: 11px;
+    top: 1px;
+    opacity: 0.85;
+}
+.slider .slides li img{
+  position: absolute;
+}
+.slides .img-wrap{
+  height: 100%;
+}
+body .noUi-horizontal .noUi-handle, body .noUi-vertical .noUi-handle{
+  width: 23px;
+    height: 23px;
+        left: -10px;
+    top: -10px;
+}
+body .noUi-handle-touch-area {
+    position: relative;
+    width: 55px;
+    height: 55px;
+    left: -17px;
+    top: -16px;
+}
+body .noUi-target.noUi-horizontal .noUi-tooltip {
+    height: 30px;
+    width: 30px;
+    top: -13px;
+    left: 0px;
+  }
+body .noUi-target.noUi-vertical .noUi-tooltip{
+    height: 30px;
+    width: 30px;
+    top: -13px;
+    left: -2px;
+  }
+
+.slider.dark-text .slides li .caption p{
+  color: var(--dark-700);
+}
+.slider.fullscreen ul.indicators{
+  bottom: 70px;
+}
+
+.slider .slides{
+  background-color: transparent;
+}
+
+.slider .slides li .caption{
+  top: 25%;
+}

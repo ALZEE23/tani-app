@@ -1,0 +1,175 @@
+
+/*----------------------------------------
+  Error Pages 
+----------------------------------------*/
+.error-code{
+  font-size: 160px;
+  line-height: 150px;
+  margin: 0;
+}
+.login-area.error-page{
+  padding: 0px 15px 0 15px;
+  /* position: absolute;
+  transform: translate(0%, 20%); */
+  width: 100%;
+}
+.error-page h3{
+  font-size: 22px;
+  margin-bottom: 0px;
+  white-space: nowrap;
+}
+.error-page h6{
+  font-size: 18px;
+  margin-top: 30px;
+}
+.access-offline + .error-page .error-code{
+  font-size: 90px;
+}
+
+
+@media only screen and (max-width: 300px) {
+  .error-page h3{
+    font-size: 20px;
+  }
+  .error-code{
+    font-size: 120px;
+  }
+  .access-offline + .error-page .error-code{
+    font-size: 60px;
+  }
+}
+@media only screen and (max-width: 200px) {
+  .error-page h3{
+    font-size: 18px;
+  }
+  .error-code{
+    font-size: 80px;
+  }
+  .access-offline + .error-page .error-code{
+    font-size: 40px;
+  }
+}
+
+/*-----------------------------
+  Error Code Style
+-----------------------------*/
+/* * {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Raleway', sans-serif;
+  background: #aaa;
+} */
+
+.error-page {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+.error-page .error-code {
+  /* font-size: 8rem; */
+  color: #ffffff;
+  text-align: center;
+  margin-top: 0;
+  /* text-transform: uppercase; */
+  /* font-weight: 900; */
+}
+
+.glitch-window {
+  position: absolute;
+  top: 100px;
+  left: 0px;
+  width: 100%;
+  color: var(--primary-color);
+  text-shadow: 2px 0 var(--primary-color), -1px 0 var(--primary-color), -2px 0 var(--accent-color);
+  overflow: hidden;
+  animation: crt-me 2500ms infinite linear alternate-reverse;
+  border-top: 1px solid var(--primary-color);
+  border-bottom: 1px solid var(--primary-color);
+  /* background: var(--primary-color); */
+}
+
+/* .glitch-window{
+  width: 350px;
+  margin: 0 auto;
+}
+.error-code{
+  margin: 0 auto;
+ width: 300px;
+} */
+
+@-webkit-keyframes crt-me {
+  0% {
+    clip: rect(31px, 9999px, 94px, 0);
+  }
+  10% {
+    clip: rect(112px, 9999px, 76px, 0);
+  }
+  20% {
+    clip: rect(85px, 9999px, 77px, 0);
+  }
+  30% {
+    clip: rect(27px, 9999px, 97px, 0);
+  }
+  40% {
+    clip: rect(64px, 9999px, 98px, 0);
+  }
+  50% {
+    clip: rect(61px, 9999px, 85px, 0);
+  }
+  60% {
+    clip: rect(99px, 9999px, 114px, 0);
+  }
+  70% {
+    clip: rect(34px, 9999px, 115px, 0);
+  }
+  80% {
+    clip: rect(98px, 9999px, 129px, 0);
+  }
+  90% {
+    clip: rect(43px, 9999px, 96px, 0);
+  }
+  100% {
+    clip: rect(82px, 9999px, 64px, 0);
+  }
+}
+
+@keyframes crt-me {
+  0% {
+    clip: rect(31px, 9999px, 94px, 0);
+  }
+  10% {
+    clip: rect(112px, 9999px, 76px, 0);
+  }
+  20% {
+    clip: rect(85px, 9999px, 77px, 0);
+  }
+  30% {
+    clip: rect(27px, 9999px, 97px, 0);
+  }
+  40% {
+    clip: rect(64px, 9999px, 98px, 0);
+  }
+  50% {
+    clip: rect(61px, 9999px, 85px, 0);
+  }
+  60% {
+    clip: rect(99px, 9999px, 114px, 0);
+  }
+  70% {
+    clip: rect(34px, 9999px, 115px, 0);
+  }
+  80% {
+    clip: rect(98px, 9999px, 129px, 0);
+  }
+  90% {
+    clip: rect(43px, 9999px, 96px, 0);
+  }
+  100% {
+    clip: rect(82px, 9999px, 64px, 0);
+  }
+}

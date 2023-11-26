@@ -1,0 +1,280 @@
+/*----------------------------------------
+  Icon Boxes
+------------------------------------------*/
+.icon-block {
+  padding: 0 0px;
+  margin-bottom: 15px;
+  display: inline-block;
+}
+.icon-block i {
+  font-size: 48px;
+}
+
+.icon-block.circular i {
+  border-radius: var(--border-radius-50percent);
+  height: 80px;
+  width: 80px;
+  display: inline-block;
+  line-height: 80px;
+  font-size: 38px;
+  background-color: #f5f5f5;
+}
+
+.icon-block.boxed i {
+  border-radius: 0%;
+  height: 80px;
+  width: 80px;
+  display: inline-block;
+  line-height: 80px;
+  font-size: 38px;
+  background-color: #f5f5f5;
+  border-radius: var(--border-radius);
+}
+
+.icon-block.bordered i {
+  border-radius: 0%;
+  border: 2px dashed rgba(var(--primary-rgb), 0.4);
+  height: 80px;
+  width: 80px;
+  display: inline-block;
+  line-height: 80px;
+  font-size: 38px;
+}
+
+/*Blocks card style*/
+.icon-block.block {
+  text-align: center;
+  background: #f5f5f5;
+  padding: 15px;
+  border-radius: var(--border-radius);
+  margin-bottom: 24px;
+  width: 100%;
+}
+.icon-block.block.left {
+  text-align: left;
+}
+
+/*Overlay style*/
+
+.icon-block.overlay {
+  text-align: center;
+  background: #f5f5f5;
+  padding: 15px;
+  border-radius: var(--border-radius);
+  margin-bottom: 80px;
+  position: relative;
+}
+
+.icon-block.overlay i {
+  position: absolute;
+  margin-left: -35px;
+  top: -40px;
+  border-radius: var(--border-radius-50percent);
+  height: 70px;
+  width: 70px;
+  display: inline-block;
+  line-height: 70px;
+  font-size: 42px;
+  background-color: #f5f5f5;
+}
+
+/*small block*/
+.icon-block.block-small {
+  text-align: left;
+  background: #f5f5f5;
+  padding: 10px;
+  border-radius: var(--border-radius);
+  margin-bottom: 15px;
+  position: relative;
+  width: 100%;
+}
+.icon-block.block-small .icon {
+  float: left;
+  height: 36px;
+  width: 36px;
+  margin: 5px 12px 0 0;
+}
+.icon-block.block-small i {
+  font-size: 36px;
+  line-height: 36px;
+  margin: 0;
+  height: 36px;
+  width: 36px;
+  display: inline-block;
+}
+.icon-block.block-small .tagline {
+  font-size: 12px;
+  opacity: 0.8;
+}
+.icon-block.block-small .title,
+.icon-block.block-small .tagline {
+  white-space: nowrap;
+}
+
+.icon-block.block-small.center{
+  text-align: center;
+}
+.icon-block.block-small.center .icon {
+  float: none;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.icon-block.block-small.circle .icon {
+  height: 40px;
+  width: 40px;
+  margin-top: 3px;
+}       
+.icon-block.block-small.center.circle .icon {
+  width: 100%;
+}
+
+.icon-block.block-small.circle i{
+  line-height: 40px;
+  border-radius: var(--border-radius-50percent);
+  background: var(--primary-color);
+  color: #ffffff;
+  font-size: 22px;
+  text-align: center;
+  height: 40px;
+  width: 40px;
+}
+
+
+.col.s12.m12.l3:last-child .icon-block.overlay {
+  margin-bottom: 20px;
+}
+.icon-block.block-small{
+  overflow: hidden;
+}
+.icon-block .icon-area{
+  padding-top: 15px;
+}
+.icon-block .title-area{
+  white-space: nowrap;
+  margin-top: 5px;
+}
+.icon-block .text-area{
+  max-height: 125px;
+  overflow: hidden;
+  margin-bottom: 5px;
+}
+
+/*----------------------------------------
+  App Settings
+----------------------------------------*/
+.settings-row{
+  margin: 0 -15px;
+}
+.setting-box{
+  /* background-color: #ffffff; */
+  padding: 15px;
+  margin-bottom: 0px;
+  /* border-radius: var(--border-radius); */
+
+}
+.setting-box i{
+    font-size: 36px;
+    margin: 0 0 0px 0;
+    line-height: 70px;
+    display: inline-block;
+    border-radius: var(--border-radius-50percent);
+    background: var(--primary-color);
+    color: #ffffff;
+    height: 80px;
+    width: 80px;
+    border: 6px solid #f5f5f5;
+    /* top: -60px; */
+    position: relative;
+}
+.setting-box h6{
+  margin: 15px 0px 0 0;
+  color: var(--dark-700);
+  background-color: #f5f5f5;
+  height: 100%;
+  padding: 20px .75rem;
+  border-radius: var(--border-radius);
+  margin-top: -30px;
+  padding-top: 30px;
+}
+.setting-box a div{
+  margin: 5px 0;
+  color: var(--dark-700);
+  opacity: 0.8;
+  font-size: 14px;
+}
+.ui-apps .setting-box h6{
+  background-color: transparent;
+  margin-top: 15px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/* .setting-box:hover{
+  background-color: #f5f5f5;
+} */
+
+.setting-box.img-box{
+  padding: 0 0 5px 0;
+  margin-bottom: 20px;
+  /* border-bottom: 1px solid rgba(0,0,0,.1); */
+}
+.ui-apps .setting-box.img-box{
+  margin-bottom: 20px;
+}
+
+.flickity-slider .setting-box.img-box{
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+/* .flickity-slider .gallery-cell{
+  margin-bottom: 0;
+} */
+.settings-row.js-flickity .gallery-cell{
+  margin-bottom: 0;
+}
+.setting-box.img-box h6{
+  background-color: transparent;
+  padding-top: 15px;
+  margin-top: 0;
+  padding-bottom: 0px;
+}
+.settings-row.js-flickity h6{
+  background-color: transparent;
+  padding-top: 12px;
+  margin-top: 0;
+  padding-bottom: 0;
+  font-size: 17px;
+}
+
+/*----------------------------------------
+  Site - Dark Mode - Iconboxes
+----------------------------------------*/
+[data-site_mode='dark'] .setting-box:hover{
+  background-color: transparent;
+}
+[data-site_mode='dark'] .icon-block.block-small,
+[data-site_mode='dark'] .icon-block.block,
+[data-site_mode='dark'] .icon-block.overlay,
+[data-site_mode='dark'] .icon-block.overlay i,
+[data-site_mode='dark'] .icon-block.boxed i,
+[data-site_mode='dark'] .icon-block.circular i {
+  background-color: var(--dark-700);
+}
+[data-site_mode='dark'] .icon-block.circle i {
+  color: var(--dark-800);
+}
+[data-site_mode='dark'] .setting-box a div{
+  color: #CFD8DC;
+}
+
+[data-site_mode="dark"] .setting-box h6 {
+  color: #CFD8DC;
+}
+
+[data-site_mode="dark"] .setting-box:not(.img-box) h6{
+  background-color: var(--dark-700);
+}
+[data-site_mode="dark"] .setting-box i{
+  border-color: var(--dark-700);
+}

@@ -1,0 +1,407 @@
+/*----------------------------------------
+  Navigation Menu
+------------------------------------------*/
+nav {
+	background: var(--primary-color);
+	z-index: 999;
+}
+
+.sidenav li {
+	line-height: 48px;
+}
+.sidenav .collapsible li{
+	box-shadow: none;
+}
+.sidenav .waves-effect {
+	display: inline-block;
+	width: 90%;
+	margin-left: 5%;
+	border-radius: var(--border-radius-button);
+}
+.sidenav li a {
+	display: block;
+	color: var(--dark-600);
+}
+.sidenav li a:hover,
+.sidenav li a:hover i {
+	color: var(--dark-700);
+}
+.sidenav li a span {
+	line-height: 50px;
+	display: inline-block;
+	font-size: 14px;
+	font-weight: 500;
+	text-transform: uppercase;
+}
+
+.sidenav li a i {
+	margin-right: -5px;
+	top: 0px;
+	position: relative;
+	font-size: 20px;
+	border-radius: var(--border-radius-50percent);
+	height: 50px;
+	width: 50px;
+	display: inline-block;
+	text-align: center;
+	border-radius: 0;
+	line-height: 50px;
+	border-top-right-radius: 30px;
+	padding-left: 15px;
+	padding-right: 15px;
+	display: inline-block;
+	border-bottom-right-radius: 30px;
+}
+.sidenav.sidemenu li.lvl1 a:after {
+	content: "\F142";
+	display: inline-block;
+	font: normal normal normal 24px/1 "Material Design Icons";
+	font-size: inherit;
+	text-rendering: auto;
+	line-height: inherit;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	position: absolute;
+	right: 15px;
+	font-size: 16px;
+	opacity: 0.7;
+	top: 13px;
+}
+.sidenav li.lvl1:not(.theme) .waves-effect {
+	padding-left: 0px;
+	height: 50px;
+}
+.sidenav li.lvl1 .waves-effect:hover,
+.sidenav li.lvl1 .waves-effect.active{
+	background: rgba(var(--primary-rgb),.15);
+}
+
+.sidenav li.lvl1 .waves-effect:hover i,
+.sidenav li.lvl1 .waves-effect.active i{
+	margin-right: 5px;
+	background: var(--primary-color);
+	color: #ffffff;
+	transition:  .2s ease-out;
+}
+.sidenav span.badge {
+	line-height: 24px;
+	color: #fff;
+	font-size: 10px;
+	margin-right: 40px;
+}
+.sidenav .copyright,
+.sidenav .subheader {
+	padding-left: 20px;
+}
+nav .sidenav-trigger {
+	margin-left: 0px;
+}
+.sidenav .subheader {
+	/* text-transform: uppercase; */
+	font-size: 12px;
+	color: #90a4ae;
+	font-weight: 400;
+	line-height: 24px;
+	margin-top: 10px;
+	margin-bottom: 5px;
+}
+.sidenav .divider {
+	background: #f5f5f5;
+	margin: 0px;
+	clear: both;
+	width: 100%;
+}
+.sidenav .copyright {
+	font-size: 13px;
+	color: #90a4ae;
+	display: none;
+	/* text-transform: uppercase; */
+}
+.sidenav .copy-spacer,
+.sidenav .copy-wrap,
+.sidenav .copyright{
+	display: none;
+}
+.sidenav .menulinks{
+	margin-top: 15px;
+}
+.sidenav .menulinks {
+	border-top-left-radius: 24px;
+	border-top-right-radius: 24px;
+	background: #ffffff;
+	top: -40px;
+	position: relative;
+	z-index: 2;
+	padding-top: 15px;
+	margin-bottom: -40px;
+  -webkit-box-shadow: 0 -5px 6px -2px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 -5px 6px -2px rgba(0, 0, 0, 0.1);
+
+}
+/* .sidenav .menulinks:before{
+	content: "";
+	position: absolute;
+	width: 100%;
+	z-index: 1;
+	background: #ffffff;
+	height: 100px;
+} */
+
+.sidenav .sidenav.sidemenu{
+	background: #ffffff;
+}
+
+/*----------------------------------------
+  Navigation User Menu
+------------------------------------------*/
+nav .brand-logo,
+nav .navicon {
+	color: var(--dark-700);
+}
+.header-image nav:not(.isfixed) .brand-logo,
+.header-image nav:not(.isfixed) .navicon {
+	color: #f5f5f5;
+}
+
+body nav a.brand-logo i {
+	font-size: 24px;
+	margin-right: 6px !important;
+}
+/* .sidenav .user-view {
+	margin: 0px 0 15px 0;
+	height: 180px;
+	background: #eee;
+	background-image: url('../images/menu-user-full.jpg');
+	background-size: cover;
+	background-position: center;
+} */
+
+.user-wrap{
+	padding: 15px 0 40px 0;
+	background: var(--primary-color);
+	position: relative;
+	z-index: 1;
+}
+.user-wrap,
+.user-wrap .user-view{
+	position: relative;
+}
+.user-wrap .user-view{
+	text-align: center;
+}
+.user-wrap .btn{
+	width: auto;
+	display: inline-block;
+	color: var(--primary-color);
+	margin: 10px 15px 15px 15px;
+	background: #ffffff;
+	position: relative;
+	z-index: 1;
+}
+.user-wrap .btn:hover{
+	background: #ffffff;
+	color: var(--primary-color);
+}
+
+/* .user-wrap .user-view::before{
+	content: " ";
+	background-color: #222222;
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	z-index: 2;
+	width: 100%;
+	opacity: 0.3;
+} */
+.sidenav .user-view .imgarea {
+	padding: 0px;
+	width: 100%;
+}
+.sidenav .user-view .infoarea {
+	/* padding-top: 5px;
+	padding-left: 9px;
+	position: absolute;
+	bottom: 20px;
+	z-index: 3; */
+	width: 100%;
+}
+.sidenav .user-view .imgarea a{
+	position: relative;
+	display: inline-block;
+}
+.sidenav .user-view .circle {
+	width: 64px;
+	height: 64px;
+	margin: auto;
+	margin-bottom: 5px;
+}
+.sidenav .user-view .name {
+	margin-top: 0px;
+	font-size: 20px;
+	margin: 5px 0 8px 0;
+	color: #f5f5f5;
+	/* text-transform: uppercase; */
+	/* color: #ffffff; */
+	/* font-family: Oswald;
+	text-transform: uppercase;
+	font-weight: 400; */
+}
+.sidenav .user-view .email {
+	padding-bottom: 0px;
+	/* color: #eeeeee; */
+	font-size: 13px;
+	color: #f5f5f5;
+	/* font-family: Oswald;
+	text-transform: uppercase;
+	font-weight: 400; */
+}
+
+
+/*----------------- Navigation Menu User Connections -------------------*/
+
+.user-wrap .connections{
+	margin-top: 10px;
+	display: inline-block;
+	width: 100%;
+	/* padding: 0px 16px 0 16px; */
+}
+.user-wrap .connections .count{
+	text-align: center;
+	width: 32%;
+	display: inline-block;
+	padding: 0px;
+	position: relative;
+	color: #ffffff;
+}
+.user-wrap .connections .count .no{
+	font-weight: 500;
+	font-size: 21px;
+}
+.user-wrap .connections .count .tag{
+	font-size: 13px;
+	opacity: 0.8;
+}
+
+.user-wrap .connections .count:after{
+	content: "";
+	position: absolute;
+	width: 1px;
+	height: 30px;
+	background-color: rgba(255,255,255,.35);
+	right: 0px;
+	top: 10px;
+}
+
+.user-wrap .connections .count:last-child:after{
+	display: none;
+}
+
+
+/*----------------- Navigation Menu Users & Social icons -------------------*/
+.menu-users .collection {
+	box-shadow: none !important;
+	background: transparent !important;
+	border: none !important;
+	border-radius: 0 !important;
+}
+.menu-users .collection .collection-item .title{
+	line-height: 1.6;
+}
+.menu-users .collection .collection-item .chatlink{
+	padding-top: 10px;
+    min-height: auto;
+    height: 70px;
+    /* vertical-align: top; */
+    padding-bottom: 0;
+		line-height: 1;
+		border-radius: 0px;
+		white-space: nowrap;
+}
+
+.menu-users .collection .collection-item .chatlink:hover{
+	background: transparent;
+}
+.menu-users .collection .collection-item.avatar{
+		height: 70px;
+    min-height: auto;
+    /* background: #ccc; */
+    padding-top: 0px;
+    margin-bottom: 1px;
+}
+/* .menu-users .user-avatar .status:after, .menu-users .collection-item.avatar .status:after{
+	display: none;
+} */
+.menu-users .collection-item.avatar .status:after{
+	top: 14px;
+}
+
+
+.menu-users .collection .collection-item.avatar .badge{
+	min-width: auto;
+	margin: 0;
+	height: 22px;
+	width: 22px;
+	line-height: 22px;
+	border-radius: var(--border-radius-button);
+}
+.menu-social .social-wrap{
+	margin-bottom: 50px;
+}
+.menu-social .social-wrap .social{
+	padding: 0 15px;
+	line-height: 1;
+	text-align: center;
+}
+.menu-social .social-wrap .social a{
+	padding: 0;
+	margin: 10px 5px 0 5px;
+	height: auto;
+}
+.menu-social .social-wrap .social a:hover{
+	background: transparent;
+}
+.menu-social .social-wrap .social a i{
+	height: 40px;
+	width: 40px;
+	line-height: 40px;
+}
+
+
+.sidenav span.badge{
+	background: var(--primary-color);
+	position: absolute;
+	left: auto;
+	right: 40px;
+	top: 50%;
+	margin-top: -11px !important;
+	/* border: 1px solid #ffffff; */
+	height: 22px;
+	width: 22px;
+	display: block;
+	margin-right: 0;
+	padding: 0;
+	min-width: auto;
+	border-radius: var(--border-radius-50percent);
+	z-index: 2;
+}
+.sidenav.sidesettings{
+	padding-top: 20px;
+}
+/* .sidenav .menu-users .collection .collection-item.avatar .secondary-content{
+	right: 0;
+} */
+
+/* [data-menu="dark"] .sidenav .user-view .name {
+	color: #cfd8dc;
+}
+[data-menu="dark"] .sidenav .user-view .email {
+	color: #b0bec5;
+}
+
+[data-menu="colored"] .sidenav .user-view .name {
+	color: #f5f5f5;
+}
+[data-menu="colored"] .sidenav .user-view .email {
+	color: #eeeeee;
+} */

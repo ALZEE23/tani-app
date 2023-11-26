@@ -1,0 +1,118 @@
+/*----------------------------------------
+  Portfolio
+------------------------------------------*/
+.row.ui-mediabox.fullwidth {
+	margin-bottom: 0px;
+}
+.ui-mediabox.fullwidth .col {
+	padding: 0px;
+	margin-bottom: 0px;
+}
+.row.ui-mediabox {
+	margin: 0 -0.75rem;
+}
+.row.ui-mediabox.team-box,
+.row.ui-mediabox.fullwidth {
+	margin: 0px;
+}
+.row.ui-mediabox.circular img {
+	border-radius: var(--border-radius-50percent);
+}
+.port-data {
+	text-align: center;
+}
+.port-data .divider, .port-data .divider+.spacer{
+	display: none;
+}
+
+
+.ui-mediabox.fullwidth .port-data {
+	padding: 0 30px;
+}
+.port-data a h4,
+.port-data a h5 {
+	color: var(--dark-700);
+}
+
+/*boxed*/
+.ui-mediabox.port-boxed .img-wrap:not(.circle):after,
+.ui-mediabox.port-boxed .img-wrap:not(.circle),
+.ui-mediabox.port-boxed .img-wrap:not(.circle) img {
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+}
+.ui-mediabox.port-boxed .img-wrap img{
+	display: inline-block;
+}
+.port-data.boxed {
+	background: #fff;
+	padding: 5px 10px 15px 10px;
+	border-bottom-left-radius: var(--border-radius);
+	border-bottom-right-radius: var(--border-radius);
+	/* margin-bottom: 30px; */
+}
+.ui-mediabox.circular .port-data.boxed,
+.ui-mediabox.fullwidth .port-data.boxed {
+	background: #fff;
+	padding: 5px 10px 15px 10px;
+	margin-bottom: 30px;
+}
+.ui-mediabox.circular .port-data.boxed {
+	padding-top: 80px;
+	margin-top: -80px;
+}
+
+
+.row.ui-mediabox.portfolio .col{
+	position: relative;
+}
+.row.ui-mediabox.portfolio .col .user-actions{
+	position: absolute;
+	top: 0px;
+	left: 30px;
+	width: calc(100% - 55px);
+}
+.row.ui-mediabox.portfolio .user-actions a{
+  color: #eeeeee;
+}
+
+.row.ui-mediabox.portfolio.js-flickity .col .user-actions{
+	left: 20px;
+}
+.port3col .row.ui-mediabox.portfolio .col .user-actions{
+  left: 30px;
+}
+.port3col .user-actions a:last-child{
+  float: left;
+}
+.portfw .divider{
+	display: none;
+}
+.portfw .spacer:last-child{
+	display: none;
+}
+.port-2colcontent .row.ui-mediabox.portfolio .col{
+	margin-bottom: 0;
+}
+.port-2colcontent .row.ui-mediabox.portfolio .col:nth-last-child(2) .divider,
+.port-2colcontent .row.ui-mediabox.portfolio .col:last-child .divider{
+	display: none;
+}
+.port-2colcontent h5{
+	margin-bottom: 0;
+}
+
+
+/*----------------------------------------
+  Site - Dark Mode - Portfolio
+----------------------------------------*/
+[data-site_mode="dark"] .port-data a h4,
+[data-site_mode="dark"] .port-data a h5 {
+	color: #f5f5f5;
+}
+
+[data-site_mode="dark"] .ui-mediabox.circular .port-data.boxed, 
+[data-site_mode="dark"] .ui-mediabox.fullwidth .port-data.boxed,
+[data-site_mode="dark"] .port-data.boxed {
+	background: var(--dark-800);
+}
