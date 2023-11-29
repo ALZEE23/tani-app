@@ -1,15 +1,7 @@
-<script src="js/preloader.js"></script>
-
-
 <!DOCTYPE html>
 <html lang="en" class=" ">
 
 <head>
-  <!-- 
-         * @Package: Odis Mobile App 
-         * @Author: themepassion
-         * @Version: 1.0
-        -->
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Jendela Tani Menu</title>
@@ -95,7 +87,6 @@
       <a href="#" data-target="" class="waves-effect waves-circle navicon back-button htmlmode show-on-large "><i class="mdi mdi-chevron-left" data-page=""></i></a>
     
     
-    <a href="#" data-target="slide-nav" class="waves-effect waves-circle navicon sidenav-trigger show-on-large"><i class="app-icon-menu61"></i></a>
 
     <a href="#" data-target="slide-settings" class="waves-effect waves-circle navicon right sidenav-trigger show-on-large">
     @auth
@@ -105,7 +96,6 @@
         <button type="submit">X</button>
     </form>
 @endauth
-@yield('content')
 </a>
 
     <!-- <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a> -->
@@ -122,76 +112,7 @@
 <div class="menu-close"><i class="mdi mdi-close"></i></div>
 
 <div class="content-area">
-
-  <div class="pagehead-bg   primary-bg" >
-    </div> 
-
-  <div class="container has-pagehead is-pagetitle">
-    <div class="section">
-      <h5 class="pagetitle">Main Menu {{auth()->user()->name}}</h5> 
-          </div>
-  </div>
-  
-
-
-
-
-  
-<div class="container over z-depth-1">
-        <div class="section">
-          <div class="row ">
-             <div class="ui-grid">
-              <a href="{{route('kelembagaan')}}"><div class="col s6" style="height:165px"><img alt="image" class="" style="width: 80px; height:80px;" src="images/family-tree.png"><h6>
-                Kelembagaan
-              </h6></div></a>
-              <a href="#"><div class="col s6" style="height:165px"><img alt="image" class="" style="width: 80px; height:80px" src="images/smart-farm.png"><h6>
-                Teknologi Pertanian
-              </h6></div></a>
-              <a href="#"><div class="col s6" style="height:165px"><img alt="image" class="" style="width: 80px; height:80px" src="images/tractor.png"><h6>
-                Akses Alsintan
-              </h6></div></a>
-              <a href="#"><div class="col s6" style="height:165px"><img alt="image" class="" style="width: 80px; height:80px" src="images/market.png"><h6>
-                Akses Pasar
-              </h6></div></a>
-              <a href="#"><div class="col s6" style="height:165px"><img alt="image" class="" style="width: 80px; height:80px" src="images/agriculture.png"><h6>
-                Produksi Tanaman & Peternakan
-              </h6></div></a>
-              <a href="#"><div class="col s6" style="height:165px"><img alt="image" class="" style="width: 80px; height:80px" src="images/business.png"><h6>
-                Kegiatan Penyuluhan
-              </h6></div></a>
-            </div>
-
-          </div>
-  </div>
-            
-
-            
-            
-
-
-
-            
-            </div>
-            
-            </div>
-        </div>
-
-    
-
-
-
-
-
-
-
-
-<div class="backtotop">
-  <a class="btn-floating btn primary-bg">
-    <i class="mdi mdi-chevron-up"></i>
-  </a>
-</div>
-
-
+@yield('content')
 
 </div><!--.content-area-->
 <style>

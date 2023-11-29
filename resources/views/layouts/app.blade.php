@@ -69,6 +69,13 @@
 <body class=" menu-full  isfullscreen  html"  data-header="light" data-footer="light"  data-header_align="app"  data-menu_type="left" data-menu="light" data-menu_icons="on" data-footer_type="left" data-site_mode="light" data-footer_menu="show" data-footer_menu_style="light"  >
 
 <div class="content-area">
+@auth
+    <!-- Tambahan code untuk tombol logout -->
+    <form action="{{ route('logout') }}" method="POST">
+        @csrf
+        <button type="submit">Logout</button>
+    </form>
+@endauth
 @yield('content')
 </div><!--.content-area-->
 
