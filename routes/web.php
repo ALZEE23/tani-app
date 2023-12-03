@@ -5,6 +5,13 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\TeknologiController;
+use App\Http\Controllers\PupukController;
+use App\Http\Controllers\PestisidaController;
+use App\Http\Controllers\BudidayaController;
+use App\Http\Controllers\PencegahanController;
+
+
 
 
 
@@ -47,3 +54,18 @@ Route::get('/tambah-gakpoktan', [App\Http\Controllers\KelembagaanController::cla
 Route::post('/store-gakpoktan', [App\Http\Controllers\KelembagaanController::class, 'store_gakpoktan'])->name('store-gakpoktan');
 
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+
+Route::get('/teknologi', [TeknologiController::class, 'index'])->name('teknologi');
+Route::get('/pupuk', [PupukController::class, 'index'])->name('pupuk');
+Route::get('/pupuk-padat', [PupukController::class, 'padat'])->name('padat');
+Route::get('/pupuk-cair', [PupukController::class, 'cair'])->name('cair');
+Route::get('/pestisida', [PestisidaController::class, 'index'])->name('pestisida');
+Route::get('/pestisida-organik', [PestisidaController::class, 'organik'])->name('organik');
+Route::get('/pestisida-kimia', [PestisidaController::class, 'kimia'])->name('kimia');
+Route::get('/teknologi-budidaya', [BudidayaController::class, 'index'])->name('budidaya');
+Route::get('/teknologi-hortikultura', [BudidayaController::class, 'hortikultura'])->name('hortikultura');
+Route::get('/teknologi-pangan', [BudidayaController::class, 'pangan'])->name('pangan');
+Route::get('/teknologi-perkebunan', [BudidayaController::class, 'perkebunan'])->name('perkebunan');
+Route::get('/pencegahan-&-pengendalian-OPT', [PencegahanController::class, 'pencegahan'])->name('pencegahan');
+
+

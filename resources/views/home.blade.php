@@ -144,7 +144,7 @@
               <a href="{{route('kelembagaan')}}"><div class="col s6" style="height:165px"><img alt="image" class="" style="width: 80px; height:80px;" src="images/family-tree.png"><h6>
                 Kelembagaan
               </h6></div></a>
-              <a href="#"><div class="col s6" style="height:165px"><img alt="image" class="" style="width: 80px; height:80px" src="images/smart-farm.png"><h6>
+              <a href="{{route('teknologi')}}"><div class="col s6" style="height:165px"><img alt="image" class="" style="width: 80px; height:80px" src="images/smart-farm.png"><h6>
                 Teknologi Pertanian
               </h6></div></a>
               <a href="#"><div class="col s6" style="height:165px"><img alt="image" class="" style="width: 80px; height:80px" src="images/tractor.png"><h6>
