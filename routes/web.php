@@ -1,6 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+// File: web.php
+
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Auth\RegisterController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -19,8 +25,9 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
+Route::middleware(['auth'])->group(function () {
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+});
 Route::get('/kelembagaan', [App\Http\Controllers\KelembagaanController::class, 'index'])->name('kelembagaan');
 Route::get('/kelembagaan-penyuluh', [App\Http\Controllers\KelembagaanController::class, 'penyuluh'])->name('kelembagaan-penyuluh');
 Route::get('/tambah-penyuluh', [App\Http\Controllers\KelembagaanController::class, 'tambah_penyuluh'])->name('tambah-penyuluh');
@@ -38,3 +45,5 @@ Route::get('/detail-poktan', [App\Http\Controllers\KelembagaanController::class,
 Route::get('/gakpoktan', [App\Http\Controllers\KelembagaanController::class, 'gakpoktan'])->name('kelembagaan-gakpoktan');
 Route::get('/tambah-gakpoktan', [App\Http\Controllers\KelembagaanController::class, 'tambah_gakpoktan'])->name('tambah-gakpoktan');
 Route::post('/store-gakpoktan', [App\Http\Controllers\KelembagaanController::class, 'store_gakpoktan'])->name('store-gakpoktan');
+
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');

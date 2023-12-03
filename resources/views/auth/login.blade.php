@@ -419,7 +419,7 @@
   <div class="spacer"></div>
   <div class="links">
 
-    <a href="ui-pages-forgotpassword.html" >Forgot Password</a><span class="sep">|</span><a href="ui-pages-register.html" >Register</a>  </div>
+    <a href="ui-pages-forgotpassword.html" >Forgot Password</a><span class="sep">|</span><a href="{{ route('register') }}" >Register</a>  </div>
 
     <div class="spacer"></div>
   
