@@ -15,9 +15,9 @@
     <div class="image-wrapper">
         <img alt="image" src="{{ asset('images/menu-petani.png') }}" style="width: 100px; height:100px">
     </div>
-    
-   <div class="select-wrapper">
-    <a href=""><button class="btn btn-secondary" style="width: 300px;">Gapoktan</button></a><br><br>
+
+    <div class="select-wrapper">
+        <a href=""><button class="btn btn-secondary" style="width: 300px;">Gapoktan</button></a><br><br>
 
         <label for="kecamatan">Pilih Kecamatan:</label>
         <select id="kecamatan" name="kecamatan">
@@ -25,8 +25,61 @@
             <option value="kecamatan2">Kecamatan 2</option>
             <!-- Tambahkan opsi kecamatan lainnya sesuai kebutuhan -->
         </select>
+
+        <a href="{{route('tambah-gakpoktan')}}">
+            <button>tambah</button>
+        </a>
+        <br>
+        <br>
     </div>
 
+    <style>
+        /* Untuk tabel */
+        .table {
+            width: 100%;
+            max-width: 100%;
+            margin-bottom: 1rem;
+            background-color: transparent;
+            overflow-x: auto;
+            display: block;
+        }
+
+        /* Untuk mengatur lebar kolom */
+        .table th,
+        .table td {
+            padding: 0.75rem;
+            vertical-align: top;
+            border-top: 1px solid #dee2e6;
+        }
+
+        /* Untuk mengatur lebar pada tampilan kecil */
+        @media (max-width: 767.98px) {
+
+            .table th,
+            .table td {
+                padding: 0.3rem;
+            }
+        }
+    </style>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">No</th>
+                <th scope="col">Nama Gapoktan</th>
+                <th scope="col">Nama Ketua</th>
+                <th scope="col">Pangan</th>
+                <th scope="col">Perkebunan</th>
+                <th scope="col">Holtikultura</th>
+                <th scope="col">peternakan</th>
+                <th scope="col">KWT</th>
+                <th scope="col">No Telp</th>
+                <th scope="col">Jumlah Produksi</th>
+            <tr>
+        <tbody>
+            <tr></tr>
+        </tbody>
+    </table>
     <!-- Card Profil -->
 </div>
 <br><br><br>

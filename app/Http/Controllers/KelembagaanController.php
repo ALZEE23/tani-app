@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Penyuluh;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Gapoktans; // Sesuaikan dengan nama model dan namespace Anda
 use Illuminate\Support\Facades\Auth;
 
 class KelembagaanController extends Controller
@@ -90,4 +91,56 @@ class KelembagaanController extends Controller
     {
         return view('kelembagaan.petani.gakpoktan');
     }
+
+    function edit_penyuluh($id){
+        $penyuluh = Penyuluh::find($id);
+        return view('kelembagaan.penyuluh.edit', compact('penyuluh'));
+    }
+
+    function delete_penyuluh($id){
+        $penyuluh = Penyuluh::find($id);
+        $penyuluh->delete();
+        return redirect('kelembagaan-penyuluh')->with('success', 'Data berhasil dihapus.');
+    }
+
+    function tambah_gakpoktan()
+    {
+        return view('kelembagaan.petani.tambah-gakpoktan');
+    }
+
+
+    public function store_gakpoktan(Request $request)
+    {
+        $validatedData = $request->validate([
+            'desa' => 'required',
+            'nama_gakpoktan' => 'required',
+            'nama_ketua' => 'required',
+            'pangan' => 'required|numeric',
+            'berkebunan' => 'required|numeric',
+            'holtikultura' => 'required|numeric',
+            'peternakan' => 'required|numeric',
+            'perikanan' => 'required|numeric',
+            'kwt' => 'required|numeric',
+        ]);
+
+        // Simpan data ke dalam model Gapoktan
+        $gapoktan = new Gapoktan();
+        $gapoktan->desa = $validatedData['desa'];
+        $gapoktan->nama_gakpoktan = $validatedData['nama_gakpoktan'];
+        $gapoktan->nama_ketua = $validatedData['nama_ketua'];
+        $gapoktan->pangan = $validatedData['pangan'];
+        $gapoktan->berkebunan = $validatedData['berkebunan'];
+        $gapoktan->holtikultura = $validatedData['holtikultura'];
+        $gapoktan->peternakan = $validatedData['peternakan'];
+        $gapoktan->perikanan = $validatedData['perikanan'];
+        $gapoktan->kwt = $validatedData['kwt'];
+
+        // Simpan data ke dalam database
+        $gapoktan->save();
+
+        // Redirect atau respons sesuai kebutuhan Anda setelah menyimpan data
+        return redirect()->route('nama_route_yang_diinginkan');
+    }
+
+    
 }

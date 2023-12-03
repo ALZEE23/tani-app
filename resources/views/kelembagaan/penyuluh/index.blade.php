@@ -41,7 +41,8 @@
                     <p>No. Telepon: {{$penyuluh->no_telepon}}</p>
                     <a href="{{asset('storage/file_rktp/'.$penyuluh->file_rktp)}}" >File RKTP</a> |
                     <a href="{{asset('storage/file_program_daerah/'.$penyuluh->file_program_desa)}}" >File Program</a>
-                    <a href="{{route('edit.penyuluh',$penyuluh->id)}}" >Edit</a>
+                    <a href="{{route('edit.penyuluh',$penyuluh->id)}}" >Edit</a>|
+                    <a href="{{route('delete.penyuluh',$penyuluh->id)}}" >Hapus</a>
                 </div>
             </div>
         </div>
