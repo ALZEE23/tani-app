@@ -23,4 +23,8 @@ class PupukController extends Controller
     public function cair(){
         return view('teknologi.pupuk.cair');
     }
+
+    public function tambah(){
+        return view('teknologi.pupuk.tambah');
+    }
 }
