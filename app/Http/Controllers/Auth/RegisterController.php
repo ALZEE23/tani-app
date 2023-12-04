@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-
+use App\Models\Kecamatan;
 class RegisterController extends Controller
 {
     /*
@@ -26,7 +26,8 @@ class RegisterController extends Controller
 
 public function showRegistrationForm()
 {
-    return view('auth.register');
+    $kecamatan = Kecamatan::all();
+    return view('auth.register', compact('kecamatan'));
 }
 
     use RegistersUsers;
@@ -59,7 +60,7 @@ public function showRegistrationForm()
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:8'],
         ]);
     }
 
@@ -77,6 +78,8 @@ public function showRegistrationForm()
             'password' => Hash::make($data['password']),
              // Tambahkan ini
         'nik' => $data['nik'],
+        'kecamatan' => $data['kecamatan'],
+            'no_telepon' => $data['no_telepon'],
         ]);
     }
 }

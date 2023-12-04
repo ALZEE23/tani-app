@@ -9,6 +9,7 @@ use App\Http\Controllers\TeknologiController;
 use App\Http\Controllers\PupukController;
 use App\Http\Controllers\PestisidaController;
 use App\Http\Controllers\BudidayaController;
+use App\Http\Controllers\KecamatanController;
 use App\Http\Controllers\PencegahanController;
 
 
@@ -31,10 +32,13 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 
 Route::middleware(['auth'])->group(function () {
+
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 });
+
 Route::get('/kelembagaan', [App\Http\Controllers\KelembagaanController::class, 'index'])->name('kelembagaan');
 Route::get('/kelembagaan-penyuluh', [App\Http\Controllers\KelembagaanController::class, 'penyuluh'])->name('kelembagaan-penyuluh');
 Route::get('/tambah-penyuluh', [App\Http\Controllers\KelembagaanController::class, 'tambah_penyuluh'])->name('tambah-penyuluh');
@@ -53,7 +57,6 @@ Route::get('/gakpoktan', [App\Http\Controllers\KelembagaanController::class, 'ga
 Route::get('/tambah-gakpoktan', [App\Http\Controllers\KelembagaanController::class, 'tambah_gakpoktan'])->name('tambah-gakpoktan');
 Route::post('/store-gakpoktan', [App\Http\Controllers\KelembagaanController::class, 'store_gakpoktan'])->name('store-gakpoktan');
 
-Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 
 Route::get('/teknologi', [TeknologiController::class, 'index'])->name('teknologi');
 Route::get('/pupuk', [PupukController::class, 'index'])->name('pupuk');
@@ -69,3 +72,5 @@ Route::get('/teknologi-perkebunan', [BudidayaController::class, 'perkebunan'])->
 Route::get('/pencegahan-&-pengendalian-OPT', [PencegahanController::class, 'pencegahan'])->name('pencegahan');
 
 
+// Kecamatan
+Route::resource('backend/kecamatan', KecamatanController::class)->name('kecamatan.index', 'kecamatan');

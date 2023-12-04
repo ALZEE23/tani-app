@@ -23,6 +23,9 @@ class User extends Authenticatable
         'password',
         'role',
         'nik',
+        'role',
+        'kecamatan',
+        'no_telepon',
     ];
 
     /**
@@ -44,4 +47,26 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isPetani(): bool
+    {
+        return $this->role === 'petani';
+    }
+
+    public function isPetugas(): bool
+    {
+        return $this->role === 'petugas';
+    }
+
+    public function isDinas(): bool
+    {
+        return $this->role === 'Dinas';
+    }
 }
+
+
