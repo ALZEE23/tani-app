@@ -15,9 +15,12 @@ class Admin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (! $request->user()->isAdmin()) {
-            abort(Response::HTTP_FORBIDDEN);
+        $user = $request->user();
+
+        if ($user && $user->isAdmin()) {
+            return $next($request);
         }
-        return $next($request);
+
+        abort(403, 'Unauthorized action.');
     }
 }

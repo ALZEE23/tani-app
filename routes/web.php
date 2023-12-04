@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 // File: web.php
 
@@ -75,3 +76,11 @@ Route::get('/pencegahan-&-pengendalian-OPT', [PencegahanController::class, 'penc
 
 // Kecamatan
 Route::resource('backend/kecamatan', KecamatanController::class)->name('kecamatan.index', 'kecamatan');
+
+
+// Admin
+Route::prefix('admin')->middleware('auth')->group(function () {
+
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    // Additional routes specific to the admin section
+});
