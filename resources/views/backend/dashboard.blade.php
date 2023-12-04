@@ -14,7 +14,7 @@
                                 </div>
                                 <h5 class="fw-semibold mb-0 fs-5">Welcome back {{auth()->user()->name}}</h5>
                             </div>
-                            <div class="d-flex align-items-center">
+                            <!-- <div class="d-flex align-items-center">
                                 <div class="border-end pe-4 border-muted border-opacity-10">
                                     <h3 class="mb-1 fw-semibold fs-8 d-flex align-content-center">$2,340<i class="ti ti-arrow-up-right fs-5 lh-base text-success"></i></h3>
                                     <p class="mb-0 text-dark">Today’s Sales</p>
@@ -23,7 +23,7 @@
                                     <h3 class="mb-1 fw-semibold fs-8 d-flex align-content-center">35%<i class="ti ti-arrow-up-right fs-5 lh-base text-success"></i></h3>
                                     <p class="mb-0 text-dark">Overall Performance</p>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="col-sm-5">
                             <div class="welcome-bg-img mb-n7 text-end">

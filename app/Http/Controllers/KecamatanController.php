@@ -12,7 +12,8 @@ class KecamatanController extends Controller
      */
     public function index()
     {
-        //
+        $kecamatan = Kecamatan::all();
+        return view('backend.kecamatan.index',compact('kecamatan'));
     }
 
     /**
@@ -20,7 +21,7 @@ class KecamatanController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.kecamatan.create');
     }
 
     /**
@@ -28,7 +29,10 @@ class KecamatanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $kecamatan = new Kecamatan();
+        $kecamatan->kecamatan = $request->kecamatan;
+        $kecamatan->save();
+        return redirect()->route('kecamatan.index')->with('success', 'Data Berhasil Ditambahkan');
     }
 
     /**
@@ -44,7 +48,7 @@ class KecamatanController extends Controller
      */
     public function edit(Kecamatan $kecamatan)
     {
-        //
+        return view('backend.kecamatan.edit',compact('kecamatan'));
     }
 
     /**
@@ -52,7 +56,9 @@ class KecamatanController extends Controller
      */
     public function update(Request $request, Kecamatan $kecamatan)
     {
-        //
+        $kecamatan->kecamatan = $request->kecamatan;
+        $kecamatan->save();
+        return redirect()->route('kecamatan.index')->with('success', 'Data Berhasil Diubah');
     }
 
     /**
@@ -60,6 +66,12 @@ class KecamatanController extends Controller
      */
     public function destroy(Kecamatan $kecamatan)
     {
-        //
+        try {
+            $kecamatan->delete();
+            return redirect()->route('kecamatan.index')->with('success', 'Data Berhasil Dihapus');
+        } catch (\Exception $e) {
+            return redirect()->route('kecamatan.index')->with('error', 'Gagal menghapus data. Silakan coba lagi.');
+        }
     }
+
 }

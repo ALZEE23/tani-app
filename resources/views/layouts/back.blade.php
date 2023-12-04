@@ -74,14 +74,14 @@
               <!-- ============================= -->
               <li class="nav-small-cap">
                 <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                <span class="hide-menu">Front</span>
+                <span class="hide-menu">Wilayah</span>
               </li>
               <li class="sidebar-item">
-                <a class="sidebar-link {{ request()->is('banners') ? 'active' : '' }}" href="" aria-expanded="false">
+                <a class="sidebar-link {{ request()->is('kecamatan') ? 'active' : '' }}" href="{{route('kecamatan.index')}}" aria-expanded="false">
                   <span>
                     <i class="ti ti-list-details"></i>
                   </span>
-                  <span class="hide-menu">Banners</span>
+                  <span class="hide-menu">Kecamatan</span>
                 </a>
               </li>
               {{-- <li class="sidebar-item">
@@ -100,19 +100,67 @@
                 <span class="hide-menu">Data</span>
               </li>
               <li class="sidebar-item">
-                <a class="sidebar-link" href="" aria-expanded="false">
+                <a class="sidebar-link {{ request()->is('petani.index') ? 'active' : '' }}" href="{{route('petani.index')}}" aria-expanded="false">
                   <span>
                     <i class="ti ti-report"></i>
                   </span>
-                  <span class="hide-menu">Report Sales</span>
+                  <span class="hide-menu">Petani</span>
                 </a>
               </li>
               <li class="sidebar-item">
-                <a class="sidebar-link" href="" aria-expanded="false">
+                <a class="sidebar-link {{ request()->is('petugas.index') ? 'active' : '' }}" href="{{route('petugas.index')}}" aria-expanded="false">
                   <span>
                     <i class="ti ti-report"></i>
                   </span>
-                  <span class="hide-menu">Report Order</span>
+                  <span class="hide-menu">Petugas</span>
+                </a>
+              </li>
+              <li class="sidebar-item">
+                <a class="sidebar-link {{ request()->is('dinas.index') ? 'active' : '' }}" href="{{route('dinas.index')}}" aria-expanded="false">
+                  <span>
+                    <i class="ti ti-report"></i>
+                  </span>
+                  <span class="hide-menu">Dinas</span>
+                </a>
+              </li>
+              <li class="sidebar-item">
+                <a class="sidebar-link {{ request()->is('penyuluh.index') ? 'active' : '' }}" href="{{route('penyuluh.index')}}" aria-expanded="false">
+                  <span>
+                    <i class="ti ti-report"></i>
+                  </span>
+                  <span class="hide-menu">Penyuluh</span>
+                </a>
+              </li>
+              <li class="sidebar-item">
+                <a class="sidebar-link {{ request()->is('poktan.index') ? 'active' : '' }}" href="{{route('dinas.index')}}" aria-expanded="false">
+                  <span>
+                    <i class="ti ti-report"></i>
+                  </span>
+                  <span class="hide-menu">Poktan</span>
+                </a>
+              </li>
+              <li class="sidebar-item">
+                <a class="sidebar-link {{ request()->is('gakpoktan.index') ? 'active' : '' }}" href="{{route('gakpoktan.index')}}" aria-expanded="false">
+                  <span>
+                    <i class="ti ti-report"></i>
+                  </span>
+                  <span class="hide-menu">Gakpoktan</span>
+                </a>
+              </li>
+              <li class="sidebar-item">
+                <a class="sidebar-link {{ request()->is('alsintan.index') ? 'active' : '' }}" href="" aria-expanded="false">
+                  <span>
+                    <i class="ti ti-report"></i>
+                  </span>
+                  <span class="hide-menu">Alsintan</span>
+                </a>
+              </li>
+              <li class="sidebar-item">
+                <a class="sidebar-link {{ request()->is('market.index') ? 'active' : '' }}" href="" aria-expanded="false">
+                  <span>
+                    <i class="ti ti-report"></i>
+                  </span>
+                  <span class="hide-menu">Market</span>
                 </a>
               </li>
               <li class="sidebar-item">

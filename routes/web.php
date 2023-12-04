@@ -10,12 +10,17 @@ use App\Http\Controllers\TeknologiController;
 use App\Http\Controllers\PupukController;
 use App\Http\Controllers\PestisidaController;
 use App\Http\Controllers\BudidayaController;
+use App\Http\Controllers\DinasController;
+use App\Http\Controllers\GakpoktansController;
 use App\Http\Controllers\KecamatanController;
 use App\Http\Controllers\PencegahanController;
-
-
-
-
+use App\Http\Controllers\PenyuluhController;
+use App\Http\Controllers\PetaniController;
+use App\Http\Controllers\PetugasController;
+use App\Http\Controllers\PoktanController;
+use App\Http\Middleware\Petugas;
+use App\Models\Gakpoktans;
+use App\Models\Penyuluh;
 
 /*
 |--------------------------------------------------------------------------
@@ -75,12 +80,19 @@ Route::get('/pencegahan-&-pengendalian-OPT', [PencegahanController::class, 'penc
 
 
 // Kecamatan
-Route::resource('backend/kecamatan', KecamatanController::class)->name('kecamatan.index', 'kecamatan');
 
 
 // Admin
 Route::prefix('admin')->middleware('auth')->group(function () {
 
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::resource('kecamatan', KecamatanController::class)->name('kecamatan','index');
+    Route::resource('petani', PetaniController::class)->name('petani','index');
+    Route::resource('petugas', PetugasController::class)->name('petugas','index');
+    Route::resource('dinas', DinasController::class)->name('dinas','index');
+    Route::resource('penyuluh', PenyuluhController::class)->name('penyuluh','index');
+    Route::resource('poktan', PoktanController::class)->name('poktan','index');
+    Route::resource('gakpoktan', GakpoktansController::class)->name('gakpoktan','index');
+
     // Additional routes specific to the admin section
 });
