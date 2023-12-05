@@ -8,13 +8,13 @@
         <div class="card-body px-4 py-3">
             <div class="row align-items-center">
                 <div class="col-9">
-                    <h4 class="fw-semibold mb-8">kecamatan</h4>
+                    <h4 class="fw-semibold mb-8">desa</h4>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
                                 <a class="text-muted " href="/">Dashboard</a>
                             </li>
-                            <li class="breadcrumb-item" aria-current="page">kecamatan</li>
+                            <li class="breadcrumb-item" aria-current="page">desa</li>
                         </ol>
                     </nav>
                 </div>
@@ -28,8 +28,8 @@
     </div>
     <div class="card w-100 position-relative overflow-hidden">
         <div class="px-4 py-3 border-bottom">
-            <h5 class="card-title fw-semibold mb-0 lh-sm">Table Data kecamatan</h5><br>
-            <a href="{{route('kecamatan.create')}}"><button type="button" class="btn mb-1 waves-effect waves-light btn-success">
+            <h5 class="card-title fw-semibold mb-0 lh-sm">Table Data desa</h5><br>
+            <a href="{{route('desa.create')}}"><button type="button" class="btn mb-1 waves-effect waves-light btn-success">
                     Tambah
                 </button></a>
         </div>
@@ -42,7 +42,7 @@
                                 <h6 class="fs-4 fw-semibold mb-0">No</h6>
                             </th>
                             <th>
-                                <h6 class="fs-4 fw-semibold mb-0">Kecamatan</h6>
+                                <h6 class="fs-4 fw-semibold mb-0">desa</h6>
                             </th>
                             <th>
                                 <h6 class="fs-4 fw-semibold mb-0">Opsi</h6>
@@ -53,19 +53,19 @@
                         @php
                         $no = 1;
                         @endphp
-                        @foreach ($kecamatan as $data)
+                        @foreach ($desa as $data)
                         <tr>
                             <td>{{$no++}}</td>
                             </td>
-                            <td>{{$data->kecamatan}}</td>
+                            <td>{{$data->desa}}</td>
                             <td>
                                 <div>
-                                    <form action="{{ route('kecamatan.edit', $data->id) }}" method="GET" class="d-inline">
+                                    <form action="{{ route('desa.edit', $data->id) }}" method="GET" class="d-inline">
                                         <button type="submit" class="btn btn-warning">
                                             <i class="ti ti-edit"></i>
                                         </button>
                                     </form>
-                                    <form action="{{ route('kecamatan.destroy', $data->id) }}" method="POST" class="d-inline">
+                                    <form action="{{ route('desa.destroy', $data->id) }}" method="POST" class="d-inline">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin untuk menghapus data ini?')">

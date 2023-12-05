@@ -15,8 +15,9 @@
         <div class="">
              <label for="desa">Pilih Desa:</label>
         <select id="desa" name="desa">
-            <option value="desa2">desa 1</option>
-            <option value="desa2">desa 2</option>
+            @foreach ($desa as $data)
+                <option value="{{$data->desa}}">{{$data->desa}}</option>
+            @endforeach
             <!-- Tambahkan opsi kecamatan lainnya sesuai kebutuhan -->
         </select>
         </div>
@@ -53,6 +54,10 @@
         </div>
         <div class="">
             <input id="notelepon" type="number" name="kwt" required placeholder="Jumlah Poktan KWT">
+            {{-- <label for="notelepon">&nbsp;&nbsp;No. Telepon</label> --}}
+        </div>
+        <div class="">
+            <input id="notelepon" type="number" name="notelepon" required placeholder="No telepon">
             {{-- <label for="notelepon">&nbsp;&nbsp;No. Telepon</label> --}}
         </div>
 

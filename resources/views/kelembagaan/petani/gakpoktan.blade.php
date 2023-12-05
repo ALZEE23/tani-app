@@ -19,16 +19,37 @@
     <div class="select-wrapper">
         <a href=""><button class="btn btn-secondary" style="width: 300px;">Gapoktan</button></a><br><br>
 
-        <label for="kecamatan">Pilih Kecamatan:</label>
-        <select id="kecamatan" name="kecamatan">
-            <option value="kecamatan1">Kecamatan 1</option>
-            <option value="kecamatan2">Kecamatan 2</option>
-            <!-- Tambahkan opsi kecamatan lainnya sesuai kebutuhan -->
-        </select>
+        <!-- @ if (auth()->user()->role == 'dinas') -->
+        @if (isset($key))
+        <div class="select-wrapper">
+            <label for="desa">Pilih Desa:</label>
+            <select id="desa" name="desa" onchange="redirectToSelecteddesa()">
+                @foreach ($desa as $data)
+                <option {{ $key == $data->desa ? 'selected' : '' }} value="{{$data->desa}}">{{$data->desa}}</option>
+                @endforeach
+                <!-- Tambahkan opsi desa lainnya sesuai kebutuhan -->
+            </select>
+        </div>
+        @else
+        <div class="select-wrapper">
+            <label for="desa">Pilih desa:</label>
+            <select id="desa" name="desa" onchange="redirectToSelecteddesa()">
+                @foreach ($desa as $data)
+                <option value="{{$data->desa}}">{{$data->desa}}</option>
+                @endforeach
+                <!-- Tambahkan opsi desa lainnya sesuai kebutuhan -->
+            </select>
+        </div>
+        @endif
+        <!-- @ endif -->
+        <script>
+            function redirectToSelecteddesa() {
+                const selecteddesa = document.getElementById('desa').value;
+                window.location.href = "{{ url('gakpoktan-filter') }}/" + encodeURIComponent(selecteddesa);
+            }
+        </script>
 
-        <a href="{{route('tambah-gakpoktan')}}">
-            <button>tambah</button>
-        </a>
+
         <br>
         <br>
     </div>
@@ -62,24 +83,57 @@
         }
     </style>
 
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th scope="col">No</th>
-                <th scope="col">Nama Gapoktan</th>
-                <th scope="col">Nama Ketua</th>
-                <th scope="col">Pangan</th>
-                <th scope="col">Perkebunan</th>
-                <th scope="col">Holtikultura</th>
-                <th scope="col">peternakan</th>
-                <th scope="col">KWT</th>
-                <th scope="col">No Telp</th>
-                <th scope="col">Jumlah Produksi</th>
-            <tr>
-        <tbody>
-            <tr></tr>
-        </tbody>
-    </table>
+    @if (auth()->user()->role == 'petugas')
+    <a href="{{route('tambah-gakpoktan')}}">
+        <button class="btn btn-primary">tambah</button>
+    </a>
+    @endif
+    <a href="{{route('export-excel-gakpoktan')}}"><button class="btn btn-secondary">Excel</button></a>
+    <a href="{{route('export-pdf-gakpoktan')}}"><button class="btn btn-secondary">Pdf</button></a>
+    <br>
+    <br>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">No</th>
+                                <th scope="col">Nama Gapoktan</th>
+                                <th scope="col">Nama Ketua</th>
+                                <th scope="col">Pangan</th>
+                                <th scope="col">Perkebunan</th>
+                                <th scope="col">Holtikultura</th>
+                                <th scope="col">peternakan</th>
+                                <th scope="col">Perikanan</th>
+                                <th scope="col">KWT</th>
+                                <th scope="col">No Telp</th>
+                            <tr>
+                        <tbody>
+                            @php
+                            $no = 1;
+                            @endphp
+                            @foreach ($gakpoktans as $data)
+                            <tr>
+                                <td scope="col">{{$no++}}</td>
+                                <td scope="col">{{$data->nama_gakpoktan}}</td>
+                                <td scope="col">{{$data->nama_ketua}}</td>
+                                <td scope="col">{{$data->pangan}}</td>
+                                <td scope="col">{{$data->berkebunan}}</td>
+                                <td scope="col">{{$data->hortikultura}}</td>
+                                <td scope="col">{{$data->peternakan}}</td>
+                                <td scope="col">{{$data->perikanan}}</td>
+                                <td scope="col">{{$data->kwt}}</td>
+                                <td scope="col">{{$data->no_telepopn}}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Card Profil -->
 </div>
 <br><br><br>

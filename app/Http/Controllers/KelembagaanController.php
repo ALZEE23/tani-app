@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use Dompdf\Dompdf;
+use Dompdf\Options;
+use App\Models\Desa;
 use App\Models\Penyuluh;
 use App\Models\Kecamatan;
+use App\Models\Gakpoktans;
 use Illuminate\Http\Request;
+use App\Exports\GakpotansExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Gapoktans; // Sesuaikan dengan nama model dan namespace Anda
-
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\View;
 class KelembagaanController extends Controller
 {
     function index()
@@ -145,7 +150,9 @@ class KelembagaanController extends Controller
     //
     function gakpoktan()
     {
-        return view('kelembagaan.petani.gakpoktan');
+        $desa = Desa::all();
+        $gakpoktans = Gakpoktans::all();
+        return view('kelembagaan.petani.gakpoktan', compact('desa', 'gakpoktans'));
     }
 
     function edit_penyuluh($id){
@@ -161,7 +168,8 @@ class KelembagaanController extends Controller
 
     function tambah_gakpoktan()
     {
-        return view('kelembagaan.petani.tambah-gakpoktan');
+        $desa = Desa::all();
+        return view('kelembagaan.petani.tambah-gakpoktan', compact('desa'));
     }
 
 
@@ -177,25 +185,57 @@ class KelembagaanController extends Controller
             'peternakan' => 'required|numeric',
             'perikanan' => 'required|numeric',
             'kwt' => 'required|numeric',
+            'notelepon' => 'required|numeric',
         ]);
 
         // Simpan data ke dalam model Gapoktan
-        $gapoktan = new Gapoktan();
+        $gapoktan = new Gakpoktans();
         $gapoktan->desa = $validatedData['desa'];
         $gapoktan->nama_gakpoktan = $validatedData['nama_gakpoktan'];
         $gapoktan->nama_ketua = $validatedData['nama_ketua'];
         $gapoktan->pangan = $validatedData['pangan'];
         $gapoktan->berkebunan = $validatedData['berkebunan'];
-        $gapoktan->holtikultura = $validatedData['holtikultura'];
+        $gapoktan->hortikultura = $validatedData['holtikultura'];
         $gapoktan->peternakan = $validatedData['peternakan'];
         $gapoktan->perikanan = $validatedData['perikanan'];
         $gapoktan->kwt = $validatedData['kwt'];
+        $gapoktan->no_telepopn = $validatedData['notelepon'];
 
         // Simpan data ke dalam database
         $gapoktan->save();
 
         // Redirect atau respons sesuai kebutuhan Anda setelah menyimpan data
-        return redirect()->route('nama_route_yang_diinginkan');
+        return redirect()->route('kelembagaan-gakpoktan');
+    }
+
+    public function export_excel_gakpoktans()
+    {
+        return Excel::download(new GakpotansExport, 'gakpoktan.xlsx');
+    }
+
+    public function export_pdf_gakpoktans()
+    {
+        $gakpoktans = Gakpoktans::all();
+
+
+        $pdf = new Dompdf();
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $pdf->setOptions($options);
+
+        // Load Bootstrap CSS locally
+        $bootstrapCSS = file_get_contents(public_path('css/bootstrap.min.css')); // Ganti path sesuai dengan lokasi CSS Bootstrap Anda
+        $html = View::make('pdf.gakpoktans', compact('gakpoktans'))->render();
+
+        // Combine Bootstrap CSS with your HTML
+        $combinedHtml = '<style>' . $bootstrapCSS . '</style>' . $html;
+
+        $pdf->loadHtml($combinedHtml);
+        $pdf->setPaper('A4', 'landscape');
+        $pdf->render();
+
+
+        return $pdf->stream('gakpoktans.pdf');
     }
 
     

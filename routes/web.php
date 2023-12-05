@@ -13,11 +13,13 @@ use App\Http\Controllers\BudidayaController;
 use App\Http\Controllers\DinasController;
 use App\Http\Controllers\GakpoktansController;
 use App\Http\Controllers\KecamatanController;
+use App\Http\Controllers\KelembagaanController;
 use App\Http\Controllers\PencegahanController;
 use App\Http\Controllers\PenyuluhController;
 use App\Http\Controllers\PetaniController;
 use App\Http\Controllers\PetugasController;
 use App\Http\Controllers\PoktanController;
+use App\Http\Controllers\DesaController;
 use App\Http\Middleware\Petugas;
 use App\Models\Gakpoktans;
 use App\Models\Penyuluh;
@@ -63,8 +65,8 @@ Route::get('/detail-poktan', [App\Http\Controllers\KelembagaanController::class,
 Route::get('/gakpoktan', [App\Http\Controllers\KelembagaanController::class, 'gakpoktan'])->name('kelembagaan-gakpoktan');
 Route::get('/tambah-gakpoktan', [App\Http\Controllers\KelembagaanController::class, 'tambah_gakpoktan'])->name('tambah-gakpoktan');
 Route::post('/store-gakpoktan', [App\Http\Controllers\KelembagaanController::class, 'store_gakpoktan'])->name('store-gakpoktan');
-
-
+Route::get('/export-excel-gakpoktan', [KelembagaanController::class, 'export_excel_gakpoktans'])->name('export-excel-gakpoktan');
+Route::get('/export-pdf-gakpoktan', [KelembagaanController::class, 'export_pdf_gakpoktans'])->name('export-pdf-gakpoktan');
 Route::get('/teknologi', [TeknologiController::class, 'index'])->name('teknologi');
 Route::get('/pupuk', [PupukController::class, 'index'])->name('pupuk');
 Route::get('/pupuk-padat', [PupukController::class, 'padat'])->name('padat');
@@ -88,6 +90,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::resource('kecamatan', KecamatanController::class)->name('kecamatan','index');
+    Route::resource('desa', DesaController::class)->name('desa','index');
     Route::resource('petani', PetaniController::class)->name('petani','index');
     Route::resource('petugas', PetugasController::class)->name('petugas','index');
     Route::resource('dinas', DinasController::class)->name('dinas','index');

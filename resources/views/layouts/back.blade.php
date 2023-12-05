@@ -84,6 +84,14 @@
                   <span class="hide-menu">Kecamatan</span>
                 </a>
               </li>
+              <li class="sidebar-item">
+                <a class="sidebar-link {{ request()->is('desa') ? 'active' : '' }}" href="{{route('desa.index')}}" aria-expanded="false">
+                  <span>
+                    <i class="ti ti-list-details"></i>
+                  </span>
+                  <span class="hide-menu">Desa</span>
+                </a>
+              </li>
               {{-- <li class="sidebar-item">
                 <a class="sidebar-link" href="./page-user-profile.html" aria-expanded="false">
                   <span>
