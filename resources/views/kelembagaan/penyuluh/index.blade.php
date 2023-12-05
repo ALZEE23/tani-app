@@ -77,7 +77,7 @@
                     <a href="{{asset('storage/file_rktp/'.$penyuluh->file_rktp)}}">File RKTP</a> |
                     <a href="{{asset('storage/file_program_daerah/'.$penyuluh->file_program_desa)}}">File Program</a>
                     @endif
-                    @if (auth()->user()->role == 'petuas')
+                    @if (auth()->user()->role == 'petugas')
                     <a href="{{route('edit.penyuluh',$penyuluh->id)}}">Edit</a>|
                     <a href="{{route('delete.penyuluh',$penyuluh->id)}}">Hapus</a>
                     @endif

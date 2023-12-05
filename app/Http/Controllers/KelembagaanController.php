@@ -88,7 +88,7 @@ class KelembagaanController extends Controller
             $filename = $request->file('foto');
             $filenamefoto = time() . '_' . $filename->getClientOriginalName();
             $filename->storeAs('public/foto', $filenamefoto);
-            $penyuluh->foto = $request->filenamefoto;
+            $penyuluh->foto = $filenamefoto;
         }
 
         $penyuluh->save();
@@ -129,6 +129,12 @@ class KelembagaanController extends Controller
             $filenameProgramDaerah = time() . '_' . $fileProgramDaerah->getClientOriginalName();
             $fileProgramDaerah->storeAs('public/file_program_daerah', $filenameProgramDaerah);
             $penyuluh->file_program_desa = $filenameProgramDaerah;
+        }
+        if ($request->hasFile('foto')) {
+            $fileFoto = $request->file('file_program_daerah');
+            $filenamefoto = time() . '_' . $fileProgramDaerah->getClientOriginalName();
+            $fileFoto->storeAs('public/file_program_daerah', $filenameProgramDaerah);
+            $penyuluh->file_program_desa = $filenamefoto;
         }
 
         $penyuluh->save();

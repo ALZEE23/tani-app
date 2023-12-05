@@ -8,11 +8,11 @@
         <div class="card-body px-4 py-3">
             <div class="row align-items-center">
                 <div class="col-9">
-                    <h4 class="fw-semibold mb-8">Form kecamatan</h4>
+                    <h4 class="fw-semibold mb-8">Form penyuluh</h4>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a class="text-muted text-decoration-none" href="/">Dashboard</a></li>
-                            <li class="breadcrumb-item" aria-current="page">kecamatans/create</li>
+                            <li class="breadcrumb-item" aria-current="page">penyuluhs/create</li>
                         </ol>
                     </nav>
                 </div>
@@ -28,12 +28,40 @@
         <div class="row">
             <div class="col-12">
                 <div class="card card-body">
-                    <h5 class="mb-3">Tambah kecamatan</h5>
-                    <form action="{{ route('kecamatan.store') }}" method="post" enctype="multipart/form-data">
+                    <h5 class="mb-3">Tambah penyuluh</h5>
+                    <form action="{{ route('penyuluh.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
-                            <label for="formFile" class="form-label">kecamatan</label>
-                            <input class="form-control" type="text" name="kecamatan" id="formFile">
+                            <label for="formFile" class="form-label">Nama</label>
+                            <input class="form-control" type="text" name="nama" id="formFile">
+                        </div>
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">Jabatan</label>
+                            <input class="form-control" type="text" name="jabatan" id="formFile">
+                        </div>
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">Wilayah</label>
+                            <select name="wilayah" id="" class="form-control">
+                                @foreach ($kecamatan as $data)
+                                <option value="{{$data->kecamatan}}">{{$data->kecamatan}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">no telepon</label>
+                            <input class="form-control" type="text" name="notelepon" id="formFile">
+                        </div>
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">foto</label>
+                            <input class="form-control" type="file" name="foto" id="formFile">
+                        </div>
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">file_rktp</label>
+                            <input class="form-control" type="file" name="file_rktp" id="formFile">
+                        </div>
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">file_program_daerah</label>
+                            <input class="form-control" type="file" name="file_program_daerah" id="formFile">
                         </div>
                         <br>
                         <button type="submit" class="btn btn-success font-medium rounded-pill px-4">
