@@ -59,22 +59,17 @@
                             </td>
                             <td>{{$data->kecamatan}}</td>
                             <td>
-                                <div>
-                                    <form action="{{ route('kecamatan.edit', $data->id) }}" method="GET" class="d-inline">
-                                        <button type="submit" class="btn btn-warning">
-                                            <i class="ti ti-edit"></i>
-                                        </button>
-                                    </form>
-                                    <form action="{{ route('kecamatan.destroy', $data->id) }}" method="POST" class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin untuk menghapus data ini?')">
-                                            <i class="ti ti-trash"></i>
-                                        </button>
-                                    </form>
-                                </div>
+                                <a href="{{ route('kecamatan.edit', $data->id) }}">
+                                    <button type="button" class="btn mb-1 btn-rounded btn-warning">
+                                        <i class="ti ti-edit"></i>
+                                    </button>
+                                </a>
+                                <a href="{{route('kecamatan.destroy',$data->id)}}">
+                                    <button type="button" class="btn mb-1 btn-rounded btn-danger">
+                                        <i class="ti ti-trash"></i>
+                                    </button>
+                                </a>
                             </td>
-
                         </tr>
                         @endforeach
                     </tbody>

@@ -9,7 +9,7 @@
         -->
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Odis Mobile App: </title>
+  <title>Jendela Tani: </title>
   <meta content="Odis Mobile App" name="description" />
   <meta content="themepassion" name="author" />
 

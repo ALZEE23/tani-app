@@ -15,19 +15,53 @@
     <div class="image-wrapper">
         <img alt="image" src="{{ asset('images/business.png') }}" style="width: 100px; height:100px">
     </div>
+    @if (auth()->user()->role == 'dinas')
+    @if (isset($key))
     <div class="select-wrapper">
         <label for="kecamatan">Pilih Kecamatan:</label>
-        <select id="kecamatan" name="kecamatan">
-            <option value="kecamatan1">Kecamatan 1</option>
-            <option value="kecamatan2">Kecamatan 2</option>
+        <select id="kecamatan" name="kecamatan" onchange="redirectToSelectedKecamatan()">
+            @foreach ($kecamatan as $data)
+            <option {{ $key == $data->kecamatan ? 'selected' : '' }} value="{{$data->kecamatan}}">{{$data->kecamatan}}</option>
+            @endforeach
             <!-- Tambahkan opsi kecamatan lainnya sesuai kebutuhan -->
         </select>
     </div>
+    @else
+    <div class="select-wrapper">
+        <label for="kecamatan">Pilih Kecamatan:</label>
+        <select id="kecamatan" name="kecamatan" onchange="redirectToSelectedKecamatan()">
+            @foreach ($kecamatan as $data)
+            <option value="{{$data->kecamatan}}">{{$data->kecamatan}}</option>
+            @endforeach
+            <!-- Tambahkan opsi kecamatan lainnya sesuai kebutuhan -->
+        </select>
+    </div>
+    @endif
+
+    <script>
+        function redirectToSelectedKecamatan() {
+            const selectedKecamatan = document.getElementById('kecamatan').value;
+            window.location.href = "{{ url('penyuluh-filter') }}/" + encodeURIComponent(selectedKecamatan);
+        }
+    </script>
+    @endif
 
     <!-- Card Profil -->
+    @if (auth()->user()->role == 'petugas')<br>
     <a href="{{route('tambah-penyuluh')}}">
         <button>tambah</button>
     </a>
+    @endif
+    <br>
+    @if ($penyuluhs->isEmpty())
+    <div class="card">
+        <div class="card-content">
+            <div class="row valign-wrapper">
+                <h5>Tidak ada data</h5>
+            </div>
+        </div>
+    </div>
+    @else
     @foreach ($penyuluhs as $penyuluh)
     <div class="card">
         <div class="card-content">
@@ -39,16 +73,22 @@
                     <span class="card-title">Nama: {{$penyuluh->nama}}</span>
                     <p>Jabatan: {{$penyuluh->jabatan}}</p>
                     <p>No. Telepon: {{$penyuluh->no_telepon}}</p>
-                    <a href="{{asset('storage/file_rktp/'.$penyuluh->file_rktp)}}" >File RKTP</a> |
-                    <a href="{{asset('storage/file_program_daerah/'.$penyuluh->file_program_desa)}}" >File Program</a>
-                    <a href="{{route('edit.penyuluh',$penyuluh->id)}}" >Edit</a>|
-                    <a href="{{route('delete.penyuluh',$penyuluh->id)}}" >Hapus</a>
+                    @if (!auth()->user()->role == 'petani')
+                    <a href="{{asset('storage/file_rktp/'.$penyuluh->file_rktp)}}">File RKTP</a> |
+                    <a href="{{asset('storage/file_program_daerah/'.$penyuluh->file_program_desa)}}">File Program</a>
+                    @endif
+                    @if (auth()->user()->role == 'petuas')
+                    <a href="{{route('edit.penyuluh',$penyuluh->id)}}">Edit</a>|
+                    <a href="{{route('delete.penyuluh',$penyuluh->id)}}">Hapus</a>
+                    @endif
                 </div>
             </div>
         </div>
     </div>
 
     @endforeach
+    @endif
+
 </div>
 <br><br><br>
 <style>

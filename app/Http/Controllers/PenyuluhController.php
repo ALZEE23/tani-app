@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Penyuluh;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 class PenyuluhController extends Controller
 {
@@ -11,7 +13,8 @@ class PenyuluhController extends Controller
      */
     public function index()
     {
-        //
+        $penyuluh = Penyuluh::all();
+        return view('backend.penyuluh.index', compact('penyuluh'));
     }
 
     /**

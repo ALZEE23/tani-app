@@ -3,23 +3,34 @@
 namespace App\Http\Controllers;
 
 use App\Models\Penyuluh;
+use App\Models\Kecamatan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Gapoktans; // Sesuaikan dengan nama model dan namespace Anda
 use Illuminate\Support\Facades\Auth;
+use App\Models\Gapoktans; // Sesuaikan dengan nama model dan namespace Anda
 
 class KelembagaanController extends Controller
 {
     function index()
     {
         return view('kelembagaan.index');
-        Auth::user();
     }
 
     function penyuluh()
     {
+        $kecamatan = Kecamatan::all();
         $penyuluhs = Penyuluh::all();
-        return view('kelembagaan.penyuluh.index', compact('penyuluhs'));
+
+        if(Auth::user()->role == 'petani'){
+            $penyuluhs = Penyuluh::where('wilayah', Auth::user()->kecamatan)->get();
+        }
+        return view('kelembagaan.penyuluh.index', compact('penyuluhs','kecamatan'));
+    }
+    function filter_penyuluh($key)
+    {
+        $kecamatan = Kecamatan::all();
+        $penyuluhs = Penyuluh::where('wilayah', $key)->get();
+        return view('kelembagaan.penyuluh.index', compact('penyuluhs','kecamatan','key'));
     }
     function petani()
     {
@@ -85,7 +96,46 @@ class KelembagaanController extends Controller
         // Redirect atau respons sesuai kebutuhan Anda
         return redirect('kelembagaan-penyuluh')->with('success', 'Data berhasil disimpan.');
     }
+    
+    function update(Request $request)
+    {
+        // Validasi data yang diterima dari form
+        $validatedData = $request->validate([
+            'nama' => 'required',
+            'jabatan' => 'required',
+            'wilayah' => 'required',
+            'notelepon' => 'required|numeric',
+            'file_rktp' => 'file|mimes:pdf', // Sesuaikan dengan jenis file yang diizinkan
+            'file_program_daerah' => 'file|mimes:pdf', // Sesuaikan dengan jenis file yang diizinkan
+        ]);
 
+        // Simpan data menggunakan Eloquent pada model Penyuluh
+        $penyuluh = Penyuluh::find($request->id);
+        $penyuluh->nama = $request->nama;
+        $penyuluh->jabatan = $request->jabatan;
+        $penyuluh->wilayah = $request->wilayah;
+        $penyuluh->no_telepon = $request->notelepon;
+
+        // Simpan file jika ada yang diunggah
+        if ($request->hasFile('file_rktp')) {
+            $fileRktp = $request->file('file_rktp');
+            $filenameRktp = time() . '_' . $fileRktp->getClientOriginalName();
+            $fileRktp->storeAs('public/file_rktp', $filenameRktp);
+            $penyuluh->file_rktp = $filenameRktp;
+        }
+
+        if ($request->hasFile('file_program_daerah')) {
+            $fileProgramDaerah = $request->file('file_program_daerah');
+            $filenameProgramDaerah = time() . '_' . $fileProgramDaerah->getClientOriginalName();
+            $fileProgramDaerah->storeAs('public/file_program_daerah', $filenameProgramDaerah);
+            $penyuluh->file_program_desa = $filenameProgramDaerah;
+        }
+
+        $penyuluh->save();
+
+        // Redirect atau respons sesuai kebutuhan Anda
+        return redirect('kelembagaan-penyuluh')->with('success', 'Data berhasil disimpan.');
+    }
     //
     function gakpoktan()
     {
