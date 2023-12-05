@@ -20,8 +20,16 @@
         <a href=""><button class="btn btn-secondary" style="width: 300px;">Gapoktan</button></a><br><br>
 
         <!-- @ if (auth()->user()->role == 'dinas') -->
+        <style>
+            .select-wrapper {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+            }
+        </style>
         @if (isset($key))
-        <div class="select-wrapper">
+        <div class="select-wrapper d-flex justify-content-center">
             <label for="desa">Pilih Desa:</label>
             <select id="desa" name="desa" onchange="redirectToSelecteddesa()">
                 @foreach ($desa as $data)
@@ -31,8 +39,8 @@
             </select>
         </div>
         @else
-        <div class="select-wrapper">
-            <label for="desa">Pilih desa:</label>
+        <div class="select-wrapper d-flex justify-content-center">
+            <label for="desa">Pilih Desa:</label>
             <select id="desa" name="desa" onchange="redirectToSelecteddesa()">
                 @foreach ($desa as $data)
                 <option value="{{$data->desa}}">{{$data->desa}}</option>
@@ -100,6 +108,7 @@
                         <thead>
                             <tr>
                                 <th scope="col">No</th>
+                                <th scope="col">Desa</th>
                                 <th scope="col">Nama Gapoktan</th>
                                 <th scope="col">Nama Ketua</th>
                                 <th scope="col">Pangan</th>
@@ -117,6 +126,7 @@
                             @foreach ($gakpoktans as $data)
                             <tr>
                                 <td scope="col">{{$no++}}</td>
+                                <td scope="col">{{$data->desa}}</td>
                                 <td scope="col">{{$data->nama_gakpoktan}}</td>
                                 <td scope="col">{{$data->nama_ketua}}</td>
                                 <td scope="col">{{$data->pangan}}</td>

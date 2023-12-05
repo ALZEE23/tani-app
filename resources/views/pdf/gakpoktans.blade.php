@@ -14,6 +14,7 @@
                         <thead>
                             <tr>
                                 <th scope="col">No</th>
+                                <th scope="col">Desa</th>
                                 <th scope="col">Nama Gapoktan</th>
                                 <th scope="col">Nama Ketua</th>
                                 <th scope="col">Pangan</th>
@@ -31,6 +32,7 @@
                             @foreach ($gakpoktans as $data)
                             <tr>
                                 <td scope="col">{{$no++}}</td>
+                                <td scope="col">{{$data->desa}}</td>
                                 <td scope="col">{{$data->nama_gakpoktan}}</td>
                                 <td scope="col">{{$data->nama_ketua}}</td>
                                 <td scope="col">{{$data->pangan}}</td>

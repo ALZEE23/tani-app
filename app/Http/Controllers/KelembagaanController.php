@@ -147,7 +147,7 @@ class KelembagaanController extends Controller
         // Redirect atau respons sesuai kebutuhan Anda
         return redirect('kelembagaan-penyuluh')->with('success', 'Data berhasil disimpan.');
     }
-    //
+    
     function gakpoktan()
     {
         $desa = Desa::all();
@@ -236,6 +236,13 @@ class KelembagaanController extends Controller
 
 
         return $pdf->stream('gakpoktans.pdf');
+    }
+
+    function filter_gakpoktan($key)
+    {
+        $desa = Desa::all();
+        $gakpoktans = Gakpoktans::where('desa', $key)->get();
+        return view('kelembagaan.petani.gakpoktan', compact('gakpoktans', 'desa', 'key'));
     }
 
     
