@@ -141,22 +141,22 @@
         <div class="section">
           <div class="row ">
              <div class="ui-grid">
-              <a href="{{route('kelembagaan')}}"><div class="col s6" style="height:165px"><img alt="image" class="" style="width: 80px; height:80px;" src="images/family-tree.png"><h6>
+              <a href="{{route('kelembagaan')}}"><div class="col s6" style="height:165px"><img alt="image" class="" style="width: 80px; height:80px;" src="{{asset('images/family-tree.png')}}"><h6>
                 Kelembagaan
               </h6></div></a>
-              <a href="{{route('teknologi')}}"><div class="col s6" style="height:165px"><img alt="image" class="" style="width: 80px; height:80px" src="images/smart-farm.png"><h6>
+              <a href="{{route('teknologi')}}"><div class="col s6" style="height:165px"><img alt="image" class="" style="width: 80px; height:80px" src="{{asset('images/smart-farm.png')}}"><h6>
                 Teknologi Pertanian
               </h6></div></a>
-              <a href="#"><div class="col s6" style="height:165px"><img alt="image" class="" style="width: 80px; height:80px" src="images/tractor.png"><h6>
+              <a href="#"><div class="col s6" style="height:165px"><img alt="image" class="" style="width: 80px; height:80px" src="{{asset('images/tractor.png')}}"><h6>
                 Akses Alsintan
               </h6></div></a>
-              <a href="#"><div class="col s6" style="height:165px"><img alt="image" class="" style="width: 80px; height:80px" src="images/market.png"><h6>
+              <a href="#"><div class="col s6" style="height:165px"><img alt="image" class="" style="width: 80px; height:80px" src="{{asset('images/market.png')}}"><h6>
                 Akses Pasar
               </h6></div></a>
-              <a href="#"><div class="col s6" style="height:165px"><img alt="image" class="" style="width: 80px; height:80px" src="images/agriculture.png"><h6>
+              <a href="#"><div class="col s6" style="height:165px"><img alt="image" class="" style="width: 80px; height:80px" src="{{asset('images/agriculture.png')}}"><h6>
                 Produksi Tanaman & Peternakan
               </h6></div></a>
-              <a href="#"><div class="col s6" style="height:165px"><img alt="image" class="" style="width: 80px; height:80px" src="images/business.png"><h6>
+              <a href="#"><div class="col s6" style="height:165px"><img alt="image" class="" style="width: 80px; height:80px" src="{{asset('images/business.png')}}"><h6>
                 Kegiatan Penyuluhan
               </h6></div></a>
             </div>

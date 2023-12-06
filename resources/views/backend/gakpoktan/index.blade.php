@@ -1,6 +1,7 @@
 @extends('layouts.back')
 @section('content')
-<div class="container-fluid">
+<div class="container">
+    <br><br><br><br>
     <!-- --------------------------------------------------- -->
     <!--  Form Basic Start -->
     <!-- --------------------------------------------------- -->
@@ -41,7 +42,7 @@
         </div>
         <div class="card-body p-4">
             <div class="table-responsive rounded-2 mb-4">
-                <table class="table border text-nowrap customize-table mb-0 align-middle table-striped">
+                <table class="table border text-nowrap customize-table mb-0 align-middle table-striped" id="example">
                     <thead class="text-dark fs-4">
                         <tr>
                             <th>
@@ -126,4 +127,15 @@
     <!--  Form Basic End -->
     <!-- --------------------------------------------------- -->
 </div>
+<script>
+    $(document).ready(function() {
+        var table = $('#example').DataTable({
+            pageLength: 5,
+            lengthMenu: [
+                [5, 10, 20, -1],
+                [5, 10, 20, 'Todos']
+            ]
+        })
+    });
+</script>
 @endsection

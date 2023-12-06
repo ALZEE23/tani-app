@@ -44,7 +44,8 @@ class KelembagaanController extends Controller
 
     function tambah_penyuluh()
     {
-        return view('kelembagaan.penyuluh.tambah');
+        $kecamatan = Kecamatan::all();
+        return view('kelembagaan.penyuluh.tambah', compact('kecamatan'));
     }
 
     public function store(Request $request)

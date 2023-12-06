@@ -12,7 +12,10 @@
   <title>Jendela Tani: </title>
   <meta content="Odis Mobile App" name="description" />
   <meta content="themepassion" name="author" />
-
+  <!-- PWA  -->
+  <meta name="theme-color" content="#6777ef" />
+  <link rel="apple-touch-icon" href="{{ asset('logo.PNG') }}">
+  <link rel="manifest" href="{{ asset('/manifest.json') }}">
 
   <!-- App Icons -->
   <link rel="apple-touch-icon" sizes="57x57" href="assets/images/icons/apple-icon-57x57.png">
@@ -40,7 +43,6 @@
 
 
   <!-- CORE CSS FRAMEWORK - START -->
-  {{-- <link href="{{asset('css/preloader.css')}}" type="text/css" rel="stylesheet" media="screen" /> --}}
 
   <link href="{{asset('modules/materialize/materialize.min.css')}}" type="text/css" rel="stylesheet" media="screen" />
   <link href="{{asset('modules/fonts/mdi/appicon/appicon.css')}}" type="text/css" rel="stylesheet" media="screen" />
@@ -51,14 +53,14 @@
   <!-- CORE CSS FRAMEWORK - END -->
 
   <!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - START -->
-    <!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - END -->
+  <!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - END -->
 
   <!-- CORE CSS TEMPLATE - START -->
 
-  
-    <link href="{{asset('css/style.css')}}" type="text/css" rel="stylesheet" media="screen" id="main-style" />
+
+  <link href="{{asset('css/style.css')}}" type="text/css" rel="stylesheet" media="screen" id="main-style" />
   <!-- CORE CSS TEMPLATE - END -->
-  
+
 
 </head>
 <!-- END HEAD -->
@@ -66,9 +68,9 @@
 <!-- BEGIN BODY -->
 
 
-<body style="background-color: #66BB6A;" class=" menu-full  isfullscreen  html"  data-header="light" data-footer="light"  data-header_align="app"  data-menu_type="left" data-menu="light" data-menu_icons="on" data-footer_type="left" data-site_mode="light" data-footer_menu="show" data-footer_menu_style="light"  >
+<body style="background-color: #ffffff;" class=" menu-full  isfullscreen  html" data-header="light" data-footer="light" data-header_align="app" data-menu_type="left" data-menu="light" data-menu_icons="on" data-footer_type="left" data-site_mode="light" data-footer_menu="show" data-footer_menu_style="light">
 
-<div class="content-area">
+  <div class="content-area">
 
 
 
@@ -77,57 +79,54 @@
         DKP3
       </h2>
       <img src="assets/images/logo-login.png" alt="" height="170">
-      </div>
+    </div>
 
-  <div class="section pt0">
-    <div class="spacer"></div>
-
-
+    <div class="section pt0">
+      <div class="spacer"></div>
 
 
 
-    <div class="row ui-mediabox portfolio portfolio-masonry ">
 
 
-      <div class="col s4 grid-item">
-        <a class="img-wrap round" href="{{route('login')}}" data-fancybox="images"
-          data-caption="Charming looking and young designs">
-          <img alt="image" class="" style="width: 100%;" src="{{asset('images/menu-petani.png')}}">
-        <h6 style="color:white" class="text-center">Petani</h6>
+      <div class="row ui-mediabox portfolio portfolio-masonry ">
 
-        </a>
-        <div class="user-actions">
+
+        <div class="col s4 grid-item">
+          <a class="img-wrap round" href="{{route('login')}}" data-fancybox="images" data-caption="Charming looking and young designs">
+            <img alt="image" class="" style="width: 100%;" src="{{asset('images/menu-petani.png')}}">
+            <h6 style="color:white" class="text-center">Petani</h6>
+
+          </a>
+          <div class="user-actions">
+          </div>
         </div>
-      </div>
 
-      <div class="col s4 grid-item">
-        <a class="img-wrap round" href="{{route('login')}}" data-fancybox="images"
-          data-caption="Create unreal combinations at your work">
-                    <img alt="image" class="" style="width: 100%;" src="{{asset('images/female.png')}}">
-        <h6 style="color:white" class="text-center">Petugas</h6>
-        </a>
-        <div class="user-actions">
+        <div class="col s4 grid-item">
+          <a class="img-wrap round" href="{{route('login')}}" data-fancybox="images" data-caption="Create unreal combinations at your work">
+            <img alt="image" class="" style="width: 100%;" src="{{asset('images/female.png')}}">
+            <h6 style="color:white" class="text-center">Petugas</h6>
+          </a>
+          <div class="user-actions">
+          </div>
         </div>
-      </div>
 
-      <div class="col s4 grid-item">
-        <a class="img-wrap round" href="{{route('login')}}" data-fancybox="images"
-          data-caption="You make your own looks stylish">
-          <img alt="image" class="" style="width: 100%;" src="{{asset('images/officer.png')}}">
-        <h6 style="color:white" class="text-center">Dinas</h6>
-        </a>
-        <div class="user-actions">
+        <div class="col s4 grid-item">
+          <a class="img-wrap round" href="{{route('login')}}" data-fancybox="images" data-caption="You make your own looks stylish">
+            <img alt="image" class="" style="width: 100%;" src="{{asset('images/officer.png')}}">
+            <h6 style="color:white" class="text-center">Dinas</h6>
+          </a>
+          <div class="user-actions">
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
 
 
 
 
-</div><!--.content-area-->
+  </div><!--.content-area-->
 
 
 
@@ -135,32 +134,47 @@
 
 
 
-<script src="{{asset('assets/js/pwa.js')}}"></script>
+  <script src="{{asset('assets/js/pwa.js')}}"></script>
 
-<!-- LOAD FILES AT PAGE END FOR FASTER LOADING -->
+  <!-- LOAD FILES AT PAGE END FOR FASTER LOADING -->
 
-<!-- CORE JS FRAMEWORK - START -->
-<script src="{{asset('modules/jquery/jquery-2.2.4.min.js')}}"></script>
-<script src="{{asset('modules/materialize/materialize.js')}}"></script>
-<script src="{{asset('modules/perfect-scrollbar/perfect-scrollbar.min.js')}}"></script>
-<script src="{{asset('assets/js/variables.js')}}"></script>
-<!-- CORE JS FRAMEWORK - END -->
-
-
-<!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - START -->
-<script src="{{asset('assets/js/common.js')}}"></script><!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - END -->
+  <!-- CORE JS FRAMEWORK - START -->
+  <script src="{{asset('modules/jquery/jquery-2.2.4.min.js')}}"></script>
+  <script src="{{asset('modules/materialize/materialize.js')}}"></script>
+  <script src="{{asset('modules/perfect-scrollbar/perfect-scrollbar.min.js')}}"></script>
+  <script src="{{asset('assets/js/variables.js')}}"></script>
+  <!-- CORE JS FRAMEWORK - END -->
 
 
-<!-- CORE TEMPLATE JS - START -->
-<script src="{{asset('modules/app/init.js')}}"></script>
-<script src="{{asset('modules/app/settings.js')}}"></script>
-
-<script src="{{asset('modules/app/scripts.js')}}"></script>
-
-<!-- END CORE TEMPLATE JS - END -->
+  <!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - START -->
+  <script src="{{asset('assets/js/common.js')}}"></script><!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - END -->
 
 
-<script src="{{asset('assets/js/preloader.js')}}"></script>
+  <!-- CORE TEMPLATE JS - START -->
+  <script src="{{asset('modules/app/init.js')}}"></script>
+  <script src="{{asset('modules/app/settings.js')}}"></script>
+
+  <script src="{{asset('modules/app/scripts.js')}}"></script>
+
+  <!-- END CORE TEMPLATE JS - END -->
+  <script src="{{ asset('/sw.js') }}"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      // Register a service worker hosted at the root of the
+      // site using the default scope.
+      navigator.serviceWorker.register("/sw.js").then(
+        (registration) => {
+          console.log("Service worker registration succeeded:", registration);
+        },
+        (error) => {
+          console.error(`Service worker registration failed: ${error}`);
+        },
+      );
+    } else {
+      console.error("Service workers are not supported.");
+    }
+  </script>
+
 </body>
 
 </html>

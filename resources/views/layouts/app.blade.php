@@ -40,7 +40,6 @@
 
 
   <!-- CORE CSS FRAMEWORK - START -->
-  {{-- <link href="{{asset('css/preloader.css')}}" type="text/css" rel="stylesheet" media="screen" /> --}}
 
   <link href="{{asset('modules/materialize/materialize.min.css')}}" type="text/css" rel="stylesheet" media="screen" />
   <link href="{{asset('modules/fonts/mdi/appicon/appicon.css')}}" type="text/css" rel="stylesheet" media="screen" />
@@ -110,7 +109,6 @@
 <!-- END CORE TEMPLATE JS - END -->
 
 
-<script src="{{asset('assets/js/preloader.js')}}"></script>
 </body>
 
 </html>

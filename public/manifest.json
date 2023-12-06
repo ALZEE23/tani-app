@@ -1,0 +1,17 @@
+{
+    "name": "Jendela Tani Web App",
+    "short_name": "Jendela Tani",
+    "start_url": "/index.php",
+    "background_color": "#green",
+    "description": "Jendela Tani",
+    "display": "fullscreen",
+    "theme_color": "#green",
+    "icons": [
+        {
+            "src": "logo.PNG",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}

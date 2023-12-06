@@ -42,7 +42,7 @@
 
 
   <!-- CORE CSS FRAMEWORK - START -->
-  <link href="{{asset('css/preloader.css')}}" type="text/css" rel="stylesheet" media="screen" />
+  <!-- <link href="{{asset('css/preloader.css')}}" type="text/css" rel="stylesheet" media="screen" /> -->
 
   <link href="{{asset('modules/materialize/materialize.min.css')}}" type="text/css" rel="stylesheet" media="screen" />
   <link href="{{asset('modules/fonts/mdi/appicon/appicon.css')}}" type="text/css" rel="stylesheet" media="screen" />
@@ -70,12 +70,12 @@
 
 
 <body class=" menu-full  isfullscreen  html"  data-header="light" data-footer="light"  data-header_align="app"  data-menu_type="left" data-menu="light" data-menu_icons="on" data-footer_type="left" data-site_mode="light" data-footer_menu="show" data-footer_menu_style="light"  >
-    <div class="preloader-background">
+    <!-- <div class="preloader-background">
       <div class="preloader-wrapper">
         <div class="loader">
         </div>
       </div>
-    </div>
+    </div> -->
   
 
 
@@ -134,7 +134,7 @@
   <div class="section">
 
       <div class="row center">
-      <img src="images/logo-login.png" alt="">
+      <img src="{{asset('images/logo-login.png')}}" alt="">
       </div>
 
     <h3 class="bot-20 center white-text">Login</h3>

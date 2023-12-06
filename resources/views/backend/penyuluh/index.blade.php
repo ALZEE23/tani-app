@@ -1,6 +1,7 @@
 @extends('layouts.back')
 @section('content')
-<div class="container-fluid">
+<div class="container">
+    <br><br><br><br>
     <!-- --------------------------------------------------- -->
     <!--  Form Basic Start -->
     <!-- --------------------------------------------------- -->
@@ -34,8 +35,8 @@
                 </button></a>
         </div>
         <div class="card-body p-4">
-            <div class="table-responsive rounded-2 mb-4">
-                <table class="table border text-nowrap customize-table mb-0 align-middle">
+            <div class="rounded-2 mb-4">
+                <table class="table border text-nowrap customize-table mb-0 align-middle" id="example">
                     <thead class="text-dark fs-4">
                         <tr>
                             <th>
@@ -76,7 +77,6 @@
                             <td>{{$data->nama}}</td>
                             <td>{{$data->jabatan}}</td>
                             <td>{{$data->no_telepon}}</td>
-                            <td>{{$data->nama}}</td>
                             <td><a href="{{asset('storage/file_rktp/')}}/{{$data->file_rktp}}">File RKTP</a></td>
                             <td><a href="{{asset('storage/file_program_desa/')}}/{{$data->file_program_desa}}">File Program Desa</a></td>
 
@@ -104,8 +104,20 @@
             </div>
         </div>
     </div>
+
     <!-- --------------------------------------------------- -->
     <!--  Form Basic End -->
     <!-- --------------------------------------------------- -->
 </div>
+<script>
+    $(document).ready(function() {
+        var table = $('#example').DataTable({
+            pageLength: 5,
+            lengthMenu: [
+                [5, 10, 20, -1],
+                [5, 10, 20, 'Todos']
+            ]
+        })
+    });
+</script>
 @endsection

@@ -23,10 +23,14 @@
         </div>
 
         <div class="">
-            <input id="wilayah" type="text" name="wilayah" required placeholder="wilayah">
-            {{-- <label for="wilayah">&nbsp;&nbsp;Wilayah</label> --}}
+            <label for="desa">Pilih Wilayah:</label>
+            <select id="wilayah" name="wilayah">
+                @foreach ($kecamatan as $data)
+                <option value="{{$data->kecamatan}}">{{$data->kecamatan}}</option>
+                @endforeach
+                <!-- Tambahkan opsi kecamatan lainnya sesuai kebutuhan -->
+            </select>
         </div>
-
         <div class="">
             <input id="notelepon" type="tel" name="notelepon" required placeholder="No Telepon">
             {{-- <label for="notelepon">&nbsp;&nbsp;No. Telepon</label> --}}
@@ -75,9 +79,9 @@
         padding-top: 20px;
     }
 
-   
+
     .btn {
         margin-top: 20px;
     }
-</style>    
+</style>
 @endsection

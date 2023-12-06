@@ -19,7 +19,11 @@
     <link rel="stylesheet" href="{{asset('dist/libs/owl.carousel/dist/assets/owl.carousel.min.css')}}">
     <!-- Core Css -->
     <link id="themeColors" rel="stylesheet" href="{{asset('dist/css/style.min.css')}}" />
+    <link rel="stylesheet" href="{{asset('dist/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css')}}">
+    <script src="{{asset('dist/libs/jquery/dist/jquery.min.js')}}"></script>
 
+    <script src="{{asset('dist/libs/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('dist/js/datatable/datatable-basic.init.js')}}"></script>
   </head>
 
   <body>
@@ -38,9 +42,8 @@
         <!-- Sidebar scroll-->
         <div>
           <div class="brand-logo d-flex align-items-center justify-content-between">
-            <a href="./index.html" class="text-nowrap logo-img">
-              <img src="{{asset('dist/images/logos/dark-logo.svg')}}" class="dark-logo" width="180" alt="" />
-              <img src="{{('dist/images/logos/light-logo.svg')}}" class="light-logo" width="180" alt="" />
+            <a href="./index.html" class="text-nowrap logo-img text-center">
+              <img src="{{asset('images/logo-login.png')}}" class="dark-logo" width="60" alt="" style="margin-left: 60px;" />
             </a>
             <div class="close-btn d-lg-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
               <i class="ti ti-x fs-8 text-muted"></i>
@@ -249,76 +252,6 @@
         <h5 class="offcanvas-title fs-5 fw-semibold" id="offcanvasRightLabel">Shopping Cart</h5>
         <span class="badge bg-primary rounded-4 px-3 py-1 lh-sm">5 new</span>
       </div>
-      <div class="offcanvas-body h-100 px-4 pt-0" data-simplebar>
-        <ul class="mb-0">
-          <li class="pb-7">
-            <div class="d-flex align-items-center">
-              <img src="dist/images/products/product-1.jpg" width="95" height="75" class="rounded-1 me-9 flex-shrink-0" alt="" />
-              <div>
-                <h6 class="mb-1">Supreme toys cooker</h6>
-                <p class="mb-0 text-muted fs-2">Kitchenware Item</p>
-                <div class="d-flex align-items-center justify-content-between mt-2">
-                  <h6 class="fs-2 fw-semibold mb-0 text-muted">$250</h6>
-                  <div class="input-group input-group-sm w-50">
-                    <button class="btn border-0 round-20 minus p-0 bg-light-success text-success " type="button" id="add1"> - </button>
-                    <input type="text" class="form-control round-20 bg-transparent text-muted fs-2 border-0  text-center qty" placeholder="" aria-label="Example text with button addon" aria-describedby="add1" value="1" />
-                    <button class="btn text-success bg-light-success  p-0 round-20 border-0 add" type="button" id="addo2"> + </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </li>
-          <li class="pb-7">
-            <div class="d-flex align-items-center">
-              <img src="dist/images/products/product-2.jpg" width="95" height="75" class="rounded-1 me-9 flex-shrink-0" alt="" />
-              <div>
-                <h6 class="mb-1">Supreme toys cooker</h6>
-                <p class="mb-0 text-muted fs-2">Kitchenware Item</p>
-                <div class="d-flex align-items-center justify-content-between mt-2">
-                  <h6 class="fs-2 fw-semibold mb-0 text-muted">$250</h6>
-                  <div class="input-group input-group-sm w-50">
-                    <button class="btn border-0 round-20 minus p-0 bg-light-success text-success " type="button" id="add2"> - </button>
-                    <input type="text" class="form-control round-20 bg-transparent text-muted fs-2 border-0  text-center qty" placeholder="" aria-label="Example text with button addon" aria-describedby="add2" value="1" />
-                    <button class="btn text-success bg-light-success  p-0 round-20 border-0 add" type="button" id="addon34"> + </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </li>
-          <li class="pb-7">
-            <div class="d-flex align-items-center">
-              <img src="dist/images/products/product-3.jpg" width="95" height="75" class="rounded-1 me-9 flex-shrink-0" alt="" />
-              <div>
-                <h6 class="mb-1">Supreme toys cooker</h6>
-                <p class="mb-0 text-muted fs-2">Kitchenware Item</p>
-                <div class="d-flex align-items-center justify-content-between mt-2">
-                  <h6 class="fs-2 fw-semibold mb-0 text-muted">$250</h6>
-                  <div class="input-group input-group-sm w-50">
-                    <button class="btn border-0 round-20 minus p-0 bg-light-success text-success " type="button" id="add3"> - </button>
-                    <input type="text" class="form-control round-20 bg-transparent text-muted fs-2 border-0  text-center qty" placeholder="" aria-label="Example text with button addon" aria-describedby="add3" value="1" />
-                    <button class="btn text-success bg-light-success  p-0 round-20 border-0 add" type="button" id="addon3"> + </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </li>
-        </ul>
-        <div class="align-bottom">
-          <div class="d-flex align-items-center pb-7">
-            <span class="text-dark fs-3">Sub Total</span>
-            <div class="ms-auto">
-              <span class="text-dark fw-semibold fs-3">$2530</span>
-            </div>
-          </div>
-          <div class="d-flex align-items-center pb-7">
-            <span class="text-dark fs-3">Total</span>
-            <div class="ms-auto">
-              <span class="text-dark fw-semibold fs-3">$6830</span>
-            </div>
-          </div>
-          <a href="./eco-checkout.html" class="btn btn-outline-primary w-100">Go to shopping cart</a>
-        </div>
-      </div>
     </div>
     <!--  Mobilenavbar -->
     <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="mobilenavbar" aria-labelledby="offcanvasWithBothOptionsLabel">
@@ -482,174 +415,9 @@
       </nav>
     </div>
     <!-- Search Bar -->
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-      <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasRightLabel">Shopping Cart</h5>
-        <span data-bs-dismiss="offcanvas" class="link-secondary cursor-pointer">
-          <!-- <i class="feather-base ms-4" data-feather="x-circle"></i> -->
-        </span>
-      </div>
-      <div class="offcanvas-body h-100" data-simplebar>
-        <ul>
-          <li class="pb-4 border-bottom">
-            <div class="d-flex align-items-center py-2">
-              <img src="dist/images/products/product-1.jpg" width="98" class="rounded-2 me-3" alt="" />
-              <div>
-                <h6 class="fs-4 fw-normal mb-0">Supreme toys cooker</h6>
-                <p class="mb-0 text-muted fs-3">Kitchenware Item</p>
-                <div class="d-flex align-items-center mt-1">
-                  <h6 class="fs-4 me-2 fw-normal mb-0">$250</h6>
-                  <div class="input-group input-group-sm w-35">
-                    <button class="btn btn-light-success text-success rounded-1 minus" type="button" id="add1"> - </button>
-                    <input type="text" class="form-control bg-transparent border-0 rounded-1 text-center qty" placeholder="" aria-label="Example text with button addon" aria-describedby="add1" value="1" />
-                    <button class="btn btn-light-success text-success rounded-1 add" type="button" id="addo2"> + </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </li>
-          <li class="py-4 border-bottom">
-            <div class="d-flex align-items-center py-2">
-              <img src="dist/images/products/product-2.jpg" width="98" class="rounded-2 me-3" alt="" />
-              <div>
-                <h6 class="fs-4 fw-normal mb-0">Supreme toys cooker</h6>
-                <p class="mb-0 text-muted fs-3">Kitchenware Item</p>
-                <div class="d-flex align-items-center mt-1">
-                  <h6 class="fs-4 me-2 fw-normal mb-0">$250</h6>
-                  <div class="input-group input-group-sm w-35">
-                    <button class="btn btn-light-success text-success rounded-1 minus" type="button" id="add2"> - </button>
-                    <input type="text" class="form-control bg-transparent border-0 rounded-1 text-center qty" placeholder="" aria-label="Example text with button addon" aria-describedby="add2" value="1" />
-                    <button class="btn btn-light-success text-success rounded-1 add" type="button" id="addon34"> + </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </li>
-          <li class="py-4 border-bottom">
-            <div class="d-flex align-items-center py-2">
-              <img src="dist/images/products/product-3.jpg" width="98" class="rounded-2 me-3" alt="" />
-              <div>
-                <h6 class="fs-4 fw-normal mb-0">Supreme toys cooker</h6>
-                <p class="mb-0 text-muted fs-3">Kitchenware Item</p>
-                <div class="d-flex align-items-center mt-1">
-                  <h6 class="fs-4 me-2 fw-normal mb-0">$250</h6>
-                  <div class="input-group input-group-sm w-35">
-                    <button class="btn btn-light-success text-success rounded-1 minus" type="button" id="add3"> - </button>
-                    <input type="text" class="form-control bg-transparent border-0 rounded-1 text-center qty" placeholder="" aria-label="Example text with button addon" aria-describedby="add3" value="1" />
-                    <button class="btn btn-light-success text-success rounded-1 add" type="button" id="addon3"> + </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </li>
-        </ul>
-        <div class="align-bottom">
-          <div class="d-flex align-items-center py-2">
-            <span class="text-muted fs-3">Sub Total</span>
-            <div class="ms-auto">
-              <span class="text-dark fw-normal fs-3">$2530</span>
-            </div>
-          </div>
-          <div class="d-flex align-items-center py-2">
-            <span class="text-muted fs-3">Total</span>
-            <div class="ms-auto">
-              <span class="text-dark fw-normal fs-3">$6830</span>
-            </div>
-          </div>
-          <a class="btn btn-primary text-white w-100 d-block" href="javascript:void(0);"> Place order </a>
-        </div>
-      </div>
-    </div>
+
     <!-- Search Bar -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-scrollable modal-lg">
-        <div class="modal-content rounded-1">
-          <div class="modal-header border-bottom">
-            <input type="search" class="form-control fs-3" placeholder="Search here" id="search" />
-            <span data-bs-dismiss="modal" class="lh-1 cursor-pointer">
-              <i class="ti ti-x fs-5 ms-3"></i>
-            </span>
-          </div>
-          <div class="modal-body message-body" data-simplebar="">
-            <h5 class="mb-0 fs-5 p-1">Quick Page Links</h5>
-            <ul class="list mb-0 py-2">
-              <li class="p-1 mb-1 bg-hover-light-black">
-                <a href="#">
-                  <span class="fs-3 text-black fw-normal d-block">Modern</span>
-                  <span class="fs-3 text-muted d-block">/dashboards/dashboard1</span>
-                </a>
-              </li>
-              <li class="p-1 mb-1 bg-hover-light-black">
-                <a href="#">
-                  <span class="fs-3 text-black fw-normal d-block">Dashboard</span>
-                  <span class="fs-3 text-muted d-block">/dashboards/dashboard2</span>
-                </a>
-              </li>
-              <li class="p-1 mb-1 bg-hover-light-black">
-                <a href="#">
-                  <span class="fs-3 text-black fw-normal d-block">Contacts</span>
-                  <span class="fs-3 text-muted d-block">/apps/contacts</span>
-                </a>
-              </li>
-              <li class="p-1 mb-1 bg-hover-light-black">
-                <a href="#">
-                  <span class="fs-3 text-black fw-normal d-block">Posts</span>
-                  <span class="fs-3 text-muted d-block">/apps/blog/posts</span>
-                </a>
-              </li>
-              <li class="p-1 mb-1 bg-hover-light-black">
-                <a href="#">
-                  <span class="fs-3 text-black fw-normal d-block">Detail</span>
-                  <span class="fs-3 text-muted d-block">/apps/blog/detail/streaming-video-way-before-it-was-cool-go-dark-tomorrow</span>
-                </a>
-              </li>
-              <li class="p-1 mb-1 bg-hover-light-black">
-                <a href="#">
-                  <span class="fs-3 text-black fw-normal d-block">Shop</span>
-                  <span class="fs-3 text-muted d-block">/apps/ecommerce/shop</span>
-                </a>
-              </li>
-              <li class="p-1 mb-1 bg-hover-light-black">
-                <a href="#">
-                  <span class="fs-3 text-black fw-normal d-block">Modern</span>
-                  <span class="fs-3 text-muted d-block">/dashboards/dashboard1</span>
-                </a>
-              </li>
-              <li class="p-1 mb-1 bg-hover-light-black">
-                <a href="#">
-                  <span class="fs-3 text-black fw-normal d-block">Dashboard</span>
-                  <span class="fs-3 text-muted d-block">/dashboards/dashboard2</span>
-                </a>
-              </li>
-              <li class="p-1 mb-1 bg-hover-light-black">
-                <a href="#">
-                  <span class="fs-3 text-black fw-normal d-block">Contacts</span>
-                  <span class="fs-3 text-muted d-block">/apps/contacts</span>
-                </a>
-              </li>
-              <li class="p-1 mb-1 bg-hover-light-black">
-                <a href="#">
-                  <span class="fs-3 text-black fw-normal d-block">Posts</span>
-                  <span class="fs-3 text-muted d-block">/apps/blog/posts</span>
-                </a>
-              </li>
-              <li class="p-1 mb-1 bg-hover-light-black">
-                <a href="#">
-                  <span class="fs-3 text-black fw-normal d-block">Detail</span>
-                  <span class="fs-3 text-muted d-block">/apps/blog/detail/streaming-video-way-before-it-was-cool-go-dark-tomorrow</span>
-                </a>
-              </li>
-              <li class="p-1 mb-1 bg-hover-light-black">
-                <a href="#">
-                  <span class="fs-3 text-black fw-normal d-block">Shop</span>
-                  <span class="fs-3 text-muted d-block">/apps/ecommerce/shop</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
+
     <!-- Customizer -->
     <button class="btn btn-primary p-3 rounded-circle d-flex align-items-center justify-content-center customizer-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
       <i class="ti ti-settings fs-7" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Settings"></i>
@@ -786,7 +554,6 @@
       });
     </script>
     @endif
-    <script src="{{asset("dist/libs/jquery/dist/jquery.min.js")}}"></script>
     <script>
       $(document).ready(function() {
         $('#flexSwitchCheckDefault').on('change', function() {
@@ -798,8 +565,8 @@
         });
       });
     </script>
-    <script src="{{asset("dist/libs/simplebar/dist/simplebar.min.js")}}"></script>
-    <script src="{{asset("dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js")}}"></script>
+    <script src="{{asset('dist/libs/simplebar/dist/simplebar.min.js')}}"></script>
+    <script src="{{asset('dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
     <!-- core files -->
     <script src="{{asset('dist/js/app.min.js')}}"></script>
     <script src="{{asset('dist/js/app.init.js')}}"></script>
@@ -807,7 +574,8 @@
     <script src="{{asset('dist/js/sidebarmenu.js')}}"></script>
     <script src="{{asset('dist/js/custom.js')}}"></script>
     <!-- current page js files -->
-    <script src="{{asset("dist/libs/apexcharts/dist/apexcharts.min.js")}}"></script>
+
+    <!-- <script src="{{asset('dist/libs/apexcharts/dist/apexcharts.min.js')}}"></script> -->
     <script src="{{asset('dist/js/dashboard2.js')}}"></script>
   </body>
 
