@@ -17,11 +17,11 @@ class UserSeeder extends Seeder
     public function run()
     {
         User::create([
-            'name' => 'Admin',
-            'email' => 'admin@example.com',
+            'name' => 'alfa',
+            'email' => 'alfarizi@gmail.com',
             'password' => bcrypt('password'),
-            'role' => 'admin',
-            'nik' => '12345678',        
+            'role' => 'user',
+            'nik' => '123456789',        
         ]);
 
         // Tambahkan pengguna lain jika perlu

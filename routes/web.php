@@ -23,6 +23,7 @@ use App\Http\Controllers\DesaController;
 use App\Http\Middleware\Petugas;
 use App\Models\Gakpoktans;
 use App\Models\Penyuluh;
+use App\Models\Pupuk;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,6 +73,7 @@ Route::get('/gakpoktan-filter/{id}', [App\Http\Controllers\KelembagaanController
 Route::get('/teknologi', [TeknologiController::class, 'index'])->name('teknologi');
 Route::get('/pupuk', [PupukController::class, 'index'])->name('pupuk');
 Route::get('/pupuk-padat', [PupukController::class, 'padat'])->name('padat');
+Route::get('pupuks/{id}', [PupukController::class,'proudctCart'])->name('addProduct.to.cart');
 Route::get('/pupuk-padat-create', [PupukController::class, 'tambah'])->name('tambah');
 Route::get('/pupuk-cair', [PupukController::class, 'cair'])->name('cair');
 Route::get('/pestisida', [PestisidaController::class, 'index'])->name('pestisida');

@@ -13,13 +13,14 @@
     <div class="row">
         <a href="{{route('tambah')}}"><button class="btn btn-secondary">Tambah</button></a>
     </div>
+@foreach($pupuks as $pupuk)
   <div class="card col-lg-4">
     <div class="image">
       <img src="http://loremflickr.com/320/150?random=6" />
     </div>
     <div class="card-inner">
       <div class="header">
-        <h2>Title</h2>
+        <h2>{{ $pupuk->judul }}</h2>
     </div>
     <div class="content">
       <p><a href="">download</a></p>
@@ -27,21 +28,8 @@
       </div>
   </div>
 </div>
-<div class="col-lg-12">
-  <div class="card col-lg-4">
-    <div class="image">
-      <img src="http://loremflickr.com/320/150?random=6" />
-    </div>
-    <div class="card-inner">
-      <div class="header">
-        <h2>Title</h2>
-    </div>
-    <div class="content">
-      <p><a href="">download</a></p>
-    </div>
-      </div>
-  </div>
-</div>
+@endforeach
+@endsection
 <br><br><br>
 <style>
 

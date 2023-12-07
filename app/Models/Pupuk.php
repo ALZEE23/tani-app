@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Pupuk extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['judul','cover','file'];
 }
