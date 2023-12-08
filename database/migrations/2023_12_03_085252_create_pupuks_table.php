@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('pupuks', function (Blueprint $table) {
             $table->id();
+            $table->string('kategori');
             $table->string('judul');
             $table->string('cover');
             $table->string('file');
+            $table->timestamps('created_at'); // Gunakan timestamps() untuk menyertakan created_at dan updated_at
+            $table->timestamps('updated_at'); // Gunakan timestamps() untuk menyertakan created_at dan updated_at
         });
     }
 

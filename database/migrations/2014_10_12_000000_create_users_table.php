@@ -18,9 +18,12 @@ return new class extends Migration
             $table->string('nik')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('kecamatan');
+            $table->string('no_telepon');
             $table->rememberToken();
             $table->timestamps();
             $table->string('role')->default('user');
+
         });
     }
 

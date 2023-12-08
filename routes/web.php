@@ -74,7 +74,9 @@ Route::get('/teknologi', [TeknologiController::class, 'index'])->name('teknologi
 Route::get('/pupuk', [PupukController::class, 'index'])->name('pupuk');
 Route::get('/pupuk-padat', [PupukController::class, 'padat'])->name('padat');
 Route::get('pupuks/{id}', [PupukController::class,'proudctCart'])->name('addProduct.to.cart');
-Route::get('/pupuk-padat-create', [PupukController::class, 'tambah'])->name('tambah');
+Route::post('/pupuk-padat-create', [PupukController::class, 'tambah'])->name('tambah');
+
+Route::get('/tambah', [PupukController::class, 'store'])->name('store');
 Route::get('/pupuk-cair', [PupukController::class, 'cair'])->name('cair');
 Route::get('/pestisida', [PestisidaController::class, 'index'])->name('pestisida');
 Route::get('/pestisida-organik', [PestisidaController::class, 'organik'])->name('organik');

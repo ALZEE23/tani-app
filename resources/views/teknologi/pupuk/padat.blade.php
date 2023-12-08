@@ -11,7 +11,7 @@
 </div>
 <div class="col-lg-12">
     <div class="row">
-        <a href="{{route('tambah')}}"><button class="btn btn-secondary">Tambah</button></a>
+        <a href="{{route('store')}}"><button class="btn btn-secondary">Tambah</button></a>
     </div>
 @foreach($pupuks as $pupuk)
   <div class="card col-lg-4">
@@ -23,7 +23,7 @@
         <h2>{{ $pupuk->judul }}</h2>
     </div>
     <div class="content">
-      <p><a href="">download</a></p>
+      <p><a href="{{ $pupuk->file }}">download</a></p>
     </div>
       </div>
   </div>
@@ -114,4 +114,3 @@
         margi
     }
 </style>
-@endsection

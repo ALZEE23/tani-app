@@ -9,5 +9,5 @@ class Pupuk extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['judul','cover','file'];
+    protected $fillable = ['kategori','judul','cover','file'];
 }

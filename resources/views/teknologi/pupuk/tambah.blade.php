@@ -12,12 +12,28 @@
 
 
 
-    <label for="file-input">
-    <div class="drop-zone">
-        <p><b>Select a file</b>or drop it here</p>
-    </div>
-    <input type="file" id="file">
-    </label>
+    <form action="{{ route('tambah') }}" method="POST" enctype="multipart/form-data">
+    @csrf
+    
+    <label for="judul">Judul:</label>
+    <input type="text" name="judul" required>
+
+    <label for="cover">Cover:</label>
+    <input type="file" name="cover" accept="image/*" required>
+
+    <label for="file">File:</label>
+    <input type="file" name="file" accept=".pdf, .doc, .docx" required>
+
+    <label for="kategori">Kategori:</label>
+    <select name="kategori">
+        <!-- Tambahkan pilihan kategori sesuai kebutuhan -->
+        <option value="Padat">Padat</option>
+        <option value="Cair">Cair</option>
+    </select>
+
+    <button type="submit">Submit</button>
+</form>
+
     
     
 
