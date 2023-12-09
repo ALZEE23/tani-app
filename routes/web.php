@@ -82,6 +82,9 @@ Route::get('/pestisida/kimia', [PestisidaController::class, 'kimia'])->name('pes
 Route::get('/pestisida/tambah', [PestisidaController::class, 'store'])->name('pestisida.tambah');
 Route::post('/pestisida/tambah', [PestisidaController::class, 'tambah']);
 Route::get('/teknologi/pestisida/search', [PestisidaController::class, 'search'])->name('pestisida.search');
+Route::get('/pestisida/organik', [PestisidaController::class, 'organik'])->name('pestisida.organik');
+Route::get('/pestisida/tambah-organik', [PestisidaController::class, 'store_organik'])->name('pestisida.tambah-organik');
+Route::post('/pestisida/tambah-organik', [PestisidaController::class, 'tambah_organik']);
 Route::get('/teknologi-budidaya', [BudidayaController::class, 'index'])->name('budidaya');
 Route::get('/teknologi-hortikultura', [BudidayaController::class, 'hortikultura'])->name('hortikultura');
 Route::get('/teknologi-pangan', [BudidayaController::class, 'pangan'])->name('pangan');

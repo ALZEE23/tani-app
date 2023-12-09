@@ -1,36 +1,46 @@
 @extends('layouts.masuk')
 
 @section('content')
-<div class="pagehead-bg   primary-bg" style="min-height: 147px;">
-</div>
+<div class="pagehead-bg primary-bg" style="min-height: 147px;"></div>
 
 <div class="container has-pagehead is-pagetitle">
     <div class="section">
         <h5 class="pagetitle">Teknologi Pertanian</h5>
     </div>
 </div>
-<div class="col-lg-12">
-    <div class="row">
-        <a href="{{ route('store') }}"><button class="btn btn-secondary">Tambah</button></a>
-    </div>
-    @foreach($pupuks as $pupuk)
-        <div class="card col-lg-4">
-            <div class="image">
-                <img src="{{ asset('storage/' . $pupuk->cover) }}" />
-            </div>
-            <div class="card-inner">
-                <div class="header">
-                    <h2>{{ $pupuk->judul }}</h2>
-                </div>
-                <div class="content">
-                    <p><a href="{{ asset('storage/' . $pupuk->file) }}">download</a></p>
-                </div>
-            </div>
+
+<div class="container -bottom-32">
+    <div class="col-lg-12">
+        <div class="row">
+            <a href="{{ route('store') }}"><button class="btn btn-secondary">Tambah</button></a>
         </div>
-    @endforeach
+        @foreach($pupuks as $pupuk)
+            <div class="card col-lg-4">
+                <div class="image">
+                    <img src="{{ asset('storage/' . $pupuk->cover) }}" />
+                </div>
+                <div class="card-inner">
+                    <div class="header">
+                        <h2>{{ $pupuk->judul }}</h2>
+                    </div>
+                    <div class="content">
+                        @if(strtolower(pathinfo($pupuk->file, PATHINFO_EXTENSION)) === 'mp4')
+                            <!-- Jika file PDF, tampilkan link download -->
+                            <p><a href="{{ asset('storage/' . $pupuk->file) }}" >download</a></p>
+                        @else
+                            <!-- Jika bukan PDF, tampilkan link download -->
+                            <p><a href="{{ asset('storage/' . $pupuk->file) }}" download>download</a></p>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    </div>
+    <br><br>
 </div>
-@endsection
 <br><br><br>
+@endsection
+
 <style>
     /* Sesuaikan style card dengan desain yang diinginkan */
     body {
@@ -41,8 +51,7 @@
         box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
         transition: all 0.2s ease-in-out;
         box-sizing: border-box;
-        padding-right: 10px;
-        padding-left: 10px;
+        overflow: hidden;
         margin-top: 10px;
         margin-bottom: 10px;
         margin-right: 10px; /* Atur margin kanan */
@@ -68,10 +77,13 @@
         margin-bottom: 5px;
     }
 
-   .card img {
+    .card img {
         max-width: 100%; /* Menggunakan max-width untuk mengontrol lebar gambar */
+        padding-left: 0;
+        padding-right: 0;
         height: auto; /* Menjaga aspek ratio gambar */
     }
+    
     .container {
         text-align: center;
         display: flex;
@@ -98,9 +110,4 @@
         border: 1px solid #ccc;
         font-size: 14px;
     }
-
-    .imgp {
-        margi
-    }
 </style>
-

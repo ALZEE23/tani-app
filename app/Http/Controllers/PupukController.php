@@ -28,35 +28,39 @@ class PupukController extends Controller
     public function store(){
         return view('teknologi.pupuk.tambah');
     }
-    public function tambah(Request $request)
-    {
-        // Validasi request
-        $request->validate([
-            'judul' => 'required|string|max:255',
-            'cover' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'file' => 'required|mimes:pdf,doc,docx|max:2048',
-            'kategori' => 'required|string',
-        ]);
+   public function tambah(Request $request)
+{
+    // Validasi request
+    $request->validate([
+        'judul' => 'required|string|max:255',
+        'cover' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'file' => 'required|mimes:pdf,doc,docx,mp4,mov,avi|max:2048', // Menambahkan tipe file video
+        'kategori' => 'required|string',
+    ]);
 
-        // Menyimpan file cover dan file
-        $coverPath = $request->file('cover')->store('covers', 'public');
-        $filePath = $request->file('file')->store('files', 'public');
+    // Menyimpan file cover dan file
+    $coverPath = $request->file('cover')->store('covers', 'public');
+    $fileType = $request->file('file')->extension(); // Mendapatkan ekstensi file
 
-        // Membuat instance Pupuk
-        $pupuk = new Pupuk([
-            'judul' => $request->judul,
-            'cover' => $coverPath,
-            'file' => $filePath,
-            'kategori' => $request->kategori,
-        ]);
+    // Menyimpan file sesuai jenisnya
+    $filePath = $request->file('file')->storeAs('files', "file_".time().".".$fileType, 'public');
 
-        // Menyimpan Pupuk ke database
-        $pupuk->save();
+    // Membuat instance Pupuk
+    $pupuk = new Pupuk([
+        'judul' => $request->judul,
+        'cover' => $coverPath,
+        'file' => $filePath,
+        'kategori' => $request->kategori,
+    ]);
 
-        // Redirect dengan pesan sukses
-        $redirectRoute = ($request->kategori == 'Cair') ? 'cair' : 'padat';
+    // Menyimpan Pupuk ke database
+    $pupuk->save();
+
+    // Redirect dengan pesan sukses
+    $redirectRoute = ($request->kategori == 'Cair') ? 'cair' : 'padat';
     return redirect()->route($redirectRoute)->with('success', 'Pupuk berhasil ditambahkan.');
-    }
+}
+
 
     public function productCart($id)
     {

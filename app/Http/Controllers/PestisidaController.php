@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Pestisida;
+use App\Models\Organik;
 use DataTables;
 
 class PestisidaController extends Controller
@@ -18,6 +19,44 @@ class PestisidaController extends Controller
     {
         $pestisidas = Pestisida::all();
         return view('teknologi.pestisida.kimia', compact('pestisidas'));
+    }
+    public function organik()
+    {
+        $organiks = Organik::all();
+        return view('teknologi.pestisida.organik', compact('organiks'));
+    }
+
+    public function store_organik(){
+        $organiks = Organik::all();
+        return view('teknologi.pestisida.tambah_organik', compact('organiks'));
+    }
+
+    public function tambah_organik(Request $request){
+        $request->validate([
+        'judul' => 'required|string|max:255',
+        'cover' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'file' => 'required|mimes:pdf,doc,docx,mp4,mov,avi|max:2048', // Menambahkan tipe file video
+    ]);
+
+    // Menyimpan file cover dan file
+    $coverPath = $request->file('cover')->store('covers', 'public');
+    $fileType = $request->file('file')->extension(); // Mendapatkan ekstensi file
+
+    // Menyimpan file sesuai jenisnya
+    $filePath = $request->file('file')->storeAs('files', "file_".time().".".$fileType, 'public');
+
+    // Membuat instance Pupuk
+    $organik = new Organik([
+        'judul' => $request->judul,
+        'cover' => $coverPath,
+        'file' => $filePath,
+    ]);
+
+    // Menyimpan Pupuk ke database
+    $organik->save();
+
+    // Redirect dengan pesan sukses
+    return redirect()->route('pestisida.organik')->with('success', 'Pupuk berhasil ditambahkan.');
     }
 
     public function store()
