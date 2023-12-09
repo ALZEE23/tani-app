@@ -16,8 +16,8 @@
         <img alt="image" src="{{ asset('images/menu-petani.png') }}" style="width: 100px; height:100px">
     </div>
     <div class="select-wrapper">
-        <a href="{{route('kimia')}}"><button class="btn btn-secondary" style="width: 300px;">Kimia</button></a><br><br>
-        <a href="{{route('organik')}}"><button class="btn btn-secondary" style="width: 300px;">Organik</button></a><br><br>
+        <a href="{{route('pestisida.kimia')}}"><button class="btn btn-secondary" style="width: 300px;">Kimia</button></a><br><br>
+        <a href=""><button class="btn btn-secondary" style="width: 300px;">Organik</button></a><br><br>
     </div>
 
     <!-- Card Profil -->

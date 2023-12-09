@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Pestisida extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'opt',
+        'bahan_aktif',
+        'produk'
+    ];
+
 }
+
