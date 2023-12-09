@@ -16,6 +16,7 @@ class Desa extends Model
 
     public $fillable = [
         'id',
+        'kecamatan',
         'desa',
     ];
 

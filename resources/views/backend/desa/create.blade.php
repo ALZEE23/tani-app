@@ -32,6 +32,14 @@
                     <form action="{{ route('desa.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
+                            <label for="formFile" class="form-label">Kecamatan</label>
+                            <select name="kecamatan" id="" class="form-control">
+                                @foreach ($kecamatan as $data)
+                                <option value="{{$data->kecamatan}}">{{$data->kecamatan}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
                             <label for="formFile" class="form-label">Desa</label>
                             <input class="form-control" type="text" name="desa" id="formFile">
                         </div>

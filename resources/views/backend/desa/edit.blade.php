@@ -31,29 +31,37 @@
                     <h5 class="mb-3">Tambah desa</h5>
                     <form action="{{ route('desa.update',$desa->id) }}" method="post" enctype="multipart/form-data">
                         @csrf
-                        @method('PUT') 
-                             <div class="mb-3">
+                        @method('PUT')
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">Kecamatan</label>
+                            <select name="kecamatan" id="" class="form-control">
+                                @foreach ($kecamatan as $data)
+                                <option {{$desa->kecamatan == $data->kecamatan ? 'selected' : '' }} value="{{$data->kecamatan}}">{{$data->kecamatan}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
                             <label for="formFile" class="form-label">desa</label>
                             <input class="form-control" type="text" name="desa" id="formFile" value="{{$desa->desa}}">
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-success font-medium rounded-pill px-4">
+                            <div class="d-flex align-items-center">
+                                <i class="ti ti-send me-2 fs-4"></i>
+                                Submit
+                            </div>
+                        </button>
+                    </form>
                 </div>
-                <br>
-                <button type="submit" class="btn btn-success font-medium rounded-pill px-4">
-                    <div class="d-flex align-items-center">
-                        <i class="ti ti-send me-2 fs-4"></i>
-                        Submit
-                    </div>
-                </button>
-                </form>
-            </div>
-            <!-- ---------------------
+                <!-- ---------------------
                                                     end Custom File Uploads
                                                 ---------------- -->
+            </div>
         </div>
-</div>
-<!-- Row -->
-</section>
-<!-- --------------------------------------------------- -->
-<!--  Form Basic End -->
-<!-- --------------------------------------------------- -->
+        <!-- Row -->
+    </section>
+    <!-- --------------------------------------------------- -->
+    <!--  Form Basic End -->
+    <!-- --------------------------------------------------- -->
 </div>
 @endsection

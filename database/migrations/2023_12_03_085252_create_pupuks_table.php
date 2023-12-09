@@ -17,8 +17,7 @@ return new class extends Migration
             $table->string('judul');
             $table->string('cover');
             $table->string('file');
-            $table->timestamps('created_at'); // Gunakan timestamps() untuk menyertakan created_at dan updated_at
-            $table->timestamps('updated_at'); // Gunakan timestamps() untuk menyertakan created_at dan updated_at
+            $table->timestamps(); // This automatically adds created_at and updated_at columns
         });
     }
 

@@ -44,7 +44,10 @@
                                 <h6 class="fs-4 fw-semibold mb-0">No</h6>
                             </th>
                             <th>
-                                <h6 class="fs-4 fw-semibold mb-0">desa</h6>
+                                <h6 class="fs-4 fw-semibold mb-0">Kecamatan</h6>
+                            </th>
+                            <th>
+                                <h6 class="fs-4 fw-semibold mb-0">Desa</h6>
                             </th>
                             <th>
                                 <h6 class="fs-4 fw-semibold mb-0">Opsi</h6>
@@ -59,6 +62,7 @@
                         <tr>
                             <td>{{$no++}}</td>
                             </td>
+                            <td>{{$data->kecamatan}}</td>
                             <td>{{$data->desa}}</td>
                             <td>
                                 <div>

@@ -144,11 +144,11 @@
      <form method="POST" action="{{ route('login') }}">
                         @csrf
 
-      <div class="col s10 offset-s1">
+      <!-- <div class="col s10 offset-s1">
         <select name="" id="">
           <option value="" class="validate">Pilih Kecamatan</option>
         </select>
-      </div>
+      </div> -->
 
       <div class="input-field col s10 offset-s1">
         <input id="email311" type="email" class="validate" name="email">

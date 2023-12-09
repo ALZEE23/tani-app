@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\desa;
+use App\Models\Kecamatan;
 use Illuminate\Http\Request;
 
 class DesaController extends Controller
@@ -21,7 +22,8 @@ class DesaController extends Controller
      */
     public function create()
     {
-        return view('backend.desa.create');
+        $kecamatan = Kecamatan::all();
+        return view('backend.desa.create',compact('kecamatan'));
     }
 
     /**
@@ -30,6 +32,7 @@ class DesaController extends Controller
     public function store(Request $request)
     {
         $desa = new Desa();
+        $desa->kecamatan = $request->kecamatan;
         $desa->desa = $request->desa;
         $desa->save();
         return redirect()->route('desa.index')->with('success', 'Data Berhasil Ditambahkan');
@@ -48,7 +51,8 @@ class DesaController extends Controller
      */
     public function edit(Desa $desa)
     {
-        return view('backend.desa.edit', compact('desa'));
+        $kecamatan = Kecamatan::all();
+        return view('backend.desa.edit', compact('desa','kecamatan'));
     }
 
     /**
@@ -56,6 +60,7 @@ class DesaController extends Controller
      */
     public function update(Request $request, Desa $desa)
     {
+        $desa->kecamatan = $request->kecamatan;
         $desa->desa = $request->desa;
         $desa->save();
         return redirect()->route('desa.index')->with('success', 'Data Berhasil Diubah');
