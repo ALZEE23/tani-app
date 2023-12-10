@@ -7,6 +7,7 @@ use Dompdf\Options;
 use App\Models\Desa;
 use App\Models\Penyuluh;
 use App\Models\Kecamatan;
+use App\Models\poktan;
 use App\Models\Gakpoktans;
 use Illuminate\Http\Request;
 use App\Exports\GakpotansExport;
@@ -172,6 +173,11 @@ class KelembagaanController extends Controller
         $desa = Desa::all();
         return view('kelembagaan.petani.tambah-gakpoktan', compact('desa'));
     }
+    function tambah_poktan()
+    {
+        $desa = Desa::all();
+        return view('kelembagaan.petani.tambah_poktan', compact('desa'));
+    }
 
 
     public function store_gakpoktan(Request $request)
@@ -246,5 +252,10 @@ class KelembagaanController extends Controller
         return view('kelembagaan.petani.gakpoktan', compact('gakpoktans', 'desa', 'key'));
     }
 
-    
+    function poktan(){
+        $kecamatan = Kecamatan::all();
+        $desa = Desa::all();
+        $poktans = poktan::all();
+        return view('kelembagaan.petani.poktan', compact('kecamatan', 'poktans','desa'));
+    }
 }

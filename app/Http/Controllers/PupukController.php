@@ -54,7 +54,8 @@ class PupukController extends Controller
         $pupuk->save();
 
         // Redirect dengan pesan sukses
-        return redirect()->route('padat')->with('success', 'Pupuk berhasil ditambahkan.');
+        $redirectRoute = ($request->kategori == 'Cair') ? 'cair' : 'padat';
+    return redirect()->route($redirectRoute)->with('success', 'Pupuk berhasil ditambahkan.');
     }
 
     public function productCart($id)

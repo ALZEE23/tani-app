@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('pestisidas', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('opt');
+            $table->string('bahan_aktif');
+            $table->string('produk');
         });
     }
 

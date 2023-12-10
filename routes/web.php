@@ -60,6 +60,8 @@ Route::get('/delete/penyuluh/{id}', [App\Http\Controllers\KelembagaanController:
 Route::get('/kelembagaan-petani', [App\Http\Controllers\KelembagaanController::class, 'petani'])->name('kelembagaan-petani');
 Route::get('/gakpoktan', [App\Http\Controllers\KelembagaanController::class, 'gakpoktan'])->name('kelembagaan-gakpoktan');
 Route::get('/poktan', [App\Http\Controllers\KelembagaanController::class, 'poktan'])->name('kelembagaan-poktan');
+Route::get('/tambah-poktan', [App\Http\Controllers\KelembagaanController::class, 'tambah_poktan'])->name('tambah-poktan');
+Route::post('/store-poktan', [App\Http\Controllers\KelembagaanController::class, 'store-poktan'])->name('store-poktan');
 Route::get('/poktan-register', [App\Http\Controllers\KelembagaanController::class, 'poktan_register'])->name('poktan-register');
 Route::get('/detail-poktan', [App\Http\Controllers\KelembagaanController::class, 'detail_poktan'])->name('detail-poktan');
 
@@ -75,12 +77,13 @@ Route::get('/pupuk', [PupukController::class, 'index'])->name('pupuk');
 Route::get('/pupuk-padat', [PupukController::class, 'padat'])->name('padat');
 Route::get('pupuks/{id}', [PupukController::class,'proudctCart'])->name('addProduct.to.cart');
 Route::post('/pupuk-padat-create', [PupukController::class, 'tambah'])->name('tambah');
-
 Route::get('/tambah', [PupukController::class, 'store'])->name('store');
 Route::get('/pupuk-cair', [PupukController::class, 'cair'])->name('cair');
 Route::get('/pestisida', [PestisidaController::class, 'index'])->name('pestisida');
-Route::get('/pestisida-organik', [PestisidaController::class, 'organik'])->name('organik');
-Route::get('/pestisida-kimia', [PestisidaController::class, 'kimia'])->name('kimia');
+Route::get('/pestisida/kimia', [PestisidaController::class, 'kimia'])->name('pestisida.kimia');
+Route::get('/pestisida/tambah', [PestisidaController::class, 'store'])->name('pestisida.tambah');
+Route::post('/pestisida/tambah', [PestisidaController::class, 'tambah']);
+Route::get('/teknologi/pestisida/search', [PestisidaController::class, 'search'])->name('pestisida.search');
 Route::get('/teknologi-budidaya', [BudidayaController::class, 'index'])->name('budidaya');
 Route::get('/teknologi-hortikultura', [BudidayaController::class, 'hortikultura'])->name('hortikultura');
 Route::get('/teknologi-pangan', [BudidayaController::class, 'pangan'])->name('pangan');
