@@ -17,7 +17,7 @@
     </div>
     <div class="select-wrapper">
         <a href="{{route('pestisida.kimia')}}"><button class="btn btn-secondary" style="width: 300px;">Kimia</button></a><br><br>
-        <a href=""><button class="btn btn-secondary" style="width: 300px;">Organik</button></a><br><br>
+        <a href="{{route('pestisida.organik')}}"><button class="btn btn-secondary" style="width: 300px;">Organik</button></a><br><br>
     </div>
 
     <!-- Card Profil -->

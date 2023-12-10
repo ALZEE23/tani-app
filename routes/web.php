@@ -84,11 +84,18 @@ Route::get('/pestisida/kimia', [PestisidaController::class, 'kimia'])->name('pes
 Route::get('/pestisida/tambah', [PestisidaController::class, 'store'])->name('pestisida.tambah');
 Route::post('/pestisida/tambah', [PestisidaController::class, 'tambah']);
 Route::get('/teknologi/pestisida/search', [PestisidaController::class, 'search'])->name('pestisida.search');
+Route::get('/pestisida/organik', [PestisidaController::class, 'organik'])->name('pestisida.organik');
+Route::get('/pestisida/tambah-organik', [PestisidaController::class, 'store_organik'])->name('pestisida.tambah-organik');
+Route::post('/pestisida/tambah-organik', [PestisidaController::class, 'tambah_organik']);
 Route::get('/teknologi-budidaya', [BudidayaController::class, 'index'])->name('budidaya');
 Route::get('/teknologi-hortikultura', [BudidayaController::class, 'hortikultura'])->name('hortikultura');
 Route::get('/teknologi-pangan', [BudidayaController::class, 'pangan'])->name('pangan');
 Route::get('/teknologi-perkebunan', [BudidayaController::class, 'perkebunan'])->name('perkebunan');
-Route::get('/pencegahan-&-pengendalian-OPT', [PencegahanController::class, 'pencegahan'])->name('pencegahan');
+Route::get('teknologi-tambah', [BudidayaController::class, 'store'])->name('teknologi.store');
+Route::post('teknologi-tambah', [BudidayaController::class, 'tambah'])->name('teknologi.tambah');
+Route::get('/pencegahan', [PencegahanController::class, 'index'])->name('pencegahan');
+Route::get('/pencegahan/tambah', [PencegahanController::class, 'store'])->name('pencegahan.store');
+Route::post('/pencegahan/tambah', [PencegahanController::class, 'tambah'])->name('pencegahan.tambah');
 
 
 // Kecamatan

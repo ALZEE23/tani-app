@@ -5,13 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Pencegahan extends Model
+class Organik extends Model
 {
     use HasFactory;
-protected $fillable = [
+    protected $fillable = [
         'judul',
         'cover',
-        'file'
+        'file',
     ];
-
 }

@@ -11,7 +11,7 @@
 
 <div class="container">
 <div class="row">
-<form action="{{ route('teknologi.tambah') }}" method="POST" enctype="multipart/form-data">
+<form action="{{route('pestisida.tambah-organik')}}" method="POST" enctype="multipart/form-data">
     @csrf
     
     <label for="judul">Judul:</label>
@@ -28,14 +28,6 @@
         <input type="file" name="file" accept=".pdf, .doc, .docx, .mp4" required>
         <div class="drop-zone" id="fileDropZone">Seret dan lepas file di sini</div>
     </div>
-
-    <label for="kategori">Kategori:</label>
-    <select name="kategori">
-        <!-- Tambahkan pilihan kategori sesuai kebutuhan -->
-        <option value="Hortikultura">Hortikultra</option>
-        <option value="Pangan">Pangan</option>
-        <option value="Perkebunan">Perkebunan</option>
-    </select>
 
     <button type="submit">Submit</button>
 </form>
