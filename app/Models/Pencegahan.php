@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Pencegahan extends Model
 {
     use HasFactory;
+protected $fillable = [
+        'judul',
+        'cover',
+        'file'
+    ];
+
 }

@@ -14,6 +14,10 @@ return new class extends Migration
         Schema::create('budidayas', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('judul');
+            $table->string('cover');
+            $table->string('file');
+            $table->string('kategori');
         });
     }
 

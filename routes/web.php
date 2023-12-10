@@ -89,7 +89,11 @@ Route::get('/teknologi-budidaya', [BudidayaController::class, 'index'])->name('b
 Route::get('/teknologi-hortikultura', [BudidayaController::class, 'hortikultura'])->name('hortikultura');
 Route::get('/teknologi-pangan', [BudidayaController::class, 'pangan'])->name('pangan');
 Route::get('/teknologi-perkebunan', [BudidayaController::class, 'perkebunan'])->name('perkebunan');
-Route::get('/pencegahan-&-pengendalian-OPT', [PencegahanController::class, 'pencegahan'])->name('pencegahan');
+Route::get('teknologi-tambah', [BudidayaController::class, 'store'])->name('teknologi.store');
+Route::post('teknologi-tambah', [BudidayaController::class, 'tambah'])->name('teknologi.tambah');
+Route::get('/pencegahan', [PencegahanController::class, 'index'])->name('pencegahan');
+Route::get('/pencegahan/tambah', [PencegahanController::class, 'store'])->name('pencegahan.store');
+Route::post('/pencegahan/tambah', [PencegahanController::class, 'tambah'])->name('pencegahan.tambah');
 
 
 // Kecamatan
