@@ -70,6 +70,19 @@ Route::get('/export-excel-gakpoktan', [KelembagaanController::class, 'export_exc
 Route::get('/export-pdf-gakpoktan', [KelembagaanController::class, 'export_pdf_gakpoktans'])->name('export-pdf-gakpoktan');
 Route::get('/gakpoktan-filter/{id}', [App\Http\Controllers\KelembagaanController::class, 'filter_gakpoktan'])->name('gakpoktan-filter');
 
+//Kegiatan Penyuluhan
+Route::get('/penyuluhan', [App\Http\Controllers\PenyuluhanController::class, 'index'])->name('penyuluhan');
+
+Route::get('/penyuluhan-rencana', [App\Http\Controllers\PenyuluhanController::class, 'rencana'])->name('penyuluhan-rencana');
+Route::get('/tambah-rencana', [App\Http\Controllers\PenyuluhanController::class, 'tambah_rencana'])->name('tambah-rencana');
+Route::post('/store-rencana', [App\Http\Controllers\PenyuluhanController::class, 'store_rencana'])->name('store-rencana');
+
+Route::get('/penyuluhan-dokumentasi', [App\Http\Controllers\PenyuluhanController::class, 'dokumentasi'])->name('penyuluhan-dokumentasi');
+Route::get('/tambah-dokumentasi', [App\Http\Controllers\PenyuluhanController::class, 'tambah_dokumentasi'])->name('tambah-dokumentasi');
+
+//Kritik Dan Saran
+Route::get('/KritikDanSaran', [App\Http\Controllers\KritikDanSaranController::class, 'index'])->name('KritikDanSaran');
+
 Route::get('/teknologi', [TeknologiController::class, 'index'])->name('teknologi');
 Route::get('/pupuk', [PupukController::class, 'index'])->name('pupuk');
 Route::get('/pupuk-padat', [PupukController::class, 'padat'])->name('padat');
@@ -110,3 +123,6 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 
     // Additional routes specific to the admin section
 });
+
+
+Route::get('/penyuluhan/filter/{id}', [App\Http\Controllers\PenyuluhanController::class, 'filter_penyuluhan'])->name('penyuluhan-filter');

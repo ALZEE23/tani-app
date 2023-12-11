@@ -27,15 +27,7 @@
 <br><br><br>
 <style>
     /* Sesuaikan style card dengan desain yang diinginkan */
-    .card {
-        margin-top: 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
 
-    .card-content {
-        padding: 10px;
-    }
 
     /* Style untuk gambar profile */
     img {
@@ -56,26 +48,6 @@
     .select-wrapper {
         margin-top: 20px;
         /* Sesuaikan jarak dari gambar ke select */
-    }
-
-    /* Style untuk label select */
-    label {
-        display: block;
-        margin-bottom: 5px;
-    }
-
-    /* Style untuk select */
-    select {
-        width: 200px;
-        /* Sesuaikan lebar select */
-        padding: 5px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-        font-size: 14px;
-    }
-
-    .imgp {
-        margi
     }
 </style>
 
