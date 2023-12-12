@@ -24,6 +24,7 @@ use App\Http\Middleware\Petugas;
 use App\Models\Gakpoktans;
 use App\Models\Penyuluh;
 use App\Models\Pupuk;
+use App\Http\Controllers\AlsintanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -96,7 +97,10 @@ Route::post('teknologi-tambah', [BudidayaController::class, 'tambah'])->name('te
 Route::get('/pencegahan', [PencegahanController::class, 'index'])->name('pencegahan');
 Route::get('/pencegahan/tambah', [PencegahanController::class, 'store'])->name('pencegahan.store');
 Route::post('/pencegahan/tambah', [PencegahanController::class, 'tambah'])->name('pencegahan.tambah');
-
+Route::get('/alsintan', [AlsintanController::class, 'index'])->name('alsintan');
+Route::get('alsintan/tambah', [AlsintanController::class, 'store'])->name('alsintan.store');
+Route::post('alsintan/tambah', [AlsintanController::class, 'tambah'])->name('alsintan.tambah');
+Route::get('/alsintan/filter', [AlsintanController::class, 'filterByKecamatan'])->name('alsintan.filterByKecamatan');
 
 // Kecamatan
 
