@@ -16,13 +16,18 @@
         <img alt="image" src="{{ asset('images/menu-petani.png') }}" style="width: 100px; height:100px">
     </div>
     <div class="select-wrapper">
-        <a href="{{route('kelembagaan-gakpoktan')}}"><button class="btn btn-secondary" style="width: 300px;">Gapoktan</button></a><br><br>
-        <a href="{{route('kelembagaan-poktan')}}"><button class="btn btn-secondary" style="width: 300px;">Poktan</button></a><br><br>
-        <a href="{{route('poktan-daftar')}}"><button class="btn btn-secondary" style="width: 300px;">Daftar Menjadi Anggota Poktan</button></a><br><br>
         <a href="{{route('cek-anggota')}}"><button class="btn btn-secondary" style="width: 300px;">Cek Keanggotaan Poktan</button></a>
     </div>
 
     <!-- Card Profil -->
+    <div class=""><br>
+        <label for=" poktan">MASUKAN NIK SESUAI KTP:</label>
+        <form action="{{route('procek')}}" method="get">
+            <input type="text" name="nik" style="width: 200px;">
+            <button type="submit" class="btn btn-secondary">cari</button>
+        </form>
+    </div>
+
 </div>
 <br><br><br>
 <style>

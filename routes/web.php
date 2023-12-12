@@ -61,9 +61,19 @@ Route::get('/kelembagaan-petani', [App\Http\Controllers\KelembagaanController::c
 Route::get('/gakpoktan', [App\Http\Controllers\KelembagaanController::class, 'gakpoktan'])->name('kelembagaan-gakpoktan');
 Route::get('/poktan', [App\Http\Controllers\KelembagaanController::class, 'poktan'])->name('kelembagaan-poktan');
 Route::get('/tambah-poktan', [App\Http\Controllers\KelembagaanController::class, 'tambah_poktan'])->name('tambah-poktan');
-Route::post('/store-poktan', [App\Http\Controllers\KelembagaanController::class, 'store-poktan'])->name('store-poktan');
+Route::post('/store-poktan', [App\Http\Controllers\KelembagaanController::class, 'store_poktan'])->name('store-poktan');
+Route::get('/detail-poktan/{id}', [App\Http\Controllers\KelembagaanController::class, 'detail_poktan'])->name('detail-poktan');
+Route::get('/edit/poktan/{id}', [App\Http\Controllers\KelembagaanController::class, 'edit_poktan'])->name('edit_poktan');
+Route::put('/update-poktan', [App\Http\Controllers\KelembagaanController::class, 'update_poktan'])->name('update-poktan');
+
+Route::get('/daftar-poktan', [App\Http\Controllers\KelembagaanController::class, 'daftar_poktan'])->name('poktan-daftar');
 Route::get('/poktan-register', [App\Http\Controllers\KelembagaanController::class, 'poktan_register'])->name('poktan-register');
-Route::get('/detail-poktan', [App\Http\Controllers\KelembagaanController::class, 'detail_poktan'])->name('detail-poktan');
+Route::post('/store-register-poktan', [App\Http\Controllers\KelembagaanController::class, 'store_poktan_register'])->name('store-register-poktan');
+Route::get('/detail-register-poktan/{id}', [App\Http\Controllers\KelembagaanController::class, 'detail_register_poktan'])->name('detail-register-poktan');
+
+Route::get('/cek-anggota', [App\Http\Controllers\KelembagaanController::class, 'cek_anggota'])->name('cek-anggota');
+Route::get('/proses-cek-anggota', [App\Http\Controllers\KelembagaanController::class, 'proses_cek_anggota'])->name('procek');
+
 
 Route::get('/gakpoktan', [App\Http\Controllers\KelembagaanController::class, 'gakpoktan'])->name('kelembagaan-gakpoktan');
 Route::get('/tambah-gakpoktan', [App\Http\Controllers\KelembagaanController::class, 'tambah_gakpoktan'])->name('tambah-gakpoktan');
@@ -71,6 +81,10 @@ Route::post('/store-gakpoktan', [App\Http\Controllers\KelembagaanController::cla
 Route::get('/export-excel-gakpoktan', [KelembagaanController::class, 'export_excel_gakpoktans'])->name('export-excel-gakpoktan');
 Route::get('/export-pdf-gakpoktan', [KelembagaanController::class, 'export_pdf_gakpoktans'])->name('export-pdf-gakpoktan');
 Route::get('/gakpoktan-filter/{id}', [App\Http\Controllers\KelembagaanController::class, 'filter_gakpoktan'])->name('gakpoktan-filter');
+Route::get('/csdesa/session/{id}', [App\Http\Controllers\KelembagaanController::class, 'csdesa'])->name('csdesa');
+Route::get('/cskecamatan/session/{id}', [App\Http\Controllers\KelembagaanController::class, 'cskecamatan'])->name('cskecamatan');
+
+
 
 Route::get('/teknologi', [TeknologiController::class, 'index'])->name('teknologi');
 Route::get('/pupuk', [PupukController::class, 'index'])->name('pupuk');
@@ -116,3 +130,5 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 
     // Additional routes specific to the admin section
 });
+
+// Route::resource('penyuluhan', PenyuluhanController::class)->name('penyulihan', 'index');

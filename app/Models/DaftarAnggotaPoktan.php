@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class poktan extends Model
+class DaftarAnggotaPoktan extends Model
 {
     use HasFactory;
 
-    public $timestamp = false;
+    public $table = 'daftar_anggota_poktan';
 }

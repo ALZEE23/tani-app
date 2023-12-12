@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\penyuluhan;
+use App\Models\DaftarAnggotaPoktan;
 use Illuminate\Http\Request;
 
-class PenyuluhanController extends Controller
+class DaftarAnggotaPoktanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class PenyuluhanController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(penyuluhan $penyuluhan)
+    public function show(DaftarAnggotaPoktan $daftarAnggotaPoktan)
     {
         //
     }
@@ -42,7 +42,7 @@ class PenyuluhanController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(penyuluhan $penyuluhan)
+    public function edit(DaftarAnggotaPoktan $daftarAnggotaPoktan)
     {
         //
     }
@@ -50,7 +50,7 @@ class PenyuluhanController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, penyuluhan $penyuluhan)
+    public function update(Request $request, DaftarAnggotaPoktan $daftarAnggotaPoktan)
     {
         //
     }
@@ -58,7 +58,7 @@ class PenyuluhanController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(penyuluhan $penyuluhan)
+    public function destroy(DaftarAnggotaPoktan $daftarAnggotaPoktan)
     {
         //
     }
