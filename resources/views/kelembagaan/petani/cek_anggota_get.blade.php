@@ -16,15 +16,53 @@
         <img alt="image" src="{{ asset('images/menu-petani.png') }}" style="width: 100px; height:100px">
     </div>
     <div class="select-wrapper">
-        <a href="{{route('kelembagaan-gakpoktan')}}"><button class="btn btn-secondary" style="width: 300px;">Gapoktan</button></a><br><br>
-        <a href="{{route('kelembagaan-poktan')}}"><button class="btn btn-secondary" style="width: 300px;">Poktan</button></a><br><br>
-        <a href="{{route('poktan-daftar')}}"><button class="btn btn-secondary" style="width: 300px;">Daftar Menjadi Anggota Poktan</button></a><br><br>
         <a href="{{route('cek-anggota')}}"><button class="btn btn-secondary" style="width: 300px;">Cek Keanggotaan Poktan</button></a>
     </div>
 
     <!-- Card Profil -->
+    <div class=""><br>
+        <label for=" poktan">MASUKAN NIK SESUAI KTP:</label>
+        <form action="{{route('procek')}}" method="get">
+            <input type="text" name="nik" style="width: 200px;">
+            <button type="submit" class="btn btn-secondary">cari</button>
+        </form>
+    </div>
+
 </div>
+<style>
+    /* Gaya untuk membuat teks rata kiri */
+    .card {
+        text-align: left;
+    }
+
+    .info {
+        /* display: block; */
+        margin-left: 10px;
+        margin-top: 10px;
+        /* Jarak antar baris */
+    }
+</style>
+<div class="container">
+    @if(count($daftarpoktan) > 0)
+    @foreach ($daftarpoktan as $data)
+    <div class="card">
+        <span class="info">Nama : {{$data->nama}}</span><br>
+        <span class="info">NNik : {{$data->nik}}</span><br>
+        <span class="info">Nama Poktan : {{$data->poktan}}</span><br>
+        <span class="info">Desa : {{$data->desa}}</span><br>
+        <span class="info">Status : {{$data->status}}</span>
+    </div>
+    @endforeach
+    @else
+    <div class="card" style="background-color:green;">
+        <p class="text-center" style="color:white">Belum terdaftar di poktan manapun.</p>
+
+    </div>
+    @endif
+</div>
+
 <br><br><br>
+
 <style>
     /* Sesuaikan style card dengan desain yang diinginkan */
     .card {

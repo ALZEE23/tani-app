@@ -32,52 +32,98 @@
         </div>
 
         <div class="">
-            <input id="jabatan" type="number" name="nama_sekretaris_poktan" required placeholder="Nama Sekretaris Poktan">
+            <input id="jabatan" type="text" name="nama_sekretaris_poktan" required placeholder="Nama Sekretaris Poktan">
         </div>
         <div class="">
             <input id="wilayah" type="number" name="no_telepon_sekretaris" required placeholder="No Telepon Sekretaris Poktan">
         </div>
 
         <div class="">
-            <input id="wilayah" type="number" name="nama_bendahara_poktan" required placeholder="Nama Bendahara Poktan">
+            <input id="wilayah" type="text" name="nama_bendahara_poktan" required placeholder="Nama Bendahara Poktan">
         </div>
         <div class="">
             <input id="wilayah" type="number" name="no_telepon_bendahara" required placeholder="No Telepon Bendahara Poktan">
         </div>
         <div class="">
-            <input id="wilayah" type="number" name="titik_koordinat" required placeholder="Titik Koordinat Usaha Tani">
+            <input id="wilayah" type="text" name="titik_koordinat" required placeholder="Titik Koordinat Usaha Tani">
         </div>
         <div class="">
             <input id="wilayah" type="number" name="jumlah_anggota_poktan" required placeholder="Jumlah Anggota Poktan">
         </div>
         <div class="">
             <select name="kelas_poktan" id="">
-                <option value="pemula">Kelas Poktan</option>
+                <option value="pemula">pemula</option>
+                <option value="pemula">suhu</option>
             </select>
         </div>
         <div class="">
             <input id="nilai_kelas_poktan" type="number" name="nilai_kelas_poktan" required placeholder="Nilai Kelas Poktan">
         </div>
-        <div class="">
-            <input id="sk_pembentukan_poktan" type="file" name="sk_pembentukan_poktan" required placeholder="Sk Pembentukan Poktan">
+        <div class="file-field ">
+            <div class="btn">
+                <span>SK Pembentukan Poktan</span>
+                <input type="file" name="sk_pembentukan_poktan">
+            </div>
+            <div class="file-path-wrapper">
+                <input class="file-path validate" type="text">
+            </div>
+        </div>
+        <div class="file-field ">
+            <div class="btn">
+                <span>SK Pengukuhan Poktan</span>
+                <input type="file" name="sk_pengukuhan_poktan">
+            </div>
+            <div class="file-path-wrapper">
+                <input class="file-path validate" type="text">
+            </div>
+        </div>
+        <div class="file-field ">
+            <div class="btn">
+                <span>Berkas Penilaian Poktan</span>
+                <input type="file" name="berkas_penilaian_poktan">
+            </div>
+            <div class="file-path-wrapper">
+                <input class="file-path validate" type="text">
+            </div>
+        </div>
+        <div class="file-field ">
+            <div class="btn">
+                <span>AD ART</span>
+                <input type="text" name="ad_art">
+            </div>
+            <div class="file-path-wrapper">
+                <input class="file-path validate" type="text">
+            </div>
+        </div>
+        <div class="file-field ">
+            <div class="btn">
+                <span>RDK</span>
+                <input type="file" name="rdk">
+            </div>
+            <div class="file-path-wrapper">
+                <input class="file-path validate" type="text">
+            </div>
+        </div>
+        <div class="file-field ">
+            <div class="btn">
+                <span>RDKK</span>
+                <input type="file" name="rdkk">
+            </div>
+            <div class="file-path-wrapper">
+                <input class="file-path validate" type="text">
+            </div>
+        </div>
+        <div class="file-field ">
+            <div class="btn">
+                <span>Surat Pendampingan Penyusunan RDKK</span>
+                <input type="file" name="surat_pendamping">
+            </div>
+            <div class="file-path-wrapper">
+                <input class="file-path validate" type="text">
+            </div>
         </div>
         <div class="">
-            <input id="sk_pengukuhan_poktan" type="file" name="sk_pengukuhan_poktan" required placeholder="Sk Pengukuhan Poktan">
-        </div>
-        <div class="">
-            <input id="berkas_penilaian_poktan" type="file" name="berkas_penilaian_poktan" required placeholder="Berkas Penilaian Poktan">
-        </div>
-        <div class="">
-            <input id="rdk" type="file" name="rdk" required placeholder="RDK">
-        </div>
-        <div class="">
-            <input id="rdk" type="file" name="rdkk" required placeholder="RDKK">
-        </div>
-        <div class="">
-            <input id="rdk" type="file" name="surat_pendampingan" required placeholder="Surat Pendampingan Peemyusunan RDKK">
-        </div>
-        <div class="">
-            <input id="notelepon" type="text" name="username" required placeholder="Username">
+            <input id="username" type="text" name="username" required placeholder="Username">
         </div>
         <div class="">
             <input id="password" type="password" name="password" required placeholder="Password">

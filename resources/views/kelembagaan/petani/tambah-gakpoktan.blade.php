@@ -5,7 +5,7 @@
 
 <div class="container has-pagehead is-pagetitle">
     <div class="section">
-        <h5 class="pagetitle">Tambah Gakpoktan</h5>
+        <h5 class="pagetitle">Tambah Gapoktan</h5>
     </div>
 </div>
 <div class="container">

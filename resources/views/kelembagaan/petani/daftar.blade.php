@@ -17,8 +17,10 @@
     </div>
 
     <div class="select-wrapper">
-        <a href=""><button class="btn btn-secondary" style="width: 300px;">Poktan</button></a><br><br>
-
+        <a href="{{route('poktan-register')}}">
+            <button class="btn btn-primary">Daftar Menjadi Anggota</button>
+        </a>
+        <br>
         <!-- @ if (auth()->user()->role == 'dinas') -->
         <style>
             .select-wrapper {
@@ -28,27 +30,6 @@
                 flex-direction: column;
             }
         </style>
-        @if (isset($key))
-        <div class="select-wrapper d-flex justify-content-center">
-            <label for="kecamatan">Pilih Kecamatan:</label>
-            <select id="kecamatan" name="kecamatan" onchange="changekec()">
-                @foreach ($kecamatan as $data)
-                <option {{ $key == $data->kecamatan ? 'selected' : '' }} value="{{$data->kecamatan}}">{{$data->kecamatan}}</option>
-                @endforeach
-                <!-- Tambahkan opsi desa lainnya sesuai kebutuhan -->
-            </select>
-        </div>
-        @else
-        <div class="select-wrapper d-flex justify-content-center">
-            <label for="kecamatan">Pilih Kecamatan:</label>
-            <select id="kecamatan" name="kecamatan" onchange="changekec()">
-                @foreach ($kecamatan as $data)
-                <option {{session('kecamatan') == $data->kecamatan ? 'selected':'' }} value="{{$data->kecamatan}}">{{$data->kecamatan}}</option>
-                @endforeach
-                <!-- Tambahkan opsi desa lainnya sesuai kebutuhan -->
-            </select>
-        </div>
-        @endif
         @if (isset($key))
         <div class="select-wrapper d-flex justify-content-center">
             <label for="desa">Pilih Desa:</label>
@@ -82,10 +63,6 @@
                 window.location.href = "{{ url('/csdesa/session') }}/" + encodeURIComponent(desa);
             }
         </script>
-
-
-        <br>
-        <br>
     </div>
 
     <style>
@@ -118,9 +95,7 @@
         }
     </style>
 
-    <a href="{{route('tambah-poktan')}}">
-        <button class="btn btn-primary">tambah</button>
-    </a>
+
     <a href="{{route('export-excel-gakpoktan')}}"><button class="btn btn-secondary">Excel</button></a>
     <a href="{{route('export-pdf-gakpoktan')}}"><button class="btn btn-secondary">Pdf</button></a>
     <br>
@@ -128,28 +103,44 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-10">
-                <div class="table-responsive">
-                    <table class="table table-bordered">
+                <style>
+                    th {
+                        vertical-align: middle;
+                        /* Menengahkan teks secara vertikal di dalam sel */
+                        line-height: normal;
+                        /* Mengatur ketinggian baris ke nilai normal */
+                    }
+                </style>
+                <div class="">
+                    <table class="table table-bordered" border="1">
                         <thead>
                             <tr>
-                                <th scope="col">No</th>
-                                <th scope="col">Desa</th>
-                                <th scope="col">Nama Ketua Poktan</th>
-                                <th scope="col">Nilai Kelas</th>
-                                <th scope="col">Opsi</th>
-                            <tr>
+                                <th>No</th>
+                                <th width="10%">Tgl Daftar</th>
+                                <th>Desa Lokasi Lahan</th>
+                                <th>Nama Poktan</th>
+                                <th>Nik Petani</th>
+                                <th>Nama Petani</th>
+                                <th>Status</th>
+                                <th>Opsi</th>
+                            </tr>
+                        </thead>
                         <tbody>
                             @php
                             $no = 1;
                             @endphp
-                            @foreach ($poktans as $data)
+                            @foreach ($daftarpoktans as $data)
                             <tr>
-                                <td scope="col">{{$no++}}</td>
-                                <td scope="col">{{$data->desa}}</td>
-                                <td scope="col">{{$data->ketua_poktan}}</td>
-                                <td scope="col">{{$data->nilai_kelas_poktan}}</td>
+                                <td>{{$no++}}</td>
+                                <td>{{ \Carbon\Carbon::parse($data->created_at)->format('d/m/Y') }}</td>
+
+                                <td>{{$data->desa}}</td>
+                                <td>{{$data->poktan}}</td>
+                                <td>{{$data->nik}}</td>
+                                <td>{{$data->nama}}</td>
+                                <td>{{$data->status}}</td>
                                 <td>
-                                    <a class="btn btn-secondary" href="{{route('detail-poktan',$data->id)}}">Detail Profile</a>
+                                    <a class="btn btn-secondary" href="{{route('detail-register-poktan',$data->id)}}">Lihat</a>
                                 </td>
                             </tr>
                             @endforeach
@@ -159,6 +150,7 @@
             </div>
         </div>
     </div>
+
     <!-- Card Profil -->
 </div>
 <br><br><br>
