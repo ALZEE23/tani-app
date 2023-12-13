@@ -15,25 +15,33 @@
             <a href="{{ route('store') }}"><button class="btn btn-secondary">Tambah</button></a>
         </div>
         @foreach($pupuks as $pupuk)
-            <div class="card col-lg-4">
-                <div class="image">
-                    <img src="{{ asset('storage/' . $pupuk->cover) }}" />
+        <div class="card col-lg-4">
+            <div class="video">
+                @if(strtolower(pathinfo($pupuk->file, PATHINFO_EXTENSION)) === 'mp4')
+                <!-- Jika file PDF, tampilkan link download -->
+                <video width="350" controls>
+                    <source src="{{ asset('storage/' . $pupuk->file) }}" type="video/mp4">
+                </video>
+                @else
+                <!-- Jika bukan PDF, tampilkan link download -->
+                <img src="{{ asset('storage/' . $pupuk->cover) }}" />
+                @endif
+            </div>
+            <div class="card-inner">
+                <div class="header">
+                    <h2>{{ $pupuk->judul }}</h2>
                 </div>
-                <div class="card-inner">
-                    <div class="header">
-                        <h2>{{ $pupuk->judul }}</h2>
-                    </div>
-                    <div class="content">
-                        @if(strtolower(pathinfo($pupuk->file, PATHINFO_EXTENSION)) === 'mp4')
-                            <!-- Jika file PDF, tampilkan link download -->
-                            <p><a href="{{ asset('storage/' . $pupuk->file) }}" >download</a></p>
-                        @else
-                            <!-- Jika bukan PDF, tampilkan link download -->
-                            <p><a href="{{ asset('storage/' . $pupuk->file) }}" download>download</a></p>
-                        @endif
-                    </div>
+                <div class="content">
+                    @if(strtolower(pathinfo($pupuk->file, PATHINFO_EXTENSION)) === 'mp4')
+                    <!-- Jika file PDF, tampilkan link download -->
+                    <p><a href="{{ asset('storage/' . $pupuk->file) }}">download</a></p>
+                    @else
+                    <!-- Jika bukan PDF, tampilkan link download -->
+                    <p><a href="{{ asset('storage/' . $pupuk->file) }}" download>download</a></p>
+                    @endif
                 </div>
             </div>
+        </div>
         @endforeach
     </div>
     <br><br>
@@ -48,27 +56,30 @@
     }
 
     .card {
-        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
         transition: all 0.2s ease-in-out;
         box-sizing: border-box;
         overflow: hidden;
         margin-top: 10px;
         margin-bottom: 10px;
-        margin-right: 10px; /* Atur margin kanan */
-        margin-left: 10px; /* Atur margin kiri */
+        margin-right: 10px;
+        /* Atur margin kanan */
+        margin-left: 10px;
+        /* Atur margin kiri */
         background-color: #5c5a5a;
         display: box;
     }
 
     .card:hover {
-        box-shadow: 0 5px 5px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+        box-shadow: 0 5px 5px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
     }
 
-    .card > .card-inner {
+    .card>.card-inner {
         padding: 10px;
     }
 
-    .card .header h2, h3 {
+    .card .header h2,
+    h3 {
         margin-bottom: 0px;
         margin-top: 0px;
     }
@@ -78,12 +89,14 @@
     }
 
     .card img {
-        max-width: 100%; /* Menggunakan max-width untuk mengontrol lebar gambar */
+        max-width: 100%;
+        /* Menggunakan max-width untuk mengontrol lebar gambar */
         padding-left: 0;
         padding-right: 0;
-        height: auto; /* Menjaga aspek ratio gambar */
+        height: auto;
+        /* Menjaga aspek ratio gambar */
     }
-    
+
     .container {
         text-align: center;
         display: flex;

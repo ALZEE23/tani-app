@@ -33,8 +33,8 @@ class PupukController extends Controller
     // Validasi request
     $request->validate([
         'judul' => 'required|string|max:255',
-        'cover' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        'file' => 'required|mimes:pdf,doc,docx,mp4,mov,avi|max:2048', // Menambahkan tipe file video
+        'cover' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:204800',
+        'file' => 'required|mimes:pdf,doc,docx,mp4,mov,avi|max:204800', // Menambahkan tipe file video
         'kategori' => 'required|string',
     ]);
 

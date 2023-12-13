@@ -153,7 +153,7 @@
               <a href="#"><div class="col s6" style="height:165px"><img alt="image" class="" style="width: 80px; height:80px" src="{{asset('images/market.png')}}"><h6>
                 Akses Pasar
               </h6></div></a>
-              <a href="#"><div class="col s6" style="height:165px"><img alt="image" class="" style="width: 80px; height:80px" src="{{asset('images/agriculture.png')}}"><h6>
+              <a href="{{route('produksi.index')}}"><div class="col s6" style="height:165px"><img alt="image" class="" style="width: 80px; height:80px" src="{{asset('images/agriculture.png')}}"><h6>
                 Produksi Tanaman & Peternakan
               </h6></div></a>
               <a href="#"><div class="col s6" style="height:165px"><img alt="image" class="" style="width: 80px; height:80px" src="{{asset('images/business.png')}}"><h6>
