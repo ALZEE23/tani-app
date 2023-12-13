@@ -6,7 +6,7 @@
 <!-- Bootstrap CSS -->
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
-<div class="pagehead-bg   primary-bg" style="min-height: 147px;">
+<div class="pagehead-bg  primary-bg" style="min-height: 147px;">
 </div>
 
 <div class="container has-pagehead is-pagetitle">
@@ -19,11 +19,17 @@
     <div class="image-wrapper">
         <img alt="image" src="{{ asset('images/menu-petani.png') }}" style="width: 250px; height:250px">
     </div>
+
+   <form action="{{ route('store-KritikDanSaran') }}" method="post">
+    @csrf
     <h3 class="select-title">Masukkan Kritik Dan Saran Terkait Kegiatan</h3>
-    <textarea class="form-control input-text" id="keterangan" rows="2"></textarea>
-    <a class="add">Kirim</a>
+    <textarea class="form-control input-text" name="KritikDanSaran" id="keterangan" rows="2"></textarea>
+    <button type="submit" class="add">Kirim</button>
+</form>
+
 </div>
 </div>
+
 <style>
 
     .container {
@@ -58,6 +64,7 @@
     text-align: center;
     font-size: 35px;
     margin-bottom: 20px;
+    border-radius: 20px;
 }
 .add {
       display: flex;

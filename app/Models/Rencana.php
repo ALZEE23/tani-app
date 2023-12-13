@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class penyuluhan extends Model
+class Rencana extends Model
 {
     use HasFactory;
-    public $fillable = ['tanggal','rencana_kegiatan','penyuluh','desa'];
+    public $fillable = ['tanggal','rencana_kegiatan','tahun','bulan','penyuluh','desa','kecamatan'];
     public $timestamps = false; 
 }

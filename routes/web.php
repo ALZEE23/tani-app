@@ -82,6 +82,8 @@ Route::get('/tambah-dokumentasi', [App\Http\Controllers\PenyuluhanController::cl
 
 //Kritik Dan Saran
 Route::get('/KritikDanSaran', [App\Http\Controllers\KritikDanSaranController::class, 'index'])->name('KritikDanSaran');
+Route::post('/store-KritikDanSaran', [App\Http\Controllers\KritikDanSaranController::class, 'store_KritikDanSaran'])->name('store-KritikDanSaran');
+
 
 Route::get('/teknologi', [TeknologiController::class, 'index'])->name('teknologi');
 Route::get('/pupuk', [PupukController::class, 'index'])->name('pupuk');
@@ -125,4 +127,4 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 });
 
 
-Route::get('/penyuluhan/filter/{id}', [App\Http\Controllers\PenyuluhanController::class, 'filter_penyuluhan'])->name('penyuluhan-filter');
+Route::get('/rencana/filter/{id}', [App\Http\Controllers\PenyuluhanController::class, 'filter_rencana'])->name('rencana-filter');

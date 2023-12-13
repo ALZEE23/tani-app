@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 use App\Models\Desa;
 use App\Models\Kecamatan;
-use App\Models\penyuluhan;
+use App\Models\Rencana;
+use App\Models\Penyuluh;
 use Illuminate\Http\Request;
 
 class PenyuluhanController extends Controller
@@ -15,9 +16,11 @@ class PenyuluhanController extends Controller
 
     function rencana()
     {
-        $penyuluhan = penyuluhan::all();
+        $rencana = Rencana::all();
+        $desa = Desa::all();
         $kecamatan = Kecamatan::all();
-        return view('penyuluhan.rencana.index', compact('penyuluhan','kecamatan'));
+        $penyuluh = Penyuluh::pluck('nama');
+        return view('penyuluhan.rencana.index', compact('rencana','kecamatan','desa','penyuluh'));
     }
     function tambah_rencana()
     {
@@ -27,21 +30,37 @@ class PenyuluhanController extends Controller
       
     public function store_rencana(Request $request)
     {
-        // Rencana Kegiatan
+        // Validasi data yang dikirimkan oleh formulir
         $request->validate([
+            'bulan' => 'required|string',
+            'tahun' => 'required|int',
+            'kecamatan' => 'required|string',
+            'desa' => 'required|string',
+            'penyuluh' => 'required|string',
             'tanggal' => 'required|date',
             'rencana_kegiatan' => 'required|string',
         ]);
-
-        // Simpan data ke database
-        penyuluhan::create([
-            'tanggal' => $request->input('tanggal'),
-            'rencana_kegiatan' => $request->input('rencana_kegiatan'),
-        ]);
-
+    
+        // Gunakan $request->penyuluh bukan $request->all()
+        $data = [
+            'bulan' => $request->bulan,
+            'tahun' => $request->tahun,
+            'kecamatan' => $request->kecamatan,
+            'desa' => $request->desa,
+            'penyuluh' => $request->penyuluh,
+            'tanggal' => $request->tanggal,
+            'rencana_kegiatan' => $request->rencana_kegiatan,
+        ];
+    
+        // Simpan data ke database menggunakan model Rencana
+        Rencana::create($data);
+    
         // Redirect atau berikan respons sesuai kebutuhan Anda
-        return redirect()->route('penyuluhan.rencana.index')->with('success', 'Rencana kegiatan berhasil disimpan.');
+        return redirect()->route('penyuluhan-rencana')->with('success', 'Rencana kegiatan berhasil disimpan.');
     }
+    
+
+    
 
     
     function update(Request $request)
@@ -90,12 +109,24 @@ class PenyuluhanController extends Controller
         return redirect('kelembagaan-penyuluh')->with('success', 'Data berhasil disimpan.');
     }
 
-    function filter_penyuluhan($key)
-     {
-        $penyuluhan = Penyuluhan::Where('kecamatan', $key)->get();
+    function filter_rencana($key)
+    {
+        // Ganti bagian ini
+        // $rencana = Rencana::Where('kecamatan','desa','penyuluh',$key)->get();
+    
+        // Menjadi
+        $rencana = Rencana::where('kecamatan', $key)
+            ->orWhere('desa', $key)
+            ->orWhere('penyuluh', $key)
+            ->get();
+    
         $kecamatan = Kecamatan::all();
-        return view ('penyuluhan.rencana.index', compact('penyuluhan','key','kecamatan'));
+        $desa = Desa::all();
+        $penyuluh = Penyuluh::pluck('nama');
+        
+        return view('penyuluhan.rencana.index', compact('rencana', 'key', 'kecamatan', 'desa', 'penyuluh'));
     }
+    
     
     function dokumentasi()
     {

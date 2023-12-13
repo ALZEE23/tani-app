@@ -67,23 +67,44 @@
 
 <h3 class="select-title">Pilih Desa</h3>
 <div class="form">
-<select>
-    <option selected>PangkalanPari</option>
-    <option value="1">One</option>
-    <option value="2">Two</option>
-    <option value="3">Three</option>
+@if (isset($key))
+<select id="desa" name="desa" onchange="redirectToSelectedDesa()">
+
+    @foreach ($desa as $data)
+            <option {{ $key == $data->desa ? 'selected' : '' }} value="{{$data->desa}}">{{$data->desa}}</option>
+            @endforeach
+
   </select>
+@else
+
+<select id="desa" name="desa" onchange="redirectToSelectedDesa()">
+@foreach ($desa as $data)
+            <option value="{{$data->desa}}">{{$data->desa}}</option>
+            @endforeach
+</select>
+@endif
+
 </div>
 
 <h3 class="select-title">Penyuluh Wilbin</h3>
 <div class="form">
-<select>
-    <option selected>Fadli Hermawan</option>
-    <option value="1">One</option>
-    <option value="2">Two</option>
-    <option value="3">Three</option>
-  </select>
+    @if (isset($key))
+    <select id="penyuluh" name="penyuluh" onchange="redirectToSelectedPenyuluh()">
+        @foreach ($penyuluh as $penyuluhItem)
+            <option {{ $key == $penyuluhItem ? 'selected' : '' }} value="{{$penyuluhItem}}">{{$penyuluhItem}}</option>
+        @endforeach
+    </select>
+    
+@else
+    <select id="penyuluh" name="penyuluh" onchange="redirectToSelectedPenyuluh()">
+        @foreach ($penyuluh as $nama)
+            <option value="{{$nama}}">{{$nama}}</option>
+        @endforeach
+    </select>
+@endif
+
 </div>
+
 
 </div>
 
@@ -93,7 +114,7 @@
 
 
 <div class="row">
-  @foreach ($penyuluhan as $data)
+  @foreach ($rencana as $data)
       <div class="col-sm-4">
           <div class="card">
               <div class="card-body">
@@ -111,7 +132,9 @@
 
 
 <style>
-
+body{
+    height: 2000px;
+}
 .container{
  text-align: center;
 }
@@ -168,8 +191,22 @@
 <script>
         function redirectToSelectedKecamatan() {
             const selectedKecamatan = document.getElementById('kecamatan').value;
-            window.location.href = "{{ url('penyuluhan/filter') }}/" + encodeURIComponent(selectedKecamatan);
+            window.location.href = "{{ url('rencana/filter') }}/" + encodeURIComponent(selectedKecamatan);
         }
     </script>
+
+<script>
+    function redirectToSelectedDesa() {
+        const selectedKecamatan = document.getElementById('desa').value;
+        window.location.href = "{{ url('rencana/filter') }}/" + encodeURIComponent(selectedDesa);
+    }
+</script>
+
+<script>
+    function redirectToSelectedPenyuluh() {
+        const selectedKecamatan = document.getElementById('penyuluh').value;
+        window.location.href = "{{ url('rencana/filter') }}/" + encodeURIComponent(selectedPenyuluh);
+    }
+</script>
 
 @endsection
