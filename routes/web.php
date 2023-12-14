@@ -8,6 +8,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\TeknologiController;
 use App\Http\Controllers\PupukController;
+use App\Http\Controllers\ProduksitanamanController;
 use App\Http\Controllers\PestisidaController;
 use App\Http\Controllers\BudidayaController;
 use App\Http\Controllers\DinasController;
@@ -25,6 +26,7 @@ use App\Models\Gakpoktans;
 use App\Models\Penyuluh;
 use App\Models\Pupuk;
 use App\Http\Controllers\AlsintanController;
+use App\Models\Produksitanaman;
 
 /*
 |--------------------------------------------------------------------------
@@ -140,5 +142,14 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 
     // Additional routes specific to the admin section
 });
+
+
+Route::resource('desa', DesaController::class)->name('desa', 'index');
+Route::get('/produksi', [ProduksitanamanController::class, 'index'])->name('produksi.index');
+Route::get('/produksi/tanaman', [ProduksitanamanController::class, 'tanaman'])->name('produksi.tanaman');
+Route::get('/produksi/kecamatan', [ProduksitanamanController::class, 'kecamatan'])->name('produksi.tanaman.kecamatan');
+Route::get('/produksi/tanaman/tambah', [ProduksitanamanController::class, 'tambah_tanaman'])->name('produksi.tanaman.tambah');
+Route::post('/produksi/tanaman/store', [ProduksitanamanController::class, 'store_tanaman'])->name('produksi.tanaman.store');
+Route::post('/filter-produksi', [ProduksitanamanController::class, 'filterProduksi'])->name('filter.produksi');
 
 // Route::resource('penyuluhan', PenyuluhanController::class)->name('penyulihan', 'index');
