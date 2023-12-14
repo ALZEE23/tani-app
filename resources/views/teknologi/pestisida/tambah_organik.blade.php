@@ -15,20 +15,20 @@
     @csrf
     
     <label for="judul">Judul:</label>
-    <input type="text" name="judul" required>
+    <input type="text" name="judul" id="judul" required>
 
     <label for="cover">Cover:</label>
     <div class="file-input" id="coverInput">
-        <input type="file" name="cover" accept="image/*" required>
+        <input type="file" name="cover" id="cover" accept="image/*" required>
         <div class="drop-zone" id="coverDropZone">Seret dan lepas file di sini</div>
     </div>
 
     <label for="file">File:</label>
     <div class="file-input" id="fileInput">
-        <input type="file" name="file" accept=".pdf, .doc, .docx, .mp4" required>
+        <input type="file" name="file" id="file" accept=".pdf, .doc, .docx, .mp4" required>
         <div class="drop-zone" id="fileDropZone">Seret dan lepas file di sini</div>
     </div>
-
+    <br>
     <button type="submit">Submit</button>
 </form>
 </div>

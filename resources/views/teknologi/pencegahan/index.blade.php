@@ -110,4 +110,13 @@
         border: 1px solid #ccc;
         font-size: 14px;
     }
+
+    @media(max-width:576px){
+        .card img,video {
+        max-width: 100%; /* Menggunakan max-width untuk mengontrol lebar gambar */
+        padding-left: 0;
+        padding-right: 0;
+        height: 200px; /* Menjaga aspek ratio gambar */
+    }
+    }
 </style>

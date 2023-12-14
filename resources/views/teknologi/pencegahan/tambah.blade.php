@@ -28,7 +28,7 @@
         <input type="file" name="file" accept=".pdf, .doc, .docx, .mp4" required>
         <div class="drop-zone" id="fileDropZone">Seret dan lepas file di sini</div>
     </div>
-
+    <br>
     <button type="submit">Submit</button>
 </form>
 </div>

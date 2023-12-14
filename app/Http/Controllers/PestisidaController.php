@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Models\Pestisida;
 use App\Models\Organik;
@@ -59,6 +60,52 @@ class PestisidaController extends Controller
     return redirect()->route('pestisida.organik')->with('success', 'Pupuk berhasil ditambahkan.');
     }
 
+    public function edit($id)
+    {
+        $organik = Organik::findOrFail($id);
+        return view('teknologi.pestisida.edit', compact('organik'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'judul' => 'required|string|max:255',
+            'cover' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'file' => 'mimes:pdf,doc,docx,mp4,mov,avi|max:2048',
+        ]);
+
+        $organik= Organik::findOrFail($id);
+
+        if ($request->hasFile('cover')) {
+            Storage::disk('public')->delete($organik->cover);
+            $coverPath = $request->file('cover')->store('covers', 'public');
+            $organik->cover = $coverPath;
+        }
+
+        if ($request->hasFile('file')) {
+
+            Storage::disk('public')->delete($organik->file);
+            $fileType = $request->file('file')->extension();
+            $filePath = $request->file('file')->storeAs('files', "file_" . time() . "." . $fileType, 'public');
+            $organik->file = $filePath;
+
+        }
+
+        $organik->judul = $request->judul;
+        $organik->save();
+
+        return redirect()->route('pestisida.organik')->with('success', 'Pupuk berhasil ditambahkan.');
+    }
+
+    public function delete($id)
+    {
+        $organik = Organik::findOrFail($id);
+        Storage::disk('public')->delete([$organik->cover, $organik->file]);
+        $organik->delete();
+
+        return redirect()->route('pestisida.organik')->with('success', 'Pupuk berhasil dihapus.');
+    }
+    
     public function store()
     {
         return view('teknologi.pestisida.tambah');
@@ -98,4 +145,6 @@ class PestisidaController extends Controller
 
         return view('teknologi.pestisida.kimia', compact('pestisidas'));
     }
+
+    
 }

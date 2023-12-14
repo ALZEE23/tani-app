@@ -11,16 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pupuks', function (Blueprint $table) {
+        //
+        Schema::create('profiles', function (Blueprint $table) {
             $table->id();
-            $table->string('kategori');
-            $table->string('judul');
+            $table->timestamps();
             $table->string('cover');
-            $table->string('file');
-            $table->timestamps(); // This automatically adds created_at and updated_at columns
+            $table->string('name');
+            $table->string('nik');
         });
- // Gunakan timestamps() untuk menyertakan created_at dan updated_at
-            
     }
 
     /**
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pupuks');
+        //
     }
 };
