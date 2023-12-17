@@ -79,6 +79,7 @@ Route::post('/store-rencana', [App\Http\Controllers\PenyuluhanController::class,
 
 Route::get('/penyuluhan-dokumentasi', [App\Http\Controllers\PenyuluhanController::class, 'dokumentasi'])->name('penyuluhan-dokumentasi');
 Route::get('/tambah-dokumentasi', [App\Http\Controllers\PenyuluhanController::class, 'tambah_dokumentasi'])->name('tambah-dokumentasi');
+Route::post('/store-dokumentasi', [App\Http\Controllers\PenyuluhanController::class, 'store_dokumentasi'])->name('store-dokumentasi');
 
 //Kritik Dan Saran
 Route::get('/KritikDanSaran', [App\Http\Controllers\KritikDanSaranController::class, 'index'])->name('KritikDanSaran');
@@ -128,3 +129,4 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 
 
 Route::get('/rencana/filter/{id}', [App\Http\Controllers\PenyuluhanController::class, 'filter_rencana'])->name('rencana-filter');
+Route::get('/dokumentasi/filter/{id}', [App\Http\Controllers\PenyuluhanController::class, 'filter_dokumentasi'])->name('dokumentasi-filter');

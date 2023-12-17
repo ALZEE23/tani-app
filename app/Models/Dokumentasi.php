@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Dokumentasi extends Model
 {
     use HasFactory;
+    public $fillable = ['tahun','bulan','desa','kecamatan','tanggal','foto','keterangan'];
+    public $timestamps = false; 
 }

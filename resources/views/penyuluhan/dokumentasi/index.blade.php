@@ -20,7 +20,7 @@
 </div>
 
 <div class="container">
-    <h3 class="select-title">Pilih Wilayah Binaan</h3>
+    <h3 class="select-title">Pilih Tahun</h3>
     <div class="form">
     <select>
         <option selected>2023</option>
@@ -51,23 +51,47 @@
     
     <h3 class="select-title">Pilih Kecamatan</h3>
     <div class="form">
-    <select>
-        <option selected>JatiTujuh</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
-      </select>
-    </div>
     
-    <h3 class="select-title">Pilih Desa</h3>
-    <div class="form">
-    <select>
-        <option selected>PangkalanPari</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
+    @if (isset($key))
+    <select id="kecamatan" name="kecamatan" onchange="redirectToSelectedKecamatan()">
+    
+        @foreach ($kecamatan as $data)
+                <option {{ $key == $data->kecamatan ? 'selected' : '' }} value="{{$data->kecamatan}}">{{$data->kecamatan}}</option>
+                @endforeach
+    
       </select>
+    @else
+    
+    <select id="kecamatan" name="kecamatan" onchange="redirectToSelectedKecamatan()">
+    @foreach ($kecamatan as $data)
+                <option value="{{$data->kecamatan}}">{{$data->kecamatan}}</option>
+                @endforeach
+    </select>
+    @endif
     </div>
+
+    
+  <h3 class="select-title">Pilih Desa</h3>
+<div class="form">
+@if (isset($key))
+<select id="desa" name="desa" onchange="redirectToSelectedDesa()">
+
+    @foreach ($desa as $data)
+            <option {{ $key == $data->desa ? 'selected' : '' }} value="{{$data->desa}}">{{$data->desa}}</option>
+            @endforeach
+
+  </select>
+@else
+
+<select id="desa" name="desa" onchange="redirectToSelectedDesa()">
+@foreach ($desa as $data)
+            <option value="{{$data->desa}}">{{$data->desa}}</option>
+            @endforeach
+</select>
+@endif
+
+</div>
+
 </div>
 
 <a href="{{route('tambah-dokumentasi')}}" class="add">Tambahkan Dokumentasi</a>
@@ -142,5 +166,19 @@
 
 
 </style>
+
+<script>
+  function redirectToSelectedKecamatan() {
+      const selectedKecamatan = document.getElementById('kecamatan').value;
+      window.location.href = "{{ url('dokumentasi/filter') }}/" + encodeURIComponent(selectedKecamatan);
+  }
+</script>
+
+<script>
+function redirectToSelectedDesa() {
+  const selectedKecamatan = document.getElementById('desa').value;
+  window.location.href = "{{ url('dokumentasi/filter') }}/" + encodeURIComponent(selectedDesa);
+}
+</script>
 
 @endsection

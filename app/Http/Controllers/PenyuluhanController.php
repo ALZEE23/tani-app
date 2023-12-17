@@ -5,6 +5,7 @@ use App\Models\Desa;
 use App\Models\Kecamatan;
 use App\Models\Rencana;
 use App\Models\Penyuluh;
+use App\Models\Dokumentasi;
 use Illuminate\Http\Request;
 
 class PenyuluhanController extends Controller
@@ -59,56 +60,6 @@ class PenyuluhanController extends Controller
         return redirect()->route('penyuluhan-rencana')->with('success', 'Rencana kegiatan berhasil disimpan.');
     }
     
-
-    
-
-    
-    function update(Request $request)
-    {
-        // Validasi data yang diterima dari form
-        $validatedData = $request->validate([
-            'nama' => 'required',
-            'jabatan' => 'required',
-            'wilayah' => 'required',
-            'notelepon' => 'required|numeric',
-            'file_rktp' => 'file|mimes:pdf', // Sesuaikan dengan jenis file yang diizinkan
-            'file_program_daerah' => 'file|mimes:pdf', // Sesuaikan dengan jenis file yang diizinkan
-        ]);
-
-        // Simpan data menggunakan Eloquent pada model Penyuluh
-        $penyuluh = Penyuluh::find($request->id);
-        $penyuluh->nama = $request->nama;
-        $penyuluh->jabatan = $request->jabatan;
-        $penyuluh->wilayah = $request->wilayah;
-        $penyuluh->no_telepon = $request->notelepon;
-
-        // Simpan file jika ada yang diunggah
-        if ($request->hasFile('file_rktp')) {
-            $fileRktp = $request->file('file_rktp');
-            $filenameRktp = time() . '_' . $fileRktp->getClientOriginalName();
-            $fileRktp->storeAs('public/file_rktp', $filenameRktp);
-            $penyuluh->file_rktp = $filenameRktp;
-        }
-
-        if ($request->hasFile('file_program_daerah')) {
-            $fileProgramDaerah = $request->file('file_program_daerah');
-            $filenameProgramDaerah = time() . '_' . $fileProgramDaerah->getClientOriginalName();
-            $fileProgramDaerah->storeAs('public/file_program_daerah', $filenameProgramDaerah);
-            $penyuluh->file_program_desa = $filenameProgramDaerah;
-        }
-        if ($request->hasFile('foto')) {
-            $fileFoto = $request->file('file_program_daerah');
-            $filenamefoto = time() . '_' . $fileProgramDaerah->getClientOriginalName();
-            $fileFoto->storeAs('public/file_program_daerah', $filenameProgramDaerah);
-            $penyuluh->file_program_desa = $filenamefoto;
-        }
-
-        $penyuluh->save();
-
-        // Redirect atau respons sesuai kebutuhan Anda
-        return redirect('kelembagaan-penyuluh')->with('success', 'Data berhasil disimpan.');
-    }
-
     function filter_rencana($key)
     {
         // Ganti bagian ini
@@ -130,11 +81,69 @@ class PenyuluhanController extends Controller
     
     function dokumentasi()
     {
-        return view('penyuluhan.dokumentasi.index');
+        {
+            $dokumentasi = Dokumentasi::all();
+            $desa = Desa::all();
+            $kecamatan = Kecamatan::all();
+            return view('penyuluhan.dokumentasi.index', compact('dokumentasi','kecamatan','desa'));
+        }
     }
     
     function tambah_dokumentasi()
     {
         return view('penyuluhan.dokumentasi.tambah');
     }
+
+    public function store_dokumentasi(Request $request)
+    {
+        // Validasi data yang dikirimkan oleh formulir
+        $request->validate([
+            'tahun' => 'required|int',
+            'bulan' => 'required|string',
+            'desa' => 'required|string',
+            'kecamatan' => 'required|string',
+            'tanggal' => 'required|date',
+            'foto' => 'foto|mimes:pdf', // Sesuaikan dengan jenis file yang diizinkan
+            'keterangan' => 'required|string',
+        ]);
+    
+            // Simpan data menggunakan Eloquent pada model Penyuluh
+            $penyuluh = Penyuluh::find($request->id);
+            $penyuluh->tahun = $request->tahun;
+            $penyuluh->bulan = $request->bulan;
+            $penyuluh->desa = $request->desa;
+            $penyuluh->kecamatan = $request->kecamatan;
+            $penyuluh->tanggal = $request->tanggal;
+            $penyuluh->keterangan = $request->keterangan;
+
+         // Simpan file jika ada yang diunggah
+         if ($request->hasFile('foto')) {
+            $foto = $request->file('foto');
+            $fotofile = time() . '_' . $foto->getClientOriginalName();
+            $foto->storeAs('public/foto', $fotofile);
+            $penyuluh->foto = $fotofile;
+        }
+        // Simpan data ke database menggunakan model Rencana
+        $penyuluh->save();
+    
+        // Redirect atau berikan respons sesuai kebutuhan Anda
+        return redirect()->route('penyuluhan-dokumentasi')->with('success', 'Rencana kegiatan berhasil disimpan.');
+    }
+    function filter_dokumentasi($key)
+    {
+        // Ganti bagian ini
+        // $rencana = Rencana::Where('kecamatan','desa','penyuluh',$key)->get();
+    
+        // Menjadi
+        $dokumentasi = Dokumentasi::where('kecamatan', $key)
+            ->orWhere('desa', $key)
+            ->get();
+    
+        $kecamatan = Kecamatan::all();
+        $desa = Desa::all();
+        
+        return view('penyuluhan.dokumentasi.index', compact('dokumentasi', 'key', 'kecamatan', 'desa',));
+    }
+    
+
 }
