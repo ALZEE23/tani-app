@@ -6,6 +6,9 @@ use App\Models\Penyuluh;
 
 use App\Models\Gakpoktans;
 use App\Models\Produksitanaman;
+<<<<<<< HEAD
+use App\Http\Controllers\ProfileController;
+=======
 use App\Http\Middleware\Petugas;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DesaController;
@@ -30,6 +33,7 @@ use App\Http\Controllers\HargaController;
 use App\Http\Controllers\PasarController;
 use App\Http\Controllers\ProduksitanamanController;
 use App\Http\Controllers\ProduksipeternakanController;
+>>>>>>> 66ce30b0583090a87bd9667ceecc6cddb5a5b8b2
 
 /*
 |--------------------------------------------------------------------------
@@ -122,10 +126,22 @@ Route::post('teknologi-tambah', [BudidayaController::class, 'tambah'])->name('te
 Route::get('/pencegahan', [PencegahanController::class, 'index'])->name('pencegahan');
 Route::get('/pencegahan/tambah', [PencegahanController::class, 'store'])->name('pencegahan.store');
 Route::post('/pencegahan/tambah', [PencegahanController::class, 'tambah'])->name('pencegahan.tambah');
+Route::get('/pencegahan/edit/{id}', [PencegahanController::class, 'edit'])->name('pencegahan.edit');
+Route::put('/pencegahan/update/{id}', [PencegahanController::class,'update'])->name('pencegahan.update');
+Route::delete('/pencegahan/delete/{id}', [PencegahanController::class,'delete'])->name('pencegahan.delete');
 Route::get('/alsintan', [AlsintanController::class, 'index'])->name('alsintan');
-Route::get('alsintan/tambah', [AlsintanController::class, 'store'])->name('alsintan.store');
-Route::post('alsintan/tambah', [AlsintanController::class, 'tambah'])->name('alsintan.tambah');
+Route::get('/alsintan/tambah', [AlsintanController::class, 'store'])->name('alsintan.store');
+Route::post('/alsintan/tambah', [AlsintanController::class, 'tambah'])->name('alsintan.tambah');
 Route::get('/alsintan/filter', [AlsintanController::class, 'filterByKecamatan'])->name('alsintan.filterByKecamatan');
+Route::get('/export-alsintan', [AlsintanController::class, 'exportToExcel'])->name('export-alsintan');
+Route::get('/fetch-desa-options', [AlsintanController::class, 'fetchDesaOptions']);
+Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+Route::get('/profile/informasi-pribadi', [ProfileController::class, 'informasi'])->name('profile.informasi');
+Route::get('/profile/sandi', [ProfileController::class, 'sandi'])->name('profile.sandi');
+Route::post('/change-password', [ProfileController::class, 'changePassword'])->name('change-password');
+
+
+
 
 // Kecamatan
 

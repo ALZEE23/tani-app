@@ -12,11 +12,14 @@
 <div class="container ">
     <div class="col-lg-12">
         <div class="row">
+            @if (auth()->user()->role == 'petugas') 
             <a href="{{ route('pestisida.tambah-organik') }}"><button class="btn btn-secondary">Tambah</button></a>
+            @endif
         </div>
         @foreach($organiks as $organik)
             <div class="card col-lg-4" >
                 <div class="image">
+                    @if (auth()->user()->role == 'petugas') 
                     <div class="dropdown" style="position: absolute; top: 15px; right: 10px; z-index: 999;" id="dropdown-{{ $organik->id }}">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <!-- Icon titik tiga secara vertikal -->
@@ -32,6 +35,7 @@
                                 </form>
                             </div>
                         </div>
+                    @endif
                     @if(strtolower(pathinfo($organik->file, PATHINFO_EXTENSION)) === 'mp4')
                         <!-- Jika file MP4, tampilkan pemutar video -->
                         <video width="100%" height="auto" controls poster="{{ asset('storage/' . $organik->cover) }}">

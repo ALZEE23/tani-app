@@ -19,7 +19,11 @@
         </div>
         <button type="submit" class="btn btn-primary">Cari</button> 
         <a href="{{route('pestisida.kimia')}}" class="btn btn-secondary mb-3">Tampilkan semua</a>
+        <div>
+        @if (auth()->user()->role == 'petugas') 
         <a href="{{route('pestisida.tambah')}}" class="btn btn-secondary mb-3">Tambah</a>
+        @endif
+        </div>
     </form>
 
    <br>
