@@ -11,9 +11,9 @@
 </div>
 
 <div class="container">
-    <h6 class="text-center">Tanaman</h6>
+    <h6 class="text-center">peternakan</h6>
     <div class="select-wrapper">
-        <a href="{{route('produksi.tanaman.tambah')}}"><button class="btn btn-secondary" style="width: 300px;">Tambah</button></a><br><br>
+        <a href="{{route('produksi.peternakan.tambah')}}"><button class="btn btn-secondary" style="width: 300px;">Tambah</button></a><br><br>
         <form id="filter-form">
             <select name="kecamatan" id="kecamatan-select">
                 <option value="">Pilih Kecamatan</option>
@@ -23,18 +23,11 @@
                 <!-- Tambahkan opsi desa lainnya sesuai kebutuhan -->
             </select>
 
-            <select name="komoditas" id="komoditas-select">
-                <option value="">Pilih Komoditas</option>
-                <option value="teh">TEH</option>
-                <option value="kopi">KOPI</option>
-                <option value="tebu">TEBU</option>
-                <option value="tobacco">TEMBAKAU</option>
-                <option value="cengkeh">CENGKEH</option>
-                <option value="kelapa">KELAPA</option>
-                <option value="aren">AREN</option>
-                <option value="nilam">NILAM</option>
-                <option value="lada">LADA</option>
-                <option value="kemiri">KEMIRI</option>
+            <select name="jenis_ternak" id="jenis_ternak-select">
+                <option value="">Pilih Jenis Ternak</option>
+                <option value="sapi">sapi</option>
+                <option value="kambing">kambing</option>
+                <option value="ayam">ayam</option>
             </select>
 
             <select name="tahun" id="tahun-select">
@@ -79,29 +72,11 @@
                 <table class="table table-bordered" id="data-table">
                     <thead>
                         <tr>
-                            <td class="tg-0lax" rowspan="2">no</td>
-                            <td class="tg-0lax" rowspan="2">Kecamatan</td>
-                            <td class="tg-0lax" rowspan="2">Desa</td>
-                            <td class="tg-0lax" colspan="2">Tanaman(HA)</td>
-                            <td class="tg-0lax" colspan="2">Panen(HA)</td>
-                            <td class="tg-0lax" colspan="2">Gagal Panen(HA)</td>
-                            <td class="tg-0lax" colspan="2">Produksi(T)</td>
-                            <td class="tg-0lax" colspan="5">Rekap Bulan Ini</td>
-                        </tr>
-                        <tr>
-                            <td class="tg-0lax">Bulan Lalu</td>
-                            <td class="tg-0lax">Bulan Ini</td>
-                            <td class="tg-0lax">Bulan Lalu</td>
-                            <td class="tg-0lax">Bulan Ini</td>
-                            <td class="tg-0lax">Bulan Lalu</td>
-                            <td class="tg-0lax">Bulan Ini</td>
-                            <td class="tg-0lax">Bulan Lalu</td>
-                            <td class="tg-0lax">Bulan Ini</td>
-                            <td class="tg-0lax">Tanam</td>
-                            <td class="tg-0lax">Panen</td>
-                            <td class="tg-0lax">Gagal Panen</td>
-                            <td class="tg-0lax">Produksi</td>
-                            <td class="tg-0lax">Provitas</td>
+                            <td class="tg-0lax">no</td>
+                            <td class="tg-0lax">Desa</td>
+                            <td class="tg-0lax">Jenis Ternak</td>
+                            <td class="tg-0lax">Jumlah Kandang</td>
+                            <td class="tg-0lax">Jumlah Ternak</td>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -112,20 +87,20 @@
                     var nomorUrutan = 1;
                     // jQuery
                     $(document).ready(function() {
-                        $('#kecamatan-select, #komoditas-select, #tahun-select, #bulan-select').change(function() {
+                        $('#kecamatan-select, #jenis_ternak-select, #tahun-select, #bulan-select').change(function() {
                             var desaValue = $('#kecamatan-select').val();
-                            var komoditasValue = $('#komoditas-select').val();
+                            var jenis_ternakValue = $('#jenis_ternak-select').val();
                             var tahunValue = $('#tahun-select').val();
                             var bulanValue = $('#bulan-select').val();
-
+                            
                             // Kirim permintaan Ajax
                             $.ajax({
                                 type: 'POST',
-                                url: '/filter-produksi',
+                                url: '/filter-produksi-ternak',
                                 data: {
                                     _token: '{{ csrf_token() }}', // Tambahkan _token untuk laravel
                                     desa: desaValue,
-                                    komoditas: komoditasValue,
+                                    jenis_ternak: jenis_ternakValue,
                                     tahun: tahunValue,
                                     bulan: bulanValue
                                 },
@@ -150,31 +125,22 @@
                                     Object.keys(sekarangByDesa).forEach(function(desa) {
                                         var mergedItem = {
                                             desa: desa,
-                                            komoditas: sekarangByDesa[desa].komoditas || null,
-                                            tanam: sekarangByDesa[desa].tanam || 0,
-                                            panen: sekarangByDesa[desa].panen || 0,
-                                            gagal_panen: sekarangByDesa[desa].gagal_panen || 0,
-                                            produksi: sekarangByDesa[desa].produksi || 0,
-                                            provitas: sekarangByDesa[desa].provitas || 0,
+                                            jenis_ternak: sekarangByDesa[desa].jenis_ternak || null,
+                                            jumlah_ternak: sekarangByDesa[desa].jumlah_ternak || 0,
+                                            jumlah_kandang: sekarangByDesa[desa].jumlah_kandang || 0,
                                             kecamatan: sekarangByDesa[desa].kecamatan || 0
                                         };
 
                                         if (bulanLaluByDesa[desa]) {
                                             mergedItem.sebelum_desa = bulanLaluByDesa[desa].sebelum_desa || null;
-                                            mergedItem.sebelum_komoditas = bulanLaluByDesa[desa].sebelum_komoditas || null;
-                                            mergedItem.sebelum_tanam = bulanLaluByDesa[desa].sebelum_tanam || 0;
-                                            mergedItem.sebelum_panen = bulanLaluByDesa[desa].sebelum_panen || 0;
-                                            mergedItem.sebelum_gagal_panen = bulanLaluByDesa[desa].sebelum_gagal_panen || 0;
-                                            mergedItem.sebelum_produksi = bulanLaluByDesa[desa].sebelum_produksi || 0;
-                                            mergedItem.sebelum_provitas = bulanLaluByDesa[desa].sebelum_provitas || 0;
+                                            mergedItem.sebelum_jenis_ternak = bulanLaluByDesa[desa].sebelum_jenis_ternak || null;
+                                            mergedItem.sebelum_jumlah_ternak = bulanLaluByDesa[desa].sebelum_jumlah_ternak || 0;
+                                            mergedItem.sebelum_jumlah_kandang = bulanLaluByDesa[desa].sebelum_jumlah_kandang || 0;
                                         } else {
                                             mergedItem.sebelum_desa = null;
-                                            mergedItem.sebelum_komoditas = null;
-                                            mergedItem.sebelum_tanam = 0;
-                                            mergedItem.sebelum_panen = 0;
-                                            mergedItem.sebelum_gagal_panen = 0;
-                                            mergedItem.sebelum_produksi = 0;
-                                            mergedItem.sebelum_provitas = 0;
+                                            mergedItem.sebelum_jenis_ternak = null;
+                                            mergedItem.sebelum_jumlah_ternak = 0;
+                                            mergedItem.sebelum_jumlah_kandang = 0;
                                         }
 
                                         mergedData.push(mergedItem);
@@ -187,28 +153,12 @@
 
 
                                     mergedData.forEach(function(item, index) {
-                                        var totalPanen = parseInt(item.panen) + parseInt(item.sebelum_panen); // Menghitung total panen
-                                        var totaltanam = parseInt(item.tanam) + parseInt(item.sebelum_tanam); // Menghitung total panen
-                                        var totalgagal_panen = parseInt(item.gagal_panen) + parseInt(item.sebelum_gagal_panen); // Menghitung total panen
-                                        var totalproduksi = parseInt(item.produksi) + parseInt(item.sebelum_produksi); // Menghitung total panen
-                                        var totalprovitas = parseInt(item.provitas) + parseInt(item.sebelum_provitas); // Menghitung total panen
                                         var row = '<tr>' +
                                             '<td>' + (index + 1) + '</td>' +
-                                            '<td>' + item.kecamatan + '</td>' +
                                             '<td>' + item.desa + '</td>' +
-                                            '<td>' + item.sebelum_tanam + '</td>' +
-                                            '<td>' + item.tanam + '</td>' +
-                                            '<td>' + item.sebelum_panen + '</td>' +
-                                            '<td>' + item.panen + '</td>' +
-                                            '<td>' + item.sebelum_gagal_panen + '</td>' +
-                                            '<td>' + item.gagal_panen + '</td>' +
-                                            '<td>' + item.sebelum_produksi + '</td>' +
-                                            '<td>' + item.produksi + '</td>' +
-                                            '<td>' + totaltanam + '</td>' +
-                                            '<td>' + totalPanen + '</td>' +
-                                            '<td>' + totalgagal_panen + '</td>' +
-                                            '<td>' + totalproduksi + '</td>' +
-                                            '<td>' + totalprovitas + '</td>' +
+                                            '<td>' + item.jenis_ternak + '</td>' +
+                                            '<td>' + item.jumlah_kandang + '</td>' +
+                                            '<td>' + item.jumlah_ternak + '</td>' +
                                             '</tr>';
 
                                         tableBody.append(row);

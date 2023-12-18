@@ -17,7 +17,7 @@
     </div>
     <div class="select-wrapper">
         <a href="{{route('produksi.tanaman')}}"><button class="btn btn-secondary" style="width: 300px;">Tanaman</button></a><br><br>
-        <a href="{{route('cek-anggota')}}"><button class="btn btn-secondary" style="width: 300px;">Peternakan</button></a>
+        <a href="{{route('produksi.peternakan')}}"><button class="btn btn-secondary" style="width: 300px;">Peternakan</button></a>
     </div>
 
     <!-- Card Profil -->

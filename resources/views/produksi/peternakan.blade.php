@@ -6,28 +6,18 @@
 
 <div class="container has-pagehead is-pagetitle">
     <div class="section">
-        <h5 class="pagetitle">Kelembagaan</h5>
+        <h5 class="pagetitle">Produksi</h5>
     </div>
 </div>
 
 <div class="container">
-    <h6 class="text-center">Petani</h6>
-    <div class="image-wrapper">
-        <img alt="image" src="{{ asset('images/menu-petani.png') }}" style="width: 100px; height:100px">
-    </div>
+    <h6 class="text-center">peternakan</h6>
     <div class="select-wrapper">
-        <a href="{{route('cek-anggota')}}"><button class="btn btn-secondary" style="width: 300px;">Cek Keanggotaan Poktan</button></a>
+        <a href="{{route('produksi.peternakan.kecamatan')}}"><button class="btn btn-secondary" style="width: 300px;">Kecamatan</button></a><br><br>
+        <a href="{{route('produksi.peternakan.rekap')}}"><button class="btn btn-secondary" style="width: 300px;">Kabupaten</button></a>
     </div>
 
     <!-- Card Profil -->
-    <div class=""><br>
-        <label for=" poktan">MASUKAN NIK SESUAI KTP:</label>
-        <form action="{{route('procek')}}" method="get">
-            <input type="text" name="nik" style="width: 200px;">
-            <button type="submit" class="btn btn-secondary">cari</button>
-        </form>
-    </div>
-
 </div>
 <br><br><br>
 <style>

@@ -89,7 +89,7 @@
         <div class="file-field ">
             <div class="btn">
                 <span>AD ART</span>
-                <input type="text" name="ad_art">
+                <input type="file" name="ad_art">
             </div>
             <div class="file-path-wrapper">
                 <input class="file-path validate" type="text">

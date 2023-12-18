@@ -14,7 +14,7 @@
     <h6 class="text-center">Tanaman</h6>
     <div class="select-wrapper">
         <a href="{{route('produksi.tanaman.kecamatan')}}"><button class="btn btn-secondary" style="width: 300px;">Kecamatan</button></a><br><br>
-        <a href="{{route('cek-anggota')}}"><button class="btn btn-secondary" style="width: 300px;">Rekap Produksi</button></a>
+        <a href="{{route('produksi.tanaman.rekap')}}"><button class="btn btn-secondary" style="width: 300px;">Rekap Produksi</button></a>
     </div>
 
     <!-- Card Profil -->
