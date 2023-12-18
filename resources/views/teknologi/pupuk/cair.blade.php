@@ -15,9 +15,32 @@
             <a href="{{ route('store') }}"><button class="btn btn-secondary">Tambah</button></a>
         </div>
         @foreach($pupuks as $pupuk)
-            <div class="card col-lg-4">
+            <div class="card col-lg-4" >
                 <div class="image">
-                    <img src="{{ asset('storage/' . $pupuk->cover) }}" />
+                    <div class="dropdown" style="position: absolute; top: 15px; right: 10px; z-index: 999;" id="dropdown-{{ $pupuk->id }}">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <!-- Icon titik tiga secara vertikal -->
+                                &#8942;
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="{{ route('pupuk.edit', $pupuk->id) }}">Edit</a>
+                                <a class="dropdown-item" href="{{ route('pupuk.delete', $pupuk->id) }}" onclick="event.preventDefault(); document.getElementById('delete-form-{{ $pupuk->id }}').submit();">Delete</a>
+                                <form id="delete-form-{{ $pupuk->id }}" action="{{ route('pupuk.delete', $pupuk->id) }}" method="POST" style="display: none;">
+                                    @csrf
+                                    @method('DELETE')
+                                </form>
+                            </div>
+                        </div>
+                    @if(strtolower(pathinfo($pupuk->file, PATHINFO_EXTENSION)) === 'mp4')
+                        <!-- Jika file MP4, tampilkan pemutar video -->
+                        <video width="100%" height="auto" controls poster="{{ asset('storage/' . $pupuk->cover) }}">
+                            <source src="{{ asset('storage/' . $pupuk->file) }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    @else
+                        <!-- Jika bukan MP4, tampilkan gambar -->
+                        <img src="{{ asset('storage/' . $pupuk->cover) }}" />
+                    @endif
                 </div>
                 <div class="card-inner">
                     <div class="header">
@@ -25,10 +48,10 @@
                     </div>
                     <div class="content">
                         @if(strtolower(pathinfo($pupuk->file, PATHINFO_EXTENSION)) === 'mp4')
-                            <!-- Jika file PDF, tampilkan link download -->
-                            <p><a href="{{ asset('storage/' . $pupuk->file) }}">download</a></p>
+                            <!-- Jika file MP4, tampilkan link download -->
+                            <p><a href="{{ asset('storage/' . $pupuk->file) }}" >download</a></p>
                         @else
-                            <!-- Jika bukan PDF, tampilkan link download -->
+                            <!-- Jika bukan MP4, tampilkan link download -->
                             <p><a href="{{ asset('storage/' . $pupuk->file) }}" download>download</a></p>
                         @endif
                     </div>
@@ -38,8 +61,23 @@
     </div>
     <br><br>
 </div>
+<br><br><br>
 @endsection
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        @foreach($pupuks as $pupuk)
+            var dropdown{{ $pupuk->id }} = document.getElementById('dropdown-{{ $pupuk->id }}');
+            
+            dropdown{{ $pupuk->id }}.addEventListener('click', function () {
+                var menu = dropdown{{ $pupuk->id }}.querySelector('.dropdown-menu');
+                
+                // Toggle class 'show' untuk menampilkan atau menyembunyikan dropdown
+                menu.classList.toggle('show');
+            });
+        @endforeach
+    });
+</script>
 <style>
     /* Sesuaikan style card dengan desain yang diinginkan */
     body {
@@ -57,6 +95,8 @@
         margin-left: 10px; /* Atur margin kiri */
         background-color: #5c5a5a;
         display: box;
+        box-shadow: 0 5px 5px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+        
     }
 
     .card:hover {
@@ -76,7 +116,7 @@
         margin-bottom: 5px;
     }
 
-    .card img {
+    .card img,video {
         max-width: 100%; /* Menggunakan max-width untuk mengontrol lebar gambar */
         padding-left: 0;
         padding-right: 0;
@@ -109,4 +149,45 @@
         border: 1px solid #ccc;
         font-size: 14px;
     }
+    .dropdown-menu {
+        display: none; /* Sembunyikan menu by default */
+        position: absolute;
+        right: 0;
+        
+        z-index: 1;
+    }
+
+    .dropdown-menu.show {
+        display: block; /* Tampilkan menu jika memiliki class 'show' */
+    }
+    
+    @media(max-width:576px){
+        .card{
+        width: 360px;
+        max-width: 100%;
+        }
+        
+        .card img {
+        max-width: 100%;
+        object-fit: cover;
+         /* Menggunakan max-width untuk mengontrol lebar gambar */
+        padding-left: 0;
+        padding-right: 0;
+        height: 200px; /* Menjaga aspek ratio gambar */
+    }
+        .card video {
+        max-width: 100%;
+        width: 355px;
+         /* Menggunakan max-width untuk mengontrol lebar gambar */
+        padding-left: 0;
+        padding-right: 0;
+        height: 200px; /* Menjaga aspek ratio gambar */
+    }
+}
+
+@media(max-width:378px){
+    .card{
+        width: 320px;
+    }
+}
 </style>

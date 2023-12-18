@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Models\Pupuk;
 
@@ -81,5 +82,54 @@ class PupukController extends Controller
         session()->put('pupuks', $cart);
 
         return redirect()->back()->with('success', 'Product has been added to cart');
+    }
+
+    public function edit($id)
+    {
+        $pupuk = Pupuk::findOrFail($id);
+        return view('teknologi.pupuk.edit', compact('pupuk'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'judul' => 'required|string|max:255',
+            'cover' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'file' => 'mimes:pdf,doc,docx,mp4,mov,avi|max:2048',
+            'kategori' => 'required|string',
+        ]);
+
+        $pupuk = Pupuk::findOrFail($id);
+
+        if ($request->hasFile('cover')) {
+            Storage::disk('public')->delete($pupuk->cover);
+            $coverPath = $request->file('cover')->store('covers', 'public');
+            $pupuk->cover = $coverPath;
+        }
+
+        if ($request->hasFile('file')) {
+
+            Storage::disk('public')->delete($pupuk->file);
+            $fileType = $request->file('file')->extension();
+            $filePath = $request->file('file')->storeAs('files', "file_" . time() . "." . $fileType, 'public');
+            $pupuk->file = $filePath;
+
+        }
+
+        $pupuk->judul = $request->judul;
+        $pupuk->kategori = $request->kategori;
+        $pupuk->save();
+
+        $redirectRoute = ($request->kategori == 'Cair') ? 'cair' : 'padat';
+    return redirect()->route($redirectRoute)->with('success', 'Pupuk berhasil ditambahkan.');
+    }
+
+    public function delete($id)
+    {
+        $pupuk = Pupuk::findOrFail($id);
+        Storage::disk('public')->delete([$pupuk->cover, $pupuk->file]);
+        $pupuk->delete();
+
+        return redirect()->route('pupuk')->with('success', 'Pupuk berhasil dihapus.');
     }
 }

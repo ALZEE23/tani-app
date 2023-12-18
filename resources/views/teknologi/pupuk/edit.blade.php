@@ -1,3 +1,5 @@
+<!-- File: edit.blade.php -->
+
 @extends('layouts.masuk')
 
 @section('content')
@@ -5,43 +7,49 @@
 
 <div class="container has-pagehead is-pagetitle">
     <div class="section">
-        <h5 class="pagetitle">Tambahkan Informasi</h5>
+        <h5 class="pagetitle">Update Informasi</h5>
     </div>
 </div>
 
 <div class="container">
-<div class="row">
-<form action="{{ route('tambah') }}" method="POST" enctype="multipart/form-data">
-    @csrf
-    
-    <label for="judul">Judul:</label>
-    <input type="text" name="judul" id="judul" required>
+    <div class="row">
+        <form action="{{ route('pupuk.update', $pupuk->id) }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT') <!-- Gunakan method PUT untuk update -->
 
-    <label for="cover">Cover:</label>
-    <div class="file-input" id="coverInput">
-        <input type="file" name="cover" id="cover" accept="image/*" required>
-        <div class="drop-zone" id="coverDropZone">Seret dan lepas file di sini</div>
+            <label for="judul">Judul:</label>
+            <input type="text" name="judul" id="judul" value="{{ $pupuk->judul }}" required>
+
+            <label for="cover">Cover:</label>
+            <div class="file-input" id="coverInput">
+                <input type="file" name="cover" id="cover" accept="image/*">
+                <div class="drop-zone" id="coverDropZone">Seret dan lepas file di sini</div>
+            </div>
+
+            <label for="file">File:</label>
+            <div class="file-input" id="fileInput">
+                <input type="file" name="file" id="file" accept=".pdf, .doc, .docx, .mp4">
+                <div class="drop-zone" id="fileDropZone">Seret dan lepas file di sini</div>
+            </div>
+
+            <label for="kategori">Kategori:</label>
+            <select name="kategori" id="kategori">
+                <option value="Padat" {{ $pupuk->kategori === 'Padat' ? 'selected' : '' }}>Padat</option>
+                <option value="Cair" {{ $pupuk->kategori === 'Cair' ? 'selected' : '' }}>Cair</option>
+            </select>
+
+            <button type="submit">Update</button>
+        </form>
     </div>
-
-    <label for="file">File:</label>
-    <div class="file-input" id="fileInput">
-        <input type="file" name="file" id="file" accept=".pdf, .doc, .docx, .mp4" required>
-        <div class="drop-zone" id="fileDropZone">Seret dan lepas file di sini</div>
-    </div>
-
-    <label for="kategori">Kategori:</label>
-    <select name="kategori" id="kategori">
-        <!-- Tambahkan pilihan kategori sesuai kebutuhan -->
-        <option value="Padat">Padat</option>
-        <option value="Cair">Cair</option>
-    </select>
-
-    <button type="submit">Submit</button>
-</form>
-</div>
 </div>
 <br><br><br>
 
+<!-- Tambahan Script Drag-and-Drop -->
+<script>
+    // Script drag-and-drop (sama seperti pada form tambah)
+    // ...
+</script>
+@endsection
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -152,4 +160,3 @@
     fileInput.addEventListener('dragover', function (e) { e.preventDefault(); });
     fileInput.addEventListener('drop', function (e) { e.preventDefault(); handleFile(fileInput, e); });
 </script>
-@endsection
