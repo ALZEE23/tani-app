@@ -63,6 +63,9 @@
     </div>
      <div class="row">
             <a href="{{route('alsintan.store')}}"><button class="btn btn-secondary">Tambah</button></a>
+            <!-- Add this button wherever you want in your view -->
+            <a href="{{ route('export-alsintan') }}" class="btn btn-success">Excel</a>
+
         </div>
     <div class="table-responsive">
         <table class="table">

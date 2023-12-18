@@ -245,7 +245,7 @@
       </a>
     </li>
     <li>
-      <a >
+      <a href="{{route('profile.index')}}">
         <i class="mdi mdi-account-circle"></i>
         <span>Profile</span>
       </a>

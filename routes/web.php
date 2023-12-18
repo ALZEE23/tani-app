@@ -27,6 +27,7 @@ use App\Models\Penyuluh;
 use App\Models\Pupuk;
 use App\Http\Controllers\AlsintanController;
 use App\Models\Produksitanaman;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -119,10 +120,22 @@ Route::post('teknologi-tambah', [BudidayaController::class, 'tambah'])->name('te
 Route::get('/pencegahan', [PencegahanController::class, 'index'])->name('pencegahan');
 Route::get('/pencegahan/tambah', [PencegahanController::class, 'store'])->name('pencegahan.store');
 Route::post('/pencegahan/tambah', [PencegahanController::class, 'tambah'])->name('pencegahan.tambah');
+Route::get('/pencegahan/edit/{id}', [PencegahanController::class, 'edit'])->name('pencegahan.edit');
+Route::put('/pencegahan/update/{id}', [PencegahanController::class,'update'])->name('pencegahan.update');
+Route::delete('/pencegahan/delete/{id}', [PencegahanController::class,'delete'])->name('pencegahan.delete');
 Route::get('/alsintan', [AlsintanController::class, 'index'])->name('alsintan');
-Route::get('alsintan/tambah', [AlsintanController::class, 'store'])->name('alsintan.store');
-Route::post('alsintan/tambah', [AlsintanController::class, 'tambah'])->name('alsintan.tambah');
+Route::get('/alsintan/tambah', [AlsintanController::class, 'store'])->name('alsintan.store');
+Route::post('/alsintan/tambah', [AlsintanController::class, 'tambah'])->name('alsintan.tambah');
 Route::get('/alsintan/filter', [AlsintanController::class, 'filterByKecamatan'])->name('alsintan.filterByKecamatan');
+Route::get('/export-alsintan', [AlsintanController::class, 'exportToExcel'])->name('export-alsintan');
+Route::get('/fetch-desa-options', [AlsintanController::class, 'fetchDesaOptions']);
+Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+Route::get('/profile/informasi-pribadi', [ProfileController::class, 'informasi'])->name('profile.informasi');
+Route::get('/profile/sandi', [ProfileController::class, 'sandi'])->name('profile.sandi');
+Route::post('/change-password', [ProfileController::class, 'changePassword'])->name('change-password');
+
+
+
 
 // Kecamatan
 

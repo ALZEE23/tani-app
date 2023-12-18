@@ -11,13 +11,17 @@
 
 <div class="container -bottom-32">
     <div class="col-lg-12">
-        <div class="row">
+        <div class="row"> 
+            @if (auth()->user()->role == 'petugas') 
             <a href="{{ route('store') }}"><button class="btn btn-secondary">Tambah</button></a>
+            @endif 
         </div>
         @foreach($pupuks as $pupuk)
             <div class="card col-lg-4" >
+                
                 <div class="image">
-                    <div class="dropdown" style="position: absolute; top: 15px; right: 10px; z-index: 999;" id="dropdown-{{ $pupuk->id }}">
+                    @if (auth()->user()->role == 'petugas')
+                        <div class="dropdown" style="position: absolute; top: 15px; right: 10px; z-index: 999;" id="dropdown-{{ $pupuk->id }}">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <!-- Icon titik tiga secara vertikal -->
                                 &#8942;
@@ -31,6 +35,7 @@
                                 </form>
                             </div>
                         </div>
+                    @endif
                     @if(strtolower(pathinfo($pupuk->file, PATHINFO_EXTENSION)) === 'mp4')
                         <!-- Jika file MP4, tampilkan pemutar video -->
                         <video width="100%" height="auto" controls poster="{{ asset('storage/' . $pupuk->cover) }}">
@@ -49,7 +54,7 @@
                     <div class="content">
                         @if(strtolower(pathinfo($pupuk->file, PATHINFO_EXTENSION)) === 'mp4')
                             <!-- Jika file MP4, tampilkan link download -->
-                            <p><a href="{{ asset('storage/' . $pupuk->file) }}" >download</a></p>
+                            <p><a href="{{ asset('storage/' . $pupuk->file) }}" download>download</a></p>
                         @else
                             <!-- Jika bukan MP4, tampilkan link download -->
                             <p><a href="{{ asset('storage/' . $pupuk->file) }}" download>download</a></p>

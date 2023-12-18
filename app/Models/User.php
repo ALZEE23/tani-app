@@ -23,7 +23,6 @@ class User extends Authenticatable
         'password',
         'role',
         'nik',
-        'role',
         'kecamatan',
         'no_telepon',
     ];
@@ -67,6 +66,24 @@ class User extends Authenticatable
     {
         return $this->role === 'Dinas';
     }
+
+    // Dalam proses otentikasi atau pengelolaan login
+public function login(Request $request)
+{
+    // Lakukan proses otentikasi
+
+    // Ambil informasi kecamatan dari formulir login
+    $kecamatan = $request->input('kecamatan');
+
+    // Simpan nilai kecamatan ke sesi atau kolom user di database
+    session(['kecamatan' => $kecamatan]);
+    // atau
+    // Auth::user()->update(['kecamatan' => $kecamatan]);
+
+    // Redirect ke halaman profil atau halaman beranda
+    return redirect('/profile');
+}
+
 }
 
 
