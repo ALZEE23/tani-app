@@ -7,6 +7,7 @@ use App\Models\Kecamatan;
 use Illuminate\Http\Request;
 use App\Models\Produksitanaman;
 use App\Models\hProduksitanaman;
+use Illuminate\Support\Facades\DB;
 use App\Models\RekapProduksitanaman;
 
 class ProduksitanamanController extends Controller
@@ -114,6 +115,7 @@ class ProduksitanamanController extends Controller
             $data2->sebelum_produksi = $data2->sebelum_produksi + $request->produksi;
             $data2->sebelum_provitas = $data2->sebelum_provitas + $request->provitas;
             $data2->save();
+        }
         if($data == null){
             $data = new Produksitanaman();
             $data->desa = $request->desa;
@@ -165,7 +167,6 @@ class ProduksitanamanController extends Controller
         }
         return redirect()->route('produksi.tanaman.kecamatan');
     }
-    }
 
 
      function filterProduksi(Request $request)
@@ -213,4 +214,62 @@ class ProduksitanamanController extends Controller
         
         return response()->json(['data_sekarang' => $filteredData,'data_bulan_lalu' => $filteredData2]);
     }
+
+    function rekap_tanaman(){
+        $kecamatan = Kecamatan::all();
+        return view('produksi.tanaman.rekap',compact('kecamatan'));
+    }
+
+    function rekap_proses(Request $request)
+    {
+        try {
+        $data = RekapProduksitanaman::query();
+
+        // Lakukan filter berdasarkan permintaan
+        if ($request->komoditas) {
+            $data->where('komoditas', $request->komoditas);
+        }
+
+        if ($request->tahun_awal && $request->tahun_akhir && $request->bulan_awal && $request->bulan_akhir) {
+            $data->where(function ($query) use ($request) {
+                $query->whereYear('tanggal', '>=', $request->tahun_awal)
+                    ->whereYear('tanggal', '<=', $request->tahun_akhir)
+                    ->whereMonth('tanggal', '>=', $request->bulan_awal)
+                    ->whereMonth('tanggal', '<=', $request->bulan_akhir);
+            });
+        }
+
+        // Ambil data berdasarkan kecamatan dan bulan
+        $groupedData = $data
+            ->select('kecamatan', 'tanggal', $request->kolom)
+            ->get();
+
+        // Array untuk menyimpan hasil grup data per kecamatan
+        $groupedByKecamatan = [];
+
+        // Proses pengelompokan data per kecamatan
+        foreach ($groupedData as $item) {
+            $kecamatan = $item->kecamatan;
+            $bulan = date('F', strtotime($item->tanggal));
+
+            if (!isset($groupedByKecamatan[$kecamatan])) {
+                $groupedByKecamatan[$kecamatan] = [];
+            }
+
+            if (!isset($groupedByKecamatan[$kecamatan][$bulan])) {
+                $groupedByKecamatan[$kecamatan][$bulan] = 0;
+            }
+
+            $groupedByKecamatan[$kecamatan][$bulan] += $item->{$request->kolom};
+        }
+
+        return response()->json(['grouped_data' => $groupedByKecamatan]);
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()]);
+    }
+    }
+
+
+
+    
 }

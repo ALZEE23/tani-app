@@ -1,32 +1,34 @@
 <?php
 
-use App\Http\Controllers\AdminController;
-use Illuminate\Support\Facades\Route;
+use App\Models\Pupuk;
+use App\Models\Penyuluh;
 // File: web.php
 
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\TeknologiController;
-use App\Http\Controllers\PupukController;
-use App\Http\Controllers\ProduksitanamanController;
-use App\Http\Controllers\PestisidaController;
-use App\Http\Controllers\BudidayaController;
-use App\Http\Controllers\DinasController;
-use App\Http\Controllers\GakpoktansController;
-use App\Http\Controllers\KecamatanController;
-use App\Http\Controllers\KelembagaanController;
-use App\Http\Controllers\PencegahanController;
-use App\Http\Controllers\PenyuluhController;
-use App\Http\Controllers\PetaniController;
-use App\Http\Controllers\PetugasController;
-use App\Http\Controllers\PoktanController;
-use App\Http\Controllers\DesaController;
-use App\Http\Middleware\Petugas;
 use App\Models\Gakpoktans;
-use App\Models\Penyuluh;
-use App\Models\Pupuk;
-use App\Http\Controllers\AlsintanController;
 use App\Models\Produksitanaman;
+use App\Http\Middleware\Petugas;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DesaController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DinasController;
+use App\Http\Controllers\PupukController;
+use App\Http\Controllers\PetaniController;
+use App\Http\Controllers\PoktanController;
+use App\Http\Controllers\PetugasController;
+use App\Http\Controllers\AlsintanController;
+use App\Http\Controllers\BudidayaController;
+use App\Http\Controllers\PenyuluhController;
+use App\Http\Controllers\KecamatanController;
+use App\Http\Controllers\PestisidaController;
+use App\Http\Controllers\TeknologiController;
+use App\Http\Controllers\GakpoktansController;
+use App\Http\Controllers\PencegahanController;
+use App\Http\Controllers\KelembagaanController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\PasarController;
+use App\Http\Controllers\ProduksitanamanController;
+use App\Http\Controllers\ProduksipeternakanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -138,12 +140,39 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 });
 
 
-Route::resource('desa', DesaController::class)->name('desa', 'index');
+// Route::resource('desa', DesaController::class)->name('desa', 'index');
 Route::get('/produksi', [ProduksitanamanController::class, 'index'])->name('produksi.index');
 Route::get('/produksi/tanaman', [ProduksitanamanController::class, 'tanaman'])->name('produksi.tanaman');
 Route::get('/produksi/kecamatan', [ProduksitanamanController::class, 'kecamatan'])->name('produksi.tanaman.kecamatan');
 Route::get('/produksi/tanaman/tambah', [ProduksitanamanController::class, 'tambah_tanaman'])->name('produksi.tanaman.tambah');
 Route::post('/produksi/tanaman/store', [ProduksitanamanController::class, 'store_tanaman'])->name('produksi.tanaman.store');
 Route::post('/filter-produksi', [ProduksitanamanController::class, 'filterProduksi'])->name('filter.produksi');
+Route::get('/produksi/tanaman/rekap', [ProduksitanamanController::class, 'rekap_tanaman'])->name('produksi.tanaman.rekap');
+Route::post('/produksi/tanaman/rekap-filter', [ProduksitanamanController::class, 'rekap_proses'])->name('produksi.tanaman.rekap.proses');
+
+// 
+Route::get('/produksi/peternakan', [ProduksitanamanController::class, 'peternakan'])->name('produksi.peternakan');
+// Route::get('/produksi/kecamatan', [ProduksitanamanController::class, 'kecamatan'])->name('produksi.tanaman.kecamatan');
+// Route::get('/produksi/tanaman/tambah', [ProduksitanamanController::class, 'tambah_tanaman'])->name('produksi.tanaman.tambah');
+// Route::post('/produksi/tanaman/store', [ProduksitanamanController::class, 'store_tanaman'])->name('produksi.tanaman.store');
+// Route::post('/filter-produksi', [ProduksitanamanController::class, 'filterProduksi'])->name('filter.produksi');
+
+
+// Route::get('/produksi/peternakan', [ProduksipeternakanController::class, 'peternakan'])->name('produksi.peternakan');
+// Route::get('/produksi/kecamatan', [ProduksipeternakanController::class, 'kecamatan'])->name('produksi.peternakan.kecamatan');
+// Route::get('/produksi/peternakan/tambah', [ProduksipeternakanController::class, 'tambah_peternakan'])->name('produksi.peternakan.tambah');
+// Route::post('/produksi/peternakan/store', [ProduksipeternakanController::class, 'store_peternakan'])->name('produksi.peternakan.store');
+// Route::post('/filter-produksi', [ProduksipeternakanController::class, 'filterProduksi'])->name('filter.produksi');
+// Route::get('/produksi/peternakan/rekap', [ProduksipeternakanController::class, 'rekap_peternakan'])->name('produksi.peternakan.rekap');
+// Route::post('/produksi/peternakan/rekap-filter', [ProduksipeternakanController::class, 'rekap_proses'])->name('produksi.peternakan.rekap.proses');
+
+// // 
+
+Route::get('/pasar', [PasarController::class, 'index'])->name('pasar.index');
+Route::get('/pasar_tambah', [PasarController::class, 'create'])->name('pasar.tambah');
+Route::post('/pasar_store', [PasarController::class, 'store'])->name('pasar.store');
+Route::post('/filter-pasar-ternak', [PasarController::class, 'filterpasar'])->name('filter.pasar');
+Route::get('/delete/pasar/{id}', [PasarController::class, 'delete_pasar'])->name('delete.pasar');
+
 
 // Route::resource('penyuluhan', PenyuluhanController::class)->name('penyulihan', 'index');

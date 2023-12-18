@@ -144,13 +144,14 @@
               <a href="{{route('kelembagaan')}}"><div class="col s6" style="height:165px"><img alt="image" class="" style="width: 80px; height:80px;" src="{{asset('images/family-tree.png')}}"><h6>
                 Kelembagaan
               </h6></div></a>
+              <!-- <div class="col s1"></div> -->
               <a href="{{route('teknologi')}}"><div class="col s6" style="height:165px"><img alt="image" class="" style="width: 80px; height:80px" src="{{asset('images/smart-farm.png')}}"><h6>
                 Teknologi Pertanian
               </h6></div></a>
               <a href="{{route('alsintan')}}"><div class="col s6" style="height:165px"><img alt="image" class="" style="width: 80px; height:80px" src="{{asset('images/tractor.png')}}"><h6>
                 Akses Alsintan
               </h6></div></a>
-              <a href="#"><div class="col s6" style="height:165px"><img alt="image" class="" style="width: 80px; height:80px" src="{{asset('images/market.png')}}"><h6>
+              <a href="{{route('pasar.index')}}"><div class="col s6" style="height:165px"><img alt="image" class="" style="width: 80px; height:80px" src="{{asset('images/market.png')}}"><h6>
                 Akses Pasar
               </h6></div></a>
               <a href="{{route('produksi.index')}}"><div class="col s6" style="height:165px"><img alt="image" class="" style="width: 80px; height:80px" src="{{asset('images/agriculture.png')}}"><h6>

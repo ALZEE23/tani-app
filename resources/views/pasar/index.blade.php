@@ -6,14 +6,14 @@
 
 <div class="container has-pagehead is-pagetitle">
     <div class="section">
-        <h5 class="pagetitle">Kelembagaan</h5>
+        <h5 class="pagetitle">Akses Pasar</h5>
     </div>
 </div>
 
 <div class="container">
-    <h6 class="text-center">Penyuluh</h6>
+    <h6 class="text-center">Pasar {{auth()->user()->kecamatan}}</h6>
     <div class="image-wrapper">
-        <img alt="image" src="{{ asset('images/business.png') }}" style="width: 100px; height:100px">
+        <img alt="image" src="{{ asset('images/market.png') }}" style="width: 100px; height:100px">
     </div>
     @if (isset($key))
     <div class="select-wrapper">
@@ -45,13 +45,13 @@
     </script>
 
     <!-- Card Profil -->
-    @if (auth()->user()->role == 'petugas')<br>
-    <a href="{{route('tambah-penyuluh')}}">
+    @if(auth()->user()->role == (auth()->user()->role))<br>
+    <a href="{{route('pasar.tambah')}}">
         <button class="btn btn-primary">tambah</button>
     </a>
     @endif
     <br>
-    @if ($penyuluhs->isEmpty())
+    @if ($pasars->isEmpty())
     <div class="card">
         <div class="card-content">
             <div class="row valign-wrapper">
@@ -60,21 +60,19 @@
         </div>
     </div>
     @else
-    @foreach ($penyuluhs as $penyuluh)
+    @foreach ($pasars as $data)
     <div class="card">
         <div class="card-content">
             <div class="row valign-wrapper">
                 <div class="col s3">
-                    <img src="{{asset('storage/foto/'.$penyuluh->foto)}}" alt="Profile Image" style="width: 75px; height: 75px;">
+                    <img src="{{asset('storage/foto/'.$data->foto)}}" alt="Profile Image" style="width: 75px; height: 75px;">
                 </div>
                 <div class="col s9">
-                    <span class="card-title">Nama: {{$penyuluh->nama}}</span>
-                    <p>Jabatan: {{$penyuluh->jabatan}}</p>
-                    <p>No. Telepon: {{$penyuluh->no_telepon}}</p>
-                    <a href="{{asset('storage/file_rktp/'.$penyuluh->file_rktp)}}">File RKTP</a> |
-                    <a href="{{asset('storage/file_program_daerah/'.$penyuluh->file_program_desa)}}">File Program</a><br>
-                    <a href="{{route('edit.penyuluh',$penyuluh->id)}}">Edit</a>|
-                    <a href="{{route('delete.penyuluh',$penyuluh->id)}}">Hapus</a>
+                    <span class="card-title">{{$data->nama_pemilik}}</span>
+                    <p>{{$data->alamat_lokasi}}</p>
+                    <p>Kontak: {{$data->kontak_pemilik}}</p>
+                    <a href="{{$data->link_gmap}}">Klik Lokasi</a> |
+                    <a href="{{route('delete.pasar',$data->id)}}">Hapus</a>
                 </div>
             </div>
         </div>
