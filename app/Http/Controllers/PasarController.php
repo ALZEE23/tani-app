@@ -91,7 +91,7 @@ class PasarController extends Controller
         $kecamatan = Kecamatan::all();
         $pasars = Pasar::where('kecamatan', $id)->get();
         $harga = Harga::where('kecamatan', $id)->get();
-        $pasars = Pasar::where('kecamatan', Auth::user()->kecamatan)->get();
+        $pasars = Pasar::where('kecamatan', $id)->get();
         return view('pasar.index2', compact('pasars', 'kecamatan','id','harga'));
     }
 }
