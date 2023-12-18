@@ -26,6 +26,7 @@ use App\Http\Controllers\GakpoktansController;
 use App\Http\Controllers\PencegahanController;
 use App\Http\Controllers\KelembagaanController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\HargaController;
 use App\Http\Controllers\PasarController;
 use App\Http\Controllers\ProduksitanamanController;
 use App\Http\Controllers\ProduksipeternakanController;
@@ -139,11 +140,13 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::resource('petugas', PetugasController::class)->name('petugas','index');
     Route::resource('dinas', DinasController::class)->name('dinas','index');
     Route::resource('penyuluh', PenyuluhController::class)->name('penyuluh','index');
+    Route::resource('harga', HargaController::class)->name('harga','index');
     Route::resource('poktan', PoktanController::class)->name('poktan','index');
     Route::resource('gakpoktan', GakpoktansController::class)->name('gakpoktan','index');
 
     // Additional routes specific to the admin section
 });
+Route::get('/pasar-filter/{id}', [App\Http\Controllers\PasarController::class, 'filter'])->name('pasar-filter');
 
 
 // Route::resource('desa', DesaController::class)->name('desa', 'index');

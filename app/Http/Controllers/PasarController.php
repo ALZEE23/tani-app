@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Harga;
 use App\Models\Pasar;
 use App\Models\Kecamatan;
 use Illuminate\Http\Request;
@@ -83,5 +84,14 @@ class PasarController extends Controller
         $pasar = Pasar::find($id);
         $pasar->delete();
         return redirect('pasar.index')->with('success', 'Data berhasil dihapus.');
+    }
+
+    public function filter($id)
+    {
+        $kecamatan = Kecamatan::all();
+        $pasars = Pasar::where('kecamatan', $id)->get();
+        $harga = Harga::where('kecamatan', $id)->get();
+        $pasars = Pasar::where('kecamatan', Auth::user()->kecamatan)->get();
+        return view('pasar.index2', compact('pasars', 'kecamatan','id','harga'));
     }
 }

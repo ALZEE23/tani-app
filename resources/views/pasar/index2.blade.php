@@ -51,6 +51,41 @@
     </a>
     @endif
     <br>
+    <br>
+    @foreach ($pasars as $data)
+    <div class="table">
+        <div class="table-bordered">
+            <div class="row valign-wrapper">
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Produk</th>
+                            <th>Harga</th>
+                            <th>Update</th>
+                        </tr>
+                    </thead>
+                    @php
+                    $no=1;
+                    @endphp
+                    <tbody>
+                        @foreach ($harga as $h)
+                        <tr>
+                            <td>{{$no++}}</td>
+                            <td>{{$h->produk}}</td>
+                            <td>{{$h->harga}}</td>
+                            <td>{{substr($h->updated_at,0,10)}}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+
+    @endforeach
     @if ($pasars->isEmpty())
     <div class="card">
         <div class="card-content">
