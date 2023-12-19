@@ -18,7 +18,7 @@
 
         @endif
         <form id="filter-form">
-            @if (auth()->user()->role == 'dinas_peternakan')
+            @if (auth()->user()->role == 'dinas')
             <select name="kecamatan" id="kecamatan-select">
                 <option value="">Pilih Kecamatan</option>
                 @foreach ($kecamatan as $data)
