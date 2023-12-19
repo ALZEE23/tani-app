@@ -124,8 +124,11 @@
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 
+
                         <div class="col s10 offset-s1">
+
                             <select name="kecamatan" id="">
+                                <option value="Pilih Kecamatan">Pilih Kecamatan</option>
                                 @foreach ($kecamatan as $data)
                                 <option value="{{$data->kecamatan}}">{{$data->kecamatan}}</option>
                                 @endforeach
@@ -155,7 +158,7 @@
                             </span>
                             @enderror
                         </div>
-                        
+
                         <div class="input-field col s10 offset-s1">
                             <input id="nik" type="text" class="validate" name="nik" value="{{old('nik')}}">
                             <label for="nik">Nik</label>
