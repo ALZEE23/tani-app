@@ -314,6 +314,7 @@ class KelembagaanController extends Controller
 
     public function store_poktan(Request $request)
     {
+        
         // Simpan data menggunakan Eloquent pada model Penyuluh
         $poktan = new Poktan();
         $poktan->desa = $request->desa;
@@ -331,7 +332,7 @@ class KelembagaanController extends Controller
         $poktan->kelas_poktan = $request->kelas_poktan;
         $desa = Desa::where('desa', $request->desa)->first();
         $user = new User();
-        $user->email = $request->email;
+        $user->username = $request->username;
         $user->poktan = $request->nama_poktan;
         $user->password = Hash::make($request->password);
         $user->kecamatan = $desa->kecamatan;
