@@ -28,6 +28,7 @@ use App\Http\Controllers\PencegahanController;
 use App\Http\Controllers\KelembagaanController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\HargaController;
+use App\Http\Controllers\KritikDanSaranController;
 use App\Http\Controllers\PasarController;
 use App\Http\Controllers\ProduksitanamanController;
 use App\Http\Controllers\ProduksipeternakanController;
@@ -94,6 +95,11 @@ Route::get('/csdesa/session/{id}', [App\Http\Controllers\KelembagaanController::
 Route::get('/cskecamatan/session/{id}', [App\Http\Controllers\KelembagaanController::class, 'cskecamatan'])->name('cskecamatan');
 
 Route::get('/notifikasi', [App\Http\Controllers\NotifController::class, 'index'])->name('notif');
+
+//Kritik Dan Saran
+Route::get('/KritikDanSaran', [App\Http\Controllers\KritikDanSaranController::class, 'index'])->name('KritikDanSaran');
+Route::post('/store-KritikDanSaran', [App\Http\Controllers\KritikDanSaranController::class, 'store_KritikDanSaran'])->name('store-KritikDanSaran');
+Route::post('/filter-kritik', [KritikDanSaranController::class, 'filter'])->name('filter.kritik');
 
 
 Route::get('/teknologi', [TeknologiController::class, 'index'])->name('teknologi');

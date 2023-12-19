@@ -149,7 +149,7 @@
   <div class="footer-menu circular">
     <ul>
       <li>
-        <a>
+        <a href="{{route('KritikDanSaran')}}}">
           <i class="mdi mdi-mailbox"></i>
           <span>Kritik & Saran</span>
         </a>

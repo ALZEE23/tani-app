@@ -258,7 +258,7 @@
   <div class="footer-menu circular">
     <ul>
       <li>
-        <a>
+        <a href="{{route('KritikDanSaran')}}">
           <i class="mdi mdi-mailbox"></i>
           <span>Kritik & Saran</span>
         </a>
@@ -274,7 +274,7 @@
       <li style="">
         <a href="{{route('notif')}}">
           <i class="mdi mdi-bell"></i>
-          <span>Pemberitahuan {{$notif_count}}</span></span>
+          <span>Pemberitahuan</span></span>
         </a>
       </li>
       @endif
