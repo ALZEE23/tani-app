@@ -30,6 +30,7 @@
                 flex-direction: column;
             }
         </style>
+        @if (auth()->user()->role == 'petugas')
         @if (isset($key))
         <div class="select-wrapper d-flex justify-content-center">
             <label for="desa">Pilih Desa:</label>
@@ -50,6 +51,7 @@
                 <!-- Tambahkan opsi desa lainnya sesuai kebutuhan -->
             </select>
         </div>
+        @endif
         @endif
         <!-- @ endif -->
         <script>

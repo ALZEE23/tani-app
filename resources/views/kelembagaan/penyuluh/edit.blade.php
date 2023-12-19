@@ -24,8 +24,11 @@
         </div>
 
         <div class="">
-            <input id="wilayah" type="text" name="wilayah" required placeholder="wilayah" value="{{$penyuluh->wilayah}}">
-            {{-- <label for="wilayah">&nbsp;&nbsp;Wilayah</label> --}}
+            <select name="wilayah" id="">
+                @foreach ($kecamatan as $data)
+                    <option value="{{$data->kecamatan}}">{{$data->kecamatan}}</option>                    
+                @endforeach
+            </select>
         </div>
 
         <div class="">

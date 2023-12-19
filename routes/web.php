@@ -6,9 +6,7 @@ use App\Models\Penyuluh;
 
 use App\Models\Gakpoktans;
 use App\Models\Produksitanaman;
-<<<<<<< HEAD
 use App\Http\Controllers\ProfileController;
-=======
 use App\Http\Middleware\Petugas;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DesaController;
@@ -33,7 +31,6 @@ use App\Http\Controllers\HargaController;
 use App\Http\Controllers\PasarController;
 use App\Http\Controllers\ProduksitanamanController;
 use App\Http\Controllers\ProduksipeternakanController;
->>>>>>> 66ce30b0583090a87bd9667ceecc6cddb5a5b8b2
 
 /*
 |--------------------------------------------------------------------------

@@ -123,7 +123,7 @@
             </div>
         </div>
         <div class="">
-            <input id="username" type="text" name="username" required placeholder="Username">
+            <input id="email" type="email" name="email" required placeholder="email">
         </div>
         <div class="">
             <input id="password" type="password" name="password" required placeholder="Password">

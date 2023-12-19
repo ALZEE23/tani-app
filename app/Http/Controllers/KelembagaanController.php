@@ -5,18 +5,20 @@ namespace App\Http\Controllers;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use App\Models\Desa;
+use App\Models\User;
+use App\Models\poktan;
 use App\Models\Penyuluh;
 use App\Models\Kecamatan;
-use App\Models\poktan;
 use App\Models\Gakpoktans;
 use Illuminate\Http\Request;
 use App\Exports\GakpotansExport;
-use App\Http\Controllers\Controller;
 use App\Models\DaftarAnggotaPoktan;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\View;
 
+use Maatwebsite\Excel\Facades\Excel;
 use function PHPUnit\Framework\returnValue;
 
 class KelembagaanController extends Controller
@@ -155,10 +157,10 @@ class KelembagaanController extends Controller
             $penyuluh->file_program_desa = $filenameProgramDaerah;
         }
         if ($request->hasFile('foto')) {
-            $fileFoto = $request->file('file_program_daerah');
-            $filenamefoto = time() . '_' . $fileProgramDaerah->getClientOriginalName();
-            $fileFoto->storeAs('public/file_program_daerah', $filenameProgramDaerah);
-            $penyuluh->file_program_desa = $filenamefoto;
+            $fileFoto = $request->file('foto');
+            $filenamefoto = time() . '_' . $fileFoto->getClientOriginalName();
+            $fileFoto->storeAs('public/foto', $filenamefoto);
+            $penyuluh->foto = $filenamefoto;
         }
 
         $penyuluh->save();
@@ -175,8 +177,9 @@ class KelembagaanController extends Controller
     }
 
     function edit_penyuluh($id){
+        $kecamatan = Kecamatan::all();
         $penyuluh = Penyuluh::find($id);
-        return view('kelembagaan.penyuluh.edit', compact('penyuluh'));
+        return view('kelembagaan.penyuluh.edit', compact('penyuluh','kecamatan'));
     }
 
     function delete_penyuluh($id){
@@ -326,8 +329,14 @@ class KelembagaanController extends Controller
         $poktan->nilai_kelas_poktan = $request->nilai_kelas_poktan;
         $poktan->ad_art = $request->ad_art;
         $poktan->kelas_poktan = $request->kelas_poktan;
-        $poktan->username = $request->username;
-        $poktan->password = $request->password;
+        $desa = Desa::where('desa', $request->desa)->first();
+        $user = new User();
+        $user->email = $request->email;
+        $user->poktan = $request->nama_poktan;
+        $user->password = Hash::make($request->password);
+        $user->kecamatan = $desa->kecamatan;
+        $user->role = 'petugas_poktan';
+        $user->save();
 
         // Simpan file jika ada yang diunggah
         if ($request->hasFile('sk_pembentukan_poktan')) {
@@ -509,7 +518,7 @@ class KelembagaanController extends Controller
 
         $poktan->save();
         // Redirect user dan menampilkan pesan sesuai status
-        return redirect()->route('kelembagaan-petani')->with('success', 'Data penyuluh berhasil ditambahkan');
+        return redirect()->route('daftar_poktan')->with('success', 'Data penyuluh berhasil ditambahkan');
     }
 
     function detail_register_poktan($id){

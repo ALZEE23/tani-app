@@ -76,7 +76,7 @@
 
     <div class="row center" style="margin-top: 90px; margin-bottom: 90px;">
       <h2>
-        DKP3
+        Jendela Tani
       </h2>
       <img src="assets/images/logo-login.png" alt="" height="170">
     </div>
@@ -94,7 +94,7 @@
         <div class="col s4 grid-item">
           <a class="img-wrap round" href="{{route('login')}}" data-fancybox="images" data-caption="Charming looking and young designs">
             <img alt="image" class="" style="width: 100%;" src="{{asset('images/menu-petani.png')}}">
-            <h6 style="color:white" class="text-center">Petani</h6>
+            <h6 style="color:black" class="text-center">Petani</h6>
 
           </a>
           <div class="user-actions">
@@ -104,7 +104,7 @@
         <div class="col s4 grid-item">
           <a class="img-wrap round" href="{{route('login')}}" data-fancybox="images" data-caption="Create unreal combinations at your work">
             <img alt="image" class="" style="width: 100%;" src="{{asset('images/female.png')}}">
-            <h6 style="color:white" class="text-center">Petugas</h6>
+            <h6 style="color:black" class="text-center">Petugas</h6>
           </a>
           <div class="user-actions">
           </div>
@@ -113,7 +113,7 @@
         <div class="col s4 grid-item">
           <a class="img-wrap round" href="{{route('login')}}" data-fancybox="images" data-caption="You make your own looks stylish">
             <img alt="image" class="" style="width: 100%;" src="{{asset('images/officer.png')}}">
-            <h6 style="color:white" class="text-center">Dinas</h6>
+            <h6 style="color:black" class="text-center">Dinas</h6>
           </a>
           <div class="user-actions">
           </div>

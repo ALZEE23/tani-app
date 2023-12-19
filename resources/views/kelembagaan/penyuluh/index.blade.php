@@ -15,6 +15,7 @@
     <div class="image-wrapper">
         <img alt="image" src="{{ asset('images/business.png') }}" style="width: 100px; height:100px">
     </div>
+    @if (auth()->user()->role == 'dinas')
     @if (isset($key))
     <div class="select-wrapper">
         <label for="kecamatan">Pilih Kecamatan:</label>
@@ -35,6 +36,7 @@
             <!-- Tambahkan opsi kecamatan lainnya sesuai kebutuhan -->
         </select>
     </div>
+    @endif
     @endif
 
     <script>
@@ -71,10 +73,14 @@
                     <span class="card-title">Nama: {{$penyuluh->nama}}</span>
                     <p>Jabatan: {{$penyuluh->jabatan}}</p>
                     <p>No. Telepon: {{$penyuluh->no_telepon}}</p>
+                    @if (auth()->user()->role != '')
                     <a href="{{asset('storage/file_rktp/'.$penyuluh->file_rktp)}}">File RKTP</a> |
                     <a href="{{asset('storage/file_program_daerah/'.$penyuluh->file_program_desa)}}">File Program</a><br>
+                    @endif
+                    @if (auth()->user()->role == 'petugas')
                     <a href="{{route('edit.penyuluh',$penyuluh->id)}}">Edit</a>|
                     <a href="{{route('delete.penyuluh',$penyuluh->id)}}">Hapus</a>
+                    @endif
                 </div>
             </div>
         </div>
