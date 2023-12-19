@@ -143,6 +143,9 @@
                                 <td>{{$data->status}}</td>
                                 <td>
                                     <a class="btn btn-secondary" href="{{route('detail-register-poktan',$data->id)}}">Lihat</a>
+                                    @if ($data->status != 'Anggota')
+                                    <a class="btn btn-secondary" href="{{route('acc-register',$data->id)}}">Acc</a>
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach

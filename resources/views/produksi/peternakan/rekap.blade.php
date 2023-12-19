@@ -11,62 +11,38 @@
 </div>
 
 <div class="container">
-    <h6 class="text-center">Rekap Tanaman</h6>
+    <h6 class="text-center">peternakan</h6>
     <div class="select-wrapper">
+        @if (auth()->user()->role == 'petugas')
+        <a href="{{route('produksi.peternakan.tambah')}}"><button class="btn btn-secondary" style="width: 300px;">Tambah</button></a><br><br>
+
+        @endif
         <form id="filter-form">
-            <select name="komoditas" id="komoditas-select">
-                <option value="">Pilih Komoditas</option>
-                <option value="teh">TEH</option>
-                <option value="kopi">KOPI</option>
-                <option value="tebu">TEBU</option>
-                <option value="tobacco">TEMBAKAU</option>
-                <option value="cengkeh">CENGKEH</option>
-                <option value="kelapa">KELAPA</option>
-                <option value="aren">AREN</option>
-                <option value="nilam">NILAM</option>
-                <option value="lada">LADA</option>
-                <option value="kemiri">KEMIRI</option>
+            @if (auth()->user()->role == 'xs')
+            <select name="kecamatan" id="kecamatan-select">
+                <option value="">Pilih Kecamatan</option>
+                @foreach ($kecamatan as $data)
+                <option value="{{$data->kecamatan}}">{{$data->kecamatan}}</option>
+                @endforeach
+                <!-- Tambahkan opsi desa lainnya sesuai kebutuhan -->
             </select>
-            <select name="kolom" id="kolom-select">
-                <option value="">Pilih Data</option>
-                <option value="panen">panen</option>
-                <option value="gagal_panen">gagal_panen</option>
-                <option value="produksi">Produksi</option>
-                <option value="tanam">tanam</option>
-                <option value="provitas">provitas</option>
+            @endif
+
+            <select name="jenis_ternak" id="jenis_ternak-select">
+                <option value="">Pilih Jenis Ternak</option>
+                <option value="sapi">sapi</option>
+                <option value="kambing">kambing</option>
+                <option value="ayam">ayam</option>
             </select>
 
-            <select name="tahun_awal" id="tahun_awal-select">
-                <option value="">Pilih Tahun Awal</option>
+            <select name="tahun" id="tahun-select">
+                <option value="">Pilih Tahun</option>
                 <option value="2023">2023</option>
                 <option value="2024">2024</option>
                 <!-- Tambahkan opsi tahun lainnya sesuai kebutuhan -->
             </select>
 
-            <select name="bulan_awal" id="bulan_awal-select">
-                <option value="">Pilih Bulan</option>
-                <option value="1">Januari</option>
-                <option value="2">Februari</option>
-                <option value="3">Maret</option>
-                <option value="4">April</option>
-                <option value="5">Mei</option>
-                <option value="6">Juni</option>
-                <option value="7">Juli</option>
-                <option value="8">Agustuus</option>
-                <option value="9">September</option>
-                <option value="10">Oktober</option>
-                <option value="11">November</option>
-                <option value="12">Desember</option>
-                <!-- Tambahkan opsi bulan lainnya sesuai kebutuhan -->
-            </select>
-            <select name="tahun_akhir" id="tahun_akhir-select">
-                <option value="">Pilih Tahun akhir</option>
-                <option value="2023">2023</option>
-                <option value="2024">2024</option>
-                <!-- Tambahkan opsi tahun lainnya sesuai kebutuhan -->
-            </select>
-
-            <select name="bulan_akhir" id="bulan_akhir-select">
+            <select name="bulan" id="bulan-select">
                 <option value="">Pilih Bulan</option>
                 <option value="1">Januari</option>
                 <option value="2">Februari</option>
@@ -93,106 +69,169 @@
     <!-- Card Profil -->
 
 </div>
-<table id="data-table">
-    <thead>
-    </thead>
-    <tbody>
-        <!-- Di sinilah data akan ditambahkan oleh JavaScript -->
-    </tbody>
-</table>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="table-responsive">
+                @if (auth()->user()->role == '')
+                <button id="export-excel">Excel</button>
+                <button id="export-pdf"> PDF</button>
+                <br>
+                <br>
+                @endif
+                <table class="table table-bordered" id="data-table">
+                    <thead>
+                        <tr>
+                            <td class="tg-0lax">no</td>
+                            <td class="tg-0lax">Kecamatan</td>
+                            <td class="tg-0lax">Jenis Ternak</td>
+                            <td class="tg-0lax">Jumlah Kandang</td>
+                            <td class="tg-0lax">Jumlah Ternak</td>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
+                <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script> -->
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
+                <script>
+                    var nomorUrutan = 1;
+                    // jQuery
+                    $(document).ready(function() {
+                        $('#kecamatan-select, #jenis_ternak-select, #tahun-select, #bulan-select').change(function() {
+                            var desaValue = $('#kecamatan-select').val();
+                            var jenis_ternakValue = $('#jenis_ternak-select').val();
+                            var tahunValue = $('#tahun-select').val();
+                            var bulanValue = $('#bulan-select').val();
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                            // Kirim permintaan Ajax
+                            $.ajax({
+                                type: 'POST',
+                                url: '/filter-produksi-ternak-kab',
+                                data: {
+                                    _token: '{{ csrf_token() }}', // Tambahkan _token untuk laravel
+                                    desa: desaValue,
+                                    jenis_ternak: jenis_ternakValue,
+                                    tahun: tahunValue,
+                                    bulan: bulanValue
+                                },
+                                success: function(response) {
+                                    console.log(response);
+                                    var data_sekarang = response.data_sekarang || [];
+                                    var data_bulan_lalu = response.data_bulan_lalu || [];
 
-<script>
-    var nomorUrutan = 1;
+                                    var sekarangByDesa = {};
+                                    var bulanLaluByDesa = {};
 
-    // jQuery
-    $(document).ready(function() {
-        $('#komoditas-select, #kolom-select, #tahun_awal-select, #bulan_awal-select, #tahun_akhir-select, #bulan_akhir-select').change(function() {
+                                    data_sekarang.forEach(function(item) {
+                                        sekarangByDesa[item.desa] = item;
+                                    });
 
-            var komoditasValue = $('#komoditas-select').val();
-            var kolom = $('#kolom-select').val();
-            var tawal = $('#tahun_awal-select').val();
-            var bawal = $('#bulan_awal-select').val();
-            var takhir = $('#tahun_akhir-select').val();
-            var bakhir = $('#bulan_akhir-select').val();
-            console.log(komoditasValue);
-            // Kirim permintaan Ajax
-            $.ajax({
-                type: 'POST',
-                url: '{{route("produksi.tanaman.rekap.proses")}}',
-                data: {
-                    _token: '{{ csrf_token() }}', // Tambahkan _token untuk laravel
-                    bulan_awal: bawal,
-                    bulan_akhir: bakhir,
-                    tahun_awal: tawal,
-                    tahun_akhir: takhir,
-                    kolom: kolom,
-                    komoditas: komoditasValue,
-                },
-                success: function(response) {
-                    console.log(response);
-                    if (response.grouped_data) {
-                        createTableHeaders(response.grouped_data);
-                        populateTableBody(response.grouped_data);
+                                    data_bulan_lalu.forEach(function(item) {
+                                        bulanLaluByDesa[item.sebelum_desa] = item;
+                                    });
+
+                                    var mergedData = [];
+
+                                    Object.keys(sekarangByDesa).forEach(function(desa) {
+                                        var mergedItem = {
+                                            desa: desa,
+                                            jenis_ternak: sekarangByDesa[desa].jenis_ternak || null,
+                                            jumlah_ternak: sekarangByDesa[desa].jumlah_ternak || 0,
+                                            jumlah_kandang: sekarangByDesa[desa].jumlah_kandang || 0,
+                                            kecamatan: sekarangByDesa[desa].kecamatan || 0
+                                        };
+
+                                        if (bulanLaluByDesa[desa]) {
+                                            mergedItem.sebelum_desa = bulanLaluByDesa[desa].sebelum_desa || null;
+                                            mergedItem.sebelum_jenis_ternak = bulanLaluByDesa[desa].sebelum_jenis_ternak || null;
+                                            mergedItem.sebelum_jumlah_ternak = bulanLaluByDesa[desa].sebelum_jumlah_ternak || 0;
+                                            mergedItem.sebelum_jumlah_kandang = bulanLaluByDesa[desa].sebelum_jumlah_kandang || 0;
+                                        } else {
+                                            mergedItem.sebelum_desa = null;
+                                            mergedItem.sebelum_jenis_ternak = null;
+                                            mergedItem.sebelum_jumlah_ternak = 0;
+                                            mergedItem.sebelum_jumlah_kandang = 0;
+                                        }
+
+                                        mergedData.push(mergedItem);
+                                    });
+
+                                    console.log(mergedData);
+
+                                    var tableBody = $('#data-table tbody');
+                                    tableBody.empty(); // Mengosongkan isi tbody sebelum memasukkan data baru
+
+
+                                    mergedData.forEach(function(item, index) {
+                                        var row = '<tr>' +
+                                            '<td>' + (index + 1) + '</td>' +
+                                            '<td>' + item.kecamatan + '</td>' +
+                                            '<td>' + item.jenis_ternak + '</td>' +
+                                            '<td>' + item.jumlah_kandang + '</td>' +
+                                            '<td>' + item.jumlah_ternak + '</td>' +
+                                            '</tr>';
+
+                                        tableBody.append(row);
+                                    });
+                                },
+
+                                error: function(error) {
+                                    console.log(error);
+                                }
+                            });
+                        });
+                    });
+
+                    function exportToExcel() {
+                        var wb = XLSX.utils.table_to_book(document.getElementById('data-table'), {
+                            sheet: 'Sheet JS'
+                        });
+                        var wbout = XLSX.write(wb, {
+                            bookType: 'xlsx',
+                            type: 'binary'
+                        });
+
+                        function s2ab(s) {
+                            var buf = new ArrayBuffer(s.length);
+                            var view = new Uint8Array(buf);
+                            for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+                            return buf;
+                        }
+
+                        saveAs(new Blob([s2ab(wbout)], {
+                            type: "application/octet-stream"
+                        }), 'data.xlsx');
                     }
-                },
 
-                error: function(error) {
-                    console.log(error);
-                }
-            });
-        });
-    });
+                    // Tambahkan event listener pada tombol export
+                    document.getElementById('export-excel').addEventListener('click', exportToExcel);
 
-    function createTableHeaders(data) {
-        const thead = document.querySelector('thead');
-        thead.innerHTML = ''; // Clear existing thead content
+                    function exportToPDF() {
+                        if (typeof jsPDF !== 'undefined') {
+                            const doc = new jsPDF();
 
-        const headerRow = document.createElement('tr');
-        const months = Object.keys(data[Object.keys(data)[0]]); // Get month names from the server response
+                            doc.autoTable({
+                                html: '#data-table'
+                            });
 
-        // First column is for 'Kecamatan'
-        const kecamatanHeader = document.createElement('th');
-        kecamatanHeader.textContent = 'Kecamatan';
-        headerRow.appendChild(kecamatanHeader);
+                            doc.save('data.pdf');
+                        } else {
+                            console.error('Error: jsPDF is not defined.');
+                        }
+                    }
 
-        // Create columns for each month in the response
-        months.forEach(month => {
-            const monthHeader = document.createElement('th');
-            monthHeader.textContent = month;
-            headerRow.appendChild(monthHeader);
-        });
+                    // Tambahkan event listener pada tombol export ke PDF
+                    document.getElementById('export-pdf').addEventListener('click', exportToPDF);
+                </script>
 
-        thead.appendChild(headerRow);
-    }
-    
-
-    // Function to populate table body based on the server response
-    function populateTableBody(data) {
-        const tbody = document.querySelector('tbody');
-        tbody.innerHTML = ''; // Clear existing tbody content
-
-        Object.keys(data).forEach(kecamatan => {
-            const row = document.createElement('tr');
-
-            // Create cell for 'Kecamatan'
-            const kecamatanCell = document.createElement('td');
-            kecamatanCell.textContent = kecamatan;
-            row.appendChild(kecamatanCell);
-
-            // Create cells for each month's data
-            Object.values(data[kecamatan]).forEach(value => {
-                const cell = document.createElement('td');
-                cell.textContent = value;
-                row.appendChild(cell);
-            });
-
-            tbody.appendChild(row);
-        });
-    }
-</script>
-
+            </div>
+        </div>
+    </div>
+</div>
 <br><br><br>
 <style>
     /* Sesuaikan style card dengan desain yang diinginkan */

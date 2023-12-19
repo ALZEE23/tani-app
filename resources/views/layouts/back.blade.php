@@ -75,6 +75,7 @@
               <!-- ============================= -->
               <!-- Apps -->
               <!-- ============================= -->
+              @if (auth()->user()->username != 'pip')
               <li class="nav-small-cap">
                 <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                 <span class="hide-menu">Wilayah</span>
@@ -95,6 +96,7 @@
                   <span class="hide-menu">Desa</span>
                 </a>
               </li>
+              @endif
               {{-- <li class="sidebar-item">
                 <a class="sidebar-link" href="./page-user-profile.html" aria-expanded="false">
                   <span>
@@ -110,6 +112,16 @@
                 <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                 <span class="hide-menu">Data</span>
               </li>
+              @if (auth()->user()->username == 'pip')
+              <li class="sidebar-item">
+                <a class="sidebar-link {{ request()->is('harga.index') ? 'active' : '' }}" href="{{route('harga.index')}}" aria-expanded="false">
+                  <span>
+                    <i class="ti ti-report"></i>
+                  </span>
+                  <span class="hide-menu">Harga Pasar</span>
+                </a>
+              </li>
+              @else
               <li class="sidebar-item">
                 <a class="sidebar-link {{ request()->is('harga.index') ? 'active' : '' }}" href="{{route('harga.index')}}" aria-expanded="false">
                   <span>
@@ -198,6 +210,8 @@
                   <span class="hide-menu">Market</span>
                 </a>
               </li>
+              @endif
+
               <li class="sidebar-item">
                 <form action="{{ route('logout') }}" method="POST">
                   <button type="submit" class="sidebar-link" href="">

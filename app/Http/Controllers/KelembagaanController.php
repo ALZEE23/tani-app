@@ -6,6 +6,7 @@ use Dompdf\Dompdf;
 use Dompdf\Options;
 use App\Models\Desa;
 use App\Models\User;
+use App\Models\Notif;
 use App\Models\poktan;
 use App\Models\Penyuluh;
 use App\Models\Kecamatan;
@@ -16,8 +17,8 @@ use App\Models\DaftarAnggotaPoktan;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\View;
 
+use Illuminate\Support\Facades\View;
 use Maatwebsite\Excel\Facades\Excel;
 use function PHPUnit\Framework\returnValue;
 
@@ -308,7 +309,9 @@ class KelembagaanController extends Controller
         }
 
         $daftarpoktans = DaftarAnggotaPoktan::where('desa', session('desa'))->where('user_id',auth()->user()->id)->get();
-
+        if(auth()->user()->poktan != ''){
+            $daftarpoktans = DaftarAnggotaPoktan::where('poktan', auth()->user()->poktan)->get();
+        }
         return view('kelembagaan.petani.daftar', compact('daftarpoktans', 'desa'));
     }
 
@@ -542,6 +545,20 @@ class KelembagaanController extends Controller
     function cek_anggota(){
         return view('kelembagaan.petani.cek_anggota');
 
+    }
+
+    function acc_register($id){
+        $daftarpoktan = DaftarAnggotaPoktan::find($id);
+        $daftarpoktan->status = "Anggota";
+        $daftarpoktan->save();
+
+        $notif = new Notif();
+        $notif->user_id = $daftarpoktan->user_id;
+        $notif->judul = "Pendaftaran Poktan";
+        $notif->status = 0;
+        $notif->pesan = "Pendaftaran anda sebagai anggota poktan ".$daftarpoktan->poktan." telah diterima";
+        $notif->save();
+        return redirect()->route('poktan-daftar')->with('success', 'Data berhasil di acc');
     }
 
 }

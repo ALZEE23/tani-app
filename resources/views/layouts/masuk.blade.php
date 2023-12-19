@@ -154,12 +154,21 @@
           <span>Kritik & Saran</span>
         </a>
       </li>
+      @if ($notif_count > 0)
       <li>
-        <a>
+        <a href="{{route('notif')}}" style="color:var(--primary-color)">
           <i class="mdi mdi-bell"></i>
-          <span>Pemberitahuan</span>
+          <span>Pemberitahuan {{$notif_count}}</span></span>
         </a>
       </li>
+      @else
+      <li style="">
+        <a href="{{route('notif')}}">
+          <i class="mdi mdi-bell"></i>
+          <span>Pemberitahuan</span></span>
+        </a>
+      </li>
+      @endif
       <li>
         <a>
           <i class="mdi mdi-account-circle"></i>

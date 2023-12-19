@@ -6,18 +6,35 @@
 
 <div class="container has-pagehead is-pagetitle">
     <div class="section">
-        <h5 class="pagetitle">Produksi</h5>
+        <h5 class="pagetitle">Pemberitahuan</h5>
     </div>
 </div>
 
 <div class="container">
-    <h6 class="text-center">Tanaman</h6>
-    <div class="select-wrapper">
-        <a href="{{route('produksi.tanaman.kecamatann')}}"><button class="btn btn-secondary" style="width: 300px;">Kecamatan</button></a><br><br>
-        <a href="{{route('produksi.tanaman.rekap')}}"><button class="btn btn-secondary" style="width: 300px;">Rekap Produksi</button></a>
+    @if ($notif->isEmpty())
+    <div class="card">
+        <div class="card-content">
+            <div class="row valign-wrapper">
+                <h5>Tidak ada data</h5>
+            </div>
+        </div>
+    </div>
+    @else
+    @foreach ($notif as $data)
+    <div class="card">
+        <div class="card-content">
+            <div class="row valign-wrapper">
+                <div class="col s12">
+                    <span class="card-title">{{$data->judul}}</span>
+                    <p>{{$data->pesan}}</p>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- Card Profil -->
+    @endforeach
+    @endif
+
 </div>
 <br><br><br>
 <style>
