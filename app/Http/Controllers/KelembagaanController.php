@@ -333,6 +333,7 @@ class KelembagaanController extends Controller
         $desa = Desa::where('desa', $request->desa)->first();
         $user = new User();
         $user->username = $request->username;
+        $user->name = $request->username;
         $user->poktan = $request->nama_poktan;
         $user->password = Hash::make($request->password);
         $user->kecamatan = $desa->kecamatan;
