@@ -16,8 +16,11 @@ class PasarController extends Controller
     public function index()
     {
         $kecamatan = Kecamatan::all();
+        $kec1 = $kecamatan->first();
         $pasars = Pasar::where('kecamatan',Auth::user()->kecamatan)->get();
-        return view('pasar.index', compact('pasars','kecamatan'));
+        $harga = Harga::where('kecamatan', $kec1->kecamatan)->get();
+
+        return view('pasar.index2', compact('pasars','kecamatan','harga'));
     }
 
     /**

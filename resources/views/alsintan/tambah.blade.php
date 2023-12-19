@@ -17,13 +17,13 @@
             <label for="kecamatan" class="form-label">Kecamatan</label>
             <select name="kecamatan" id="kecamatan">
                 @foreach ($kecamatan as $data)
-                    <option value="{{$data->kecamatan}}">{{$data->kecamatan}}</option>
+                <option value="{{$data->kecamatan}}">{{$data->kecamatan}}</option>
                 @endforeach
                 @error('kecamatan')
-                    <span class=" invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
+                <span class=" invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                @enderror
             </select>
         </div>
         <div class="mb-3">
@@ -37,6 +37,12 @@
             <select class="form-select" id="subsektor" name="subsektor" required>
                 <option value="" selected disabled>Pilih Subsektor</option>
                 <option value="Pangan">Pangan</option>
+                <option value="Perkebunan">Perkebunan</option>
+                <option value="Hortikultura">Hortikultura</option>
+                <option value="Perikanan">Perikanan</option>
+                <option value="Perikanan">Perikanan</option>
+                <option value="KWT">KWT</option>
+                <option value="UPJA">UPJA</option>
             </select>
         </div>
         <div class="mb-3">
@@ -45,7 +51,7 @@
                 <option value="" selected disabled>Pilih Gapoktan</option>
                 <option value="Gebyog">Gebyog</option>
             </select>
-        </div> 
+        </div>
         <div class="mb-3">
             <label for="ketua_gapoktan" class="form-label">Ketua Gapoktan</label>
             <input type="text" class="form-control" id="ketua_gapoktan" name="ketua_gapoktan" required>
@@ -76,7 +82,7 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         // Fungsi untuk memuat opsi desa berdasarkan kecamatan yang dipilih
         function fetchDesaOptions() {
             var kecamatan = $('#kecamatan').val();
@@ -84,24 +90,26 @@
             $.ajax({
                 url: '/fetch-desa-options',
                 type: 'GET',
-                data: { kecamatan: kecamatan },
-                success: function (data) {
+                data: {
+                    kecamatan: kecamatan
+                },
+                success: function(data) {
                     // Hapus opsi desa yang ada sebelumnya
                     $('#desa').empty();
 
                     // Tambahkan opsi desa baru
-                    $.each(data, function (key, value) {
+                    $.each(data, function(key, value) {
                         $('#desa').append('<option value="' + value + '">' + value + '</option>');
                     });
                 },
-                error: function (xhr, status, error) {
+                error: function(xhr, status, error) {
                     console.error(xhr.responseText);
                 }
             });
         }
 
         // Panggil fungsi fetchDesaOptions saat kecamatan berubah
-        $('#kecamatan').change(function () {
+        $('#kecamatan').change(function() {
             fetchDesaOptions();
         });
 
@@ -125,12 +133,12 @@
         var selectedKecamatan = kecamatanDropdown.value;
 
         // Panggil fungsi AJAX untuk mendapatkan data desa
-        getDesaOptionsFromServer(selectedKecamatan, function (desaOptions) {
+        getDesaOptionsFromServer(selectedKecamatan, function(desaOptions) {
             // Kosongkan opsi desa sebelum menambahkan yang baru
             desaDropdown.innerHTML = '<option value="" selected disabled>Pilih Desa</option>';
 
             // Tambahkan opsi desa baru
-            desaOptions.forEach(function (desa) {
+            desaOptions.forEach(function(desa) {
                 var option = document.createElement('option');
                 option.value = desa;
                 option.text = desa;
@@ -138,5 +146,4 @@
             });
         });
     }
-
 </script>

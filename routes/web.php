@@ -31,6 +31,7 @@ use App\Http\Controllers\HargaController;
 use App\Http\Controllers\PasarController;
 use App\Http\Controllers\ProduksitanamanController;
 use App\Http\Controllers\ProduksipeternakanController;
+use App\Models\Produksipeternakan;
 
 /*
 |--------------------------------------------------------------------------
@@ -173,20 +174,13 @@ Route::get('/produksi/tanaman/rekap', [ProduksitanamanController::class, 'rekap_
 Route::post('/produksi/tanaman/rekap-filter', [ProduksitanamanController::class, 'rekap_proses'])->name('produksi.tanaman.rekap.proses');
 
 // 
-Route::get('/produksi/peternakan', [ProduksitanamanController::class, 'peternakan'])->name('produksi.peternakan');
-// Route::get('/produksi/kecamatan', [ProduksitanamanController::class, 'kecamatan'])->name('produksi.tanaman.kecamatan');
-// Route::get('/produksi/tanaman/tambah', [ProduksitanamanController::class, 'tambah_tanaman'])->name('produksi.tanaman.tambah');
-// Route::post('/produksi/tanaman/store', [ProduksitanamanController::class, 'store_tanaman'])->name('produksi.tanaman.store');
-// Route::post('/filter-produksi', [ProduksitanamanController::class, 'filterProduksi'])->name('filter.produksi');
-
-
-// Route::get('/produksi/peternakan', [ProduksipeternakanController::class, 'peternakan'])->name('produksi.peternakan');
-// Route::get('/produksi/kecamatan', [ProduksipeternakanController::class, 'kecamatan'])->name('produksi.peternakan.kecamatan');
-// Route::get('/produksi/peternakan/tambah', [ProduksipeternakanController::class, 'tambah_peternakan'])->name('produksi.peternakan.tambah');
-// Route::post('/produksi/peternakan/store', [ProduksipeternakanController::class, 'store_peternakan'])->name('produksi.peternakan.store');
-// Route::post('/filter-produksi', [ProduksipeternakanController::class, 'filterProduksi'])->name('filter.produksi');
-// Route::get('/produksi/peternakan/rekap', [ProduksipeternakanController::class, 'rekap_peternakan'])->name('produksi.peternakan.rekap');
-// Route::post('/produksi/peternakan/rekap-filter', [ProduksipeternakanController::class, 'rekap_proses'])->name('produksi.peternakan.rekap.proses');
+Route::get('/produksi/peternakan', [ProduksipeternakanController::class, 'peternakan'])->name('produksi.peternakan');
+Route::get('/produksi/kecamatan', [ProduksipeternakanController::class, 'kecamatan'])->name('produksi.peternakan.kecamatan');
+Route::get('/produksi/peternakan/tambah', [ProduksipeternakanController::class, 'tambah_peternakan'])->name('produksi.peternakan.tambah');
+Route::post('/produksi/peternakan/store', [ProduksipeternakanController::class, 'store_peternakan'])->name('produksi.peternakan.store');
+Route::post('/filter-produksi-ternak', [ProduksipeternakanController::class, 'filterProduksi'])->name('filter.produksi.peternakan');
+Route::get('/produksi/peternakan/rekap', [ProduksipeternakanController::class, 'rekap_peternakan'])->name('produksi.peternakan.rekap');
+Route::post('/produksi/peternakan/rekap-filter', [ProduksipeternakanController::class, 'rekap_proses'])->name('produksi.peternakan.rekap.proses');
 
 // // 
 

@@ -13,8 +13,11 @@
 <div class="container">
     <h6 class="text-center">Tanaman</h6>
     <div class="select-wrapper">
+        @if (auth()->user()->role == 'petugas')
         <a href="{{route('produksi.tanaman.tambah')}}"><button class="btn btn-secondary" style="width: 300px;">Tambah</button></a><br><br>
+        @endif
         <form id="filter-form">
+            @if (auth()->user()->role == 'dinas')
             <select name="kecamatan" id="kecamatan-select">
                 <option value="">Pilih Kecamatan</option>
                 @foreach ($kecamatan as $data)
@@ -22,6 +25,7 @@
                 @endforeach
                 <!-- Tambahkan opsi desa lainnya sesuai kebutuhan -->
             </select>
+            @endif
 
             <select name="komoditas" id="komoditas-select">
                 <option value="">Pilih Komoditas</option>

@@ -13,8 +13,12 @@
 <div class="container">
     <h6 class="text-center">peternakan</h6>
     <div class="select-wrapper">
+        @if (auth()->user()->role == 'petugas')
         <a href="{{route('produksi.peternakan.tambah')}}"><button class="btn btn-secondary" style="width: 300px;">Tambah</button></a><br><br>
+
+        @endif
         <form id="filter-form">
+            @if (auth()->user()->role == 'dinas_peternakan')
             <select name="kecamatan" id="kecamatan-select">
                 <option value="">Pilih Kecamatan</option>
                 @foreach ($kecamatan as $data)
@@ -22,6 +26,7 @@
                 @endforeach
                 <!-- Tambahkan opsi desa lainnya sesuai kebutuhan -->
             </select>
+            @endif
 
             <select name="jenis_ternak" id="jenis_ternak-select">
                 <option value="">Pilih Jenis Ternak</option>
@@ -92,7 +97,7 @@
                             var jenis_ternakValue = $('#jenis_ternak-select').val();
                             var tahunValue = $('#tahun-select').val();
                             var bulanValue = $('#bulan-select').val();
-                            
+
                             // Kirim permintaan Ajax
                             $.ajax({
                                 type: 'POST',
