@@ -123,8 +123,8 @@
   </div>
   <div class="row center" style="margin-top: 90px; margin-bottom: 90px;">
     <div style="background-color: red;margin: 0 auto; width: 50%; border-radius:10px">
-      <h5 style="color:white; ">
-        Dinas ........
+      <h5 style="color:grey; ">
+        Dinas Ketahanan Pangan, Pertanian Dan Perikanan
       </h5>
     </div>
 
