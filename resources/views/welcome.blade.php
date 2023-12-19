@@ -122,9 +122,9 @@
     </div>
   </div>
   <div class="row center" style="margin-top: 90px; margin-bottom: 90px;">
-    <div style="background-color: red;margin: 0 auto; width: 50%; border-radius:10px">
-      <h5 style="color:grey; ">
-        Dinas Ketahanan Pangan, Pertanian Dan Perikanan
+    <div style="background-color: red;margin: 0 auto; width: 90%; border-radius:10px">
+      <h5 style="color:#e8e6df; ">
+        Dinas Ketahanan Pangan, Pertanian Dan Perikanan Majalengka
       </h5>
     </div>
 
