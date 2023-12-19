@@ -158,6 +158,15 @@
                             </span>
                             @enderror
                         </div>
+                        <div class="input-field col s10 offset-s1">
+                            <input id="username" type="text" class="validate" name="username" value="{{old('username')}}">
+                            <label for="username">username</label>
+                            @error('username')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
 
                         <div class="input-field col s10 offset-s1">
                             <input id="nik" type="text" class="validate" name="nik" value="{{old('nik')}}">

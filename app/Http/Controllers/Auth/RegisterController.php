@@ -78,6 +78,7 @@ public function showRegistrationForm()
             'password' => Hash::make($data['password']),
              // Tambahkan ini
         'nik' => $data['nik'],
+        'username' => $data['username'],
         'kecamatan' => $data['kecamatan'],
             'no_telepon' => $data['no_telepon'],
         ]);
