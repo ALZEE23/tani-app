@@ -177,7 +177,7 @@
                 </h6>
               </div>
             </a>
-            <a href="#">
+            <a href="{{route('penyuluhan')}}">
               <div class="col s6" style="height:165px"><img alt="image" class="" style="width: 80px; height:80px" src="{{asset('images/business.png')}}">
                 <h6>
                   Kegiatan Penyuluhan

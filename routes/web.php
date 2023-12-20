@@ -101,6 +101,17 @@ Route::get('/KritikDanSaran', [App\Http\Controllers\KritikDanSaranController::cl
 Route::post('/store-KritikDanSaran', [App\Http\Controllers\KritikDanSaranController::class, 'store_KritikDanSaran'])->name('store-KritikDanSaran');
 Route::post('/filter-kritik', [KritikDanSaranController::class, 'filter'])->name('filter.kritik');
 
+//Kegiatan Penyuluhan
+Route::get('/penyuluhan', [App\Http\Controllers\PenyuluhanController::class, 'index'])->name('penyuluhan');
+
+Route::get('/penyuluhan-rencana', [App\Http\Controllers\PenyuluhanController::class, 'rencana'])->name('penyuluhan-rencana');
+Route::get('/tambah-rencana', [App\Http\Controllers\PenyuluhanController::class, 'tambah_rencana'])->name('tambah-rencana');
+Route::post('/store-rencana', [App\Http\Controllers\PenyuluhanController::class, 'store_rencana'])->name('rencana-store');
+Route::post('/filter-rencana', [App\Http\Controllers\PenyuluhanController::class, 'filter'])->name('rencana-filter');
+
+Route::get('/penyuluhan-dokumentasi', [App\Http\Controllers\PenyuluhanController::class, 'dokumentasi'])->name('penyuluhan-dokumentasi');
+Route::get('/tambah-dokumentasi', [App\Http\Controllers\PenyuluhanController::class, 'tambah_dokumentasi'])->name('tambah-dokumentasi');
+Route::post('/store-dokumentasi', [App\Http\Controllers\PenyuluhanController::class, 'store_dokumentasi'])->name('store-dokumentasi');
 
 Route::get('/teknologi', [TeknologiController::class, 'index'])->name('teknologi');
 Route::get('/pupuk', [PupukController::class, 'index'])->name('pupuk');
