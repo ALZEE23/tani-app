@@ -170,10 +170,10 @@
       </li>
       @endif
       <li>
-        <a>
-          <i class="mdi mdi-account-circle"></i>
-          <span>Profile</span>
-        </a>
+        <a href="{{route('profile.index')}}">
+            <i class="mdi mdi-account-circle"></i>
+            <span>Profile</span>
+          </a>
       </li>
     </ul>
   </div>
