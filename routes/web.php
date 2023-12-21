@@ -32,7 +32,6 @@ use App\Http\Controllers\KritikDanSaranController;
 use App\Http\Controllers\PasarController;
 use App\Http\Controllers\ProduksitanamanController;
 use App\Http\Controllers\ProduksipeternakanController;
-use App\Models\Produksipeternakan;
 
 /*
 |--------------------------------------------------------------------------
@@ -156,6 +155,8 @@ Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index
 Route::get('/profile/informasi-pribadi', [ProfileController::class, 'informasi'])->name('profile.informasi');
 Route::get('/profile/sandi', [ProfileController::class, 'sandi'])->name('profile.sandi');
 Route::post('/change-password', [ProfileController::class, 'changePassword'])->name('change-password');
+Route::get('/alsintan-backend', [AlsintanController::class, 'backend'])->name('alsintan.backend');
+Route::get('/alsintan-backend/tambah', [AlsintanController::class, 'storeBackend'])->name('alsintan.create');
 
 
 
@@ -176,6 +177,8 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::resource('harga', HargaController::class)->name('harga','index');
     Route::resource('poktan', PoktanController::class)->name('poktan','index');
     Route::resource('gakpoktan', GakpoktansController::class)->name('gakpoktan','index');
+    Route::resource('alsintan', AlsintanController::class)->name('alsintan','index');
+
 
     // Additional routes specific to the admin section
 });

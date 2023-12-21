@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Kecamatan;
+
 
 class ProfileController extends Controller
 {
@@ -13,9 +15,13 @@ class ProfileController extends Controller
         return view('profile.index');
     }
 
-    public function informasi(){
-       
-        return view('profile.informasi');
+    public function informasi()
+    {
+        // Ambil data kecamatan dari model Kecamatan
+        $kecamatans = Kecamatan::all();
+
+        // Tampilkan view 'profile.informasi' dengan data kecamatan
+        return view('profile.informasi', ['kecamatans' => $kecamatans]);
     }
 
     public function sandi(){
@@ -45,5 +51,7 @@ class ProfileController extends Controller
             return back()->withErrors(['current_password' => 'Current password is incorrect.']);
         }
     }
+
+    
 }
 

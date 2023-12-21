@@ -9,26 +9,50 @@
     </div>
 </div>
 
-<div class="container -bottom-32">
+<div class="container ">
     <div class="col-lg-12">
         <div class="row">
-            <a href="{{route('teknologi.store')}}"><button class="btn btn-secondary">Tambah</button></a>
+            <a href="{{ route('pencegahan.tambah') }}"><button class="btn btn-secondary">Tambah</button></a>
         </div>
         @foreach($budidayas as $budidaya)
-            <div class="card col-lg-4">
+            <div class="card col-lg-4" >
                 <div class="image">
-                    <img src="{{ asset('storage/' . $budidaya->cover) }}" />
+                    <div class="dropdown" style="position: absolute; top: 15px; right: 10px; z-index: 999;" id="dropdown-{{ $budidaya->id }}">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <!-- Icon titik tiga secara vertikal -->
+                                &#8942;
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="{{ route('budidaya.edit', $budidaya->id) }}">Edit</a>
+                                <a class="dropdown-item" href="#" onclick="confirmDelete('{{ $budidaya->id }}')">Delete</a>
+                                
+                                <form id="delete-form-{{ $budidaya->id }}" action="{{ route('budidaya.delete', $pencegahan->id) }}" method="POST" style="display: none;">
+                                    @csrf
+                                    @method('DELETE')
+                                </form>
+                            </div>
+                        </div>
+                    @if(strtolower(pathinfo($budidaya->file, PATHINFO_EXTENSION)) === 'mp4')
+                        <!-- Jika file MP4, tampilkan pemutar video -->
+                        <video width="100%" height="auto" controls poster="{{ asset('storage/' . $budidaya->cover) }}">
+                            <source src="{{ asset('storage/' . $budidaya->file) }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    @else
+                        <!-- Jika bukan MP4, tampilkan gambar -->
+                        <img src="{{ asset('storage/' . $budidaya->cover) }}" />
+                    @endif
                 </div>
                 <div class="card-inner">
                     <div class="header">
                         <h2>{{ $budidaya->judul }}</h2>
                     </div>
                     <div class="content">
-                        @if(strtolower(pathinfo($budidaya->file, PATHINFO_EXTENSION)) == 'mp4')
-                            <!-- Jika file PDF, tampilkan link download -->
-                            <p><a href="{{ asset('storage/' . $budidaya->file) }}">download</a></p>
+                        @if(strtolower(pathinfo($budidaya->file, PATHINFO_EXTENSION)) === 'mp4')
+                            <!-- Jika file MP4, tampilkan link download -->
+                            <p><a href="{{ asset('storage/' . $budidaya->file) }}" >download</a></p>
                         @else
-                            <!-- Jika bukan PDF, tampilkan link download -->
+                            <!-- Jika bukan MP4, tampilkan link download -->
                             <p><a href="{{ asset('storage/' . $budidaya->file) }}" download>download</a></p>
                         @endif
                     </div>
@@ -36,11 +60,34 @@
             </div>
         @endforeach
     </div>
-    <br><br><br><br>
+    <br><br>
 </div>
-<br><br><br><br>
+<br><br><br>
 @endsection
+<script>
+    function confirmDelete(id) {
+        var confirmation = confirm('Are you sure you want to delete?');
 
+        if (confirmation) {
+            document.getElementById('delete-form-' + id).submit();
+        }
+    }
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        @foreach($budidayas as $budidaya)
+            var dropdown{{ $budidaya->id }} = document.getElementById('dropdown-{{ $budidaya->id }}');
+            
+            dropdown{{ $budidaya->id }}.addEventListener('click', function () {
+                var menu = dropdown{{ $budidaya->id }}.querySelector('.dropdown-menu');
+                
+                // Toggle class 'show' untuk menampilkan atau menyembunyikan dropdown
+                menu.classList.toggle('show');
+            });
+        @endforeach
+    });
+</script>
 <style>
     /* Sesuaikan style card dengan desain yang diinginkan */
     body {
@@ -58,6 +105,8 @@
         margin-left: 10px; /* Atur margin kiri */
         background-color: #5c5a5a;
         display: box;
+        box-shadow: 0 5px 5px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+        
     }
 
     .card:hover {
@@ -77,7 +126,7 @@
         margin-bottom: 5px;
     }
 
-    .card img {
+    .card img,video {
         max-width: 100%; /* Menggunakan max-width untuk mengontrol lebar gambar */
         padding-left: 0;
         padding-right: 0;
@@ -110,13 +159,44 @@
         border: 1px solid #ccc;
         font-size: 14px;
     }
+    .dropdown-menu {
+        display: none; /* Sembunyikan menu by default */
+        position: absolute;
+        right: 0;
+        z-index: 1;
+    }
 
+    .dropdown-menu.show {
+        display: block; /* Tampilkan menu jika memiliki class 'show' */
+    }
+    
     @media(max-width:576px){
-        .card img,video {
-        max-width: 100%; /* Menggunakan max-width untuk mengontrol lebar gambar */
+        .card{
+        width: 360px;
+        max-width: 100%;
+        }
+        
+        .card img {
+        max-width: 100%;
+        object-fit: cover;
+         /* Menggunakan max-width untuk mengontrol lebar gambar */
         padding-left: 0;
         padding-right: 0;
         height: 200px; /* Menjaga aspek ratio gambar */
     }
+        .card video {
+        max-width: 100%;
+        width: 355px;
+         /* Menggunakan max-width untuk mengontrol lebar gambar */
+        padding-left: 0;
+        padding-right: 0;
+        height: 200px; /* Menjaga aspek ratio gambar */
     }
+}
+
+@media(max-width:378px){
+    .card{
+        width: 320px;
+    }
+}
 </style>
