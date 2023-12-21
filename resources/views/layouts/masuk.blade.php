@@ -88,7 +88,7 @@
         <!-- Tambahan code untuk tombol logout -->
         <form action="{{ route('logout') }}" method="POST">
           @csrf
-          <button type="submit">X</button>
+          <button type="submit">X Logout</button>
         </form>
         @endauth
       </a>

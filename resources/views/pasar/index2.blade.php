@@ -73,7 +73,7 @@
                         <tr>
                             <td>{{$no++}}</td>
                             <td>{{$h->produk}}</td>
-                            <td>{{$h->harga}}</td>
+                            <td>Rp.{{$h->harga}}</td>
                             <td>{{substr($h->updated_at,0,10)}}</td>
                         </tr>
                         @endforeach

@@ -74,52 +74,55 @@ class PenyuluhanController extends Controller
     function dokumentasi()
     { {
             $dokumentasi = Dokumentasi::all();
-            $desa = Desa::all();
+            $desa = Desa::pluck('desa');
             $kecamatan = Kecamatan::all();
+            // dd($dokumentasi);
             return view('penyuluhan.dokumentasi.index', compact('dokumentasi', 'kecamatan', 'desa'));
         }
     }
 
     function tambah_dokumentasi()
     {
-        return view('penyuluhan.dokumentasi.tambah');
+        $desa = Desa::all();
+        return view('penyuluhan.dokumentasi.tambah', compact('desa'));
     }
 
     public function store_dokumentasi(Request $request)
     {
-        // Validasi data yang dikirimkan oleh formulir
-        $request->validate([
-            'tahun' => 'required|int',
-            'bulan' => 'required|string',
-            'desa' => 'required|string',
-            'kecamatan' => 'required|string',
-            'tanggal' => 'required|date',
-            'foto' => 'foto|mimes:pdf', // Sesuaikan dengan jenis file yang diizinkan
-            'keterangan' => 'required|string',
-        ]);
+        try {
+            $documentation = new Dokumentasi();
+            $documentation->tahun = $request->input('tanggal');
+            $documentation->desa = $request->input('desa');
 
-        // Simpan data menggunakan Eloquent pada model Penyuluh
-        $penyuluh = Penyuluh::find($request->id);
-        $penyuluh->tahun = $request->tahun;
-        $penyuluh->bulan = $request->bulan;
-        $penyuluh->desa = $request->desa;
-        $penyuluh->kecamatan = $request->kecamatan;
-        $penyuluh->tanggal = $request->tanggal;
-        $penyuluh->keterangan = $request->keterangan;
+            $desa = Desa::where('desa', $request->desa)->first();
+            if ($desa) {
+                $documentation->kecamatan = $desa->kecamatan;
+            } else {
+                $documentation->kecamatan = 'Kecamatan Default';
+            }
 
-        // Simpan file jika ada yang diunggah
-        if ($request->hasFile('foto')) {
-            $foto = $request->file('foto');
-            $fotofile = time() . '_' . $foto->getClientOriginalName();
-            $foto->storeAs('public/foto', $fotofile);
-            $penyuluh->foto = $fotofile;
+            $documentation->tanggal = $request->input('tanggal');
+            $documentation->keterangan = $request->input('rencana');
+
+            $gambar = [];
+            if ($request->hasFile('file')) {
+                foreach ($request->file('file') as $file) {
+                    $fileName = time() . '_' . $file->getClientOriginalName();
+                    $file->storeAs('public/dokumentasi', $fileName);
+                    $gambar[] = $fileName;
+                }
+
+                $documentation->foto = implode(',', $gambar);
+            }
+
+            $documentation->save();
+
+            return redirect()->route('penyuluhan-dokumentasi')->with('success', 'Dokumentasi kegiatan berhasil disimpan.');
+        } catch (\Exception $e) {
+            return "Terjadi kesalahan: " . $e->getMessage(); // Memberikan pesan kesalahan umum
         }
-        // Simpan data ke database menggunakan model Rencana
-        $penyuluh->save();
-
-        // Redirect atau berikan respons sesuai kebutuhan Anda
-        return redirect()->route('penyuluhan-dokumentasi')->with('success', 'Rencana kegiatan berhasil disimpan.');
     }
+
     function filter_dokumentasi($key)
     {
         // Ganti bagian ini

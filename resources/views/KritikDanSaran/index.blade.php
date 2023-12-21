@@ -23,7 +23,7 @@
     <form action="{{ route('store-KritikDanSaran') }}" method="post">
         @csrf
         <h3 class="select-title">Masukkan Kritik Dan Saran Terkait Kegiatan</h3>
-        <textarea class="form-control input-text" name="KritikDanSaran" id="keterangan" rows="2"></textarea>
+        <textarea class="form-control input-text" name="KritikDanSaran" id="keterangan" rows="2">Masukan Kritik dan Saran</textarea>
         <button type="submit" class="add">Kirim</button>
         <br><br><br>
     </form>
@@ -66,7 +66,7 @@
         align-items: center;
         /* Memusatkan secara vertikal */
         text-align: center;
-        font-size: 35px;
+        font-size: 15px;
         margin-bottom: 20px;
         border-radius: 20px;
     }

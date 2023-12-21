@@ -6,12 +6,12 @@
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 <div class="container has-pagehead is-pagetitle">
     <div class="section">
-        <h5 class="pagetitle">Produksi</h5>
+        <h5 class="pagetitle">Produksi Tanaman</h5>
     </div>
 </div>
 
 <div class="container">
-    <h6 class="text-center">Tanaman</h6>
+    <!-- <h6 class="text-center">Tanaman</h6> -->
     <div class="select-wrapper">
         @if (auth()->user()->role == 'petugas')
         <a href="{{route('produksi.tanaman.tambah')}}"><button class="btn btn-secondary" style="width: 300px;">Tambah</button></a><br><br>

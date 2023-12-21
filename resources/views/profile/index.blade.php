@@ -6,12 +6,12 @@
 
 <div class="container has-pagehead is-pagetitle">
     <div class="section">
-        <h5 class="pagetitle">Teknologi Pertanian</h5>
+        <h5 class="pagetitle">Profile</h5>
     </div>
 </div>
 
 <div class="container">
-    <h6 class="text-center">Teknologi Pertanian</h6>
+    <!-- <h6 class="text-center">Teknologi Pertanian</h6> -->
     <div class="image-wrapper">
         <img alt="image" src="{{ asset('images/menu-petani.png') }}" style="width: 100px; height:100px">
     </div>
