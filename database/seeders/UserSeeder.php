@@ -18,12 +18,13 @@ class UserSeeder extends Seeder
     {
         User::create([
             'kecamatan' => 'Dramaga',
-            'name' => 'admin',
-            'email' => 'admin@gmail.com',
+            'name' => 'alfa',
+            'email' => 'alfa@gmail.com',
+            'username' => 'alfa',
             'password' => bcrypt('password'),
             'no_telepon' => '0000',
-            'role' => 'admin',
-            'nik' => '123456789',        
+            'role' => 'user',
+            'nik' => '12345679',        
         ]);
 
         // Tambahkan pengguna lain jika perlu

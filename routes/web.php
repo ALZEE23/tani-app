@@ -32,10 +32,8 @@ use App\Http\Controllers\KritikDanSaranController;
 use App\Http\Controllers\PasarController;
 use App\Http\Controllers\ProduksitanamanController;
 use App\Http\Controllers\ProduksipeternakanController;
-<<<<<<< HEAD
-=======
+
 use App\Models\Produksipeternakan;
->>>>>>> 1a4823e95d604aeccd66bd51aed28c18bfb057ed
 
 /*
 |--------------------------------------------------------------------------
