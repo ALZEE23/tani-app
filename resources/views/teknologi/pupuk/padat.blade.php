@@ -12,7 +12,7 @@
 <div class="container -bottom-32">
     <div class="col-lg-12">
         <div class="row"> 
-            @if (auth()->user()->role == 'petugas') 
+            @if(auth()->user()->role == 'petugas') 
             <a href="{{ route('store') }}"><button class="btn btn-secondary">Tambah</button></a>
             @endif 
         </div>

@@ -81,5 +81,77 @@ if ($kategori == 'Hortikultura') {
 
 return redirect()->route($redirectRoute)->with('success', 'Pupuk berhasil ditambahkan.');
 }
+public function edit($id)
+    {
+        $pencegahan = Pencegahan::findOrFail($id);
+        return view('teknologi.pencegahan.edit', compact('pencegahan'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'judul' => 'required|string|max:255',
+            'cover' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'file' => 'mimes:pdf,doc,docx,mp4,mov,avi|max:2048',
+        ]);
+
+        $budidaya = Budidaya::findOrFail($id);
+
+        if ($request->hasFile('cover')) {
+            Storage::disk('public')->delete($pencegahan->cover);
+            $coverPath = $request->file('cover')->store('covers', 'public');
+            $budidaya->cover = $coverPath;
+        }
+
+        if ($request->hasFile('file')) {
+
+            Storage::disk('public')->delete($budidaya->file);
+            $fileType = $request->file('file')->extension();
+            $filePath = $request->file('file')->storeAs('files', "file_" . time() . "." . $fileType, 'public');
+            $budidaya->file = $filePath;
+
+        }
+
+        $budidaya->judul = $request->judul;
+        $budidaya>save();
+
+         $kategori = $request->kategori;
+
+if ($kategori == 'Hortikultura') {
+    $redirectRoute = 'hortikultura';
+} elseif ($kategori == 'Pangan') {
+    $redirectRoute = 'pangan';
+} elseif ($kategori == 'Perkebunan') {
+    $redirectRoute = 'perkebunan';
+} else {
+    // Default route jika kategori tidak sesuai dengan yang diharapkan
+    $redirectRoute = 'home';
+}
+
+return redirect()->route($redirectRoute)->with('success', 'Pupuk berhasil ditambahkan.');
+    }
+
+    public function delete($id)
+    {
+        $budidaya = Budidaya::findOrFail($id);
+        Storage::disk('public')->delete([$budidaya->cover, $budidaya->file]);
+        $budidaya->delete();
+
+         $kategori = $request->kategori;
+
+if ($kategori == 'Hortikultura') {
+    $redirectRoute = 'hortikultura';
+} elseif ($kategori == 'Pangan') {
+    $redirectRoute = 'pangan';
+} elseif ($kategori == 'Perkebunan') {
+    $redirectRoute = 'perkebunan';
+} else {
+    // Default route jika kategori tidak sesuai dengan yang diharapkan
+    $redirectRoute = 'home';
+}
+
+return redirect()->route($redirectRoute)->with('success', 'Pupuk berhasil ditambahkan.');
+    }
+
 
 }

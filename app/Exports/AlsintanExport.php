@@ -17,7 +17,11 @@ class AlsintanExport implements FromCollection, WithHeadings, WithChunkReading, 
     }
     public function collection()
     {
+<<<<<<< HEAD
+        return Alsintan::all();
+=======
         return \App\Models\Alsintan::all();
+>>>>>>> 1a4823e95d604aeccd66bd51aed28c18bfb057ed
     }
     public function headings(): array
     {
@@ -30,17 +34,33 @@ class AlsintanExport implements FromCollection, WithHeadings, WithChunkReading, 
             'Ketua Gapoktan',
             'No Telepon',
             'Jenis Alat',
+<<<<<<< HEAD
+            'Jumlah',
+            'Tahun Terbit',
+=======
             'Jumlah alat',
             'tahun',
             'poktan',
+>>>>>>> 1a4823e95d604aeccd66bd51aed28c18bfb057ed
             // Tambahkan kolom lainnya sesuai kebutuhan
         ];
     }
 
-    public function map($gakpoktan): array
+    public function map($alsintan): array
     {
         return [
             ++$this->rowNumber,
+<<<<<<< HEAD
+            $alsintan->kecamatan,
+            $alsintan->desa,
+            $alsintan->subsektor,
+            $alsintan->gapoktan,
+            $alsintan->ketua_gapoktan,
+            $alsintan->kontak,
+            $alsintan->alat,
+            $alsintan->jumlah_alat,
+            $alsintan->tahun,
+=======
             $gakpoktan->desa,
             $gakpoktan->kecamatan,
             $gakpoktan->subsektor,
@@ -51,6 +71,7 @@ class AlsintanExport implements FromCollection, WithHeadings, WithChunkReading, 
             $gakpoktan->jumlah_alat,
             $gakpoktan->tahun,
             $gakpoktan->poktan,
+>>>>>>> 1a4823e95d604aeccd66bd51aed28c18bfb057ed
             // Mapping kolom lainnya sesuai kebutuhan
         ];
     }

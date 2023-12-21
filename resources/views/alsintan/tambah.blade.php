@@ -30,6 +30,9 @@
             <label for="desa" class="form-label">Desa</label>
             <select class="form-select" id="desa" name="desa" required>
                 <option value="" selected disabled>Pilih Desa</option>
+                @foreach ($desa as $data)
+                    <option value="{{$data->desa}}">{{$data->desa}}</option>
+                @endforeach
             </select>
         </div>
         <div class="mb-3">
@@ -79,9 +82,11 @@
 </div>
 <br><br><br>
 @endsection
+<!-- Script JavaScript -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
 <script>
+<<<<<<< HEAD
+=======
     $(document).ready(function() {
         // Fungsi untuk memuat opsi desa berdasarkan kecamatan yang dipilih
         function fetchDesaOptions() {
@@ -126,12 +131,22 @@
     }
 
     // Fungsi untuk mengubah opsi dropdown desa berdasarkan kecamatan yang dipilih
+>>>>>>> 1a4823e95d604aeccd66bd51aed28c18bfb057ed
     function updateDesaOptions() {
         var kecamatanDropdown = document.getElementById('kecamatan');
         var desaDropdown = document.getElementById('desa');
 
         var selectedKecamatan = kecamatanDropdown.value;
 
+<<<<<<< HEAD
+        // Kosongkan opsi desa sebelum menambahkan yang baru
+        desaDropdown.innerHTML = '<option value="" selected disabled>Pilih Desa</option>';
+
+        // Tambahkan opsi desa yang sesuai dengan kecamatan
+        @foreach ($desa as $data)
+            // Hanya tambahkan opsi jika kecamatan sesuai
+            if ("{{ $data->kecamatan }}" == selectedKecamatan) {
+=======
         // Panggil fungsi AJAX untuk mendapatkan data desa
         getDesaOptionsFromServer(selectedKecamatan, function(desaOptions) {
             // Kosongkan opsi desa sebelum menambahkan yang baru
@@ -139,11 +154,24 @@
 
             // Tambahkan opsi desa baru
             desaOptions.forEach(function(desa) {
+>>>>>>> 1a4823e95d604aeccd66bd51aed28c18bfb057ed
                 var option = document.createElement('option');
-                option.value = desa;
-                option.text = desa;
+                option.value = "{{ $data->desa }}";
+                option.text = "{{ $data->desa }}";
                 desaDropdown.appendChild(option);
-            });
-        });
+            }
+        @endforeach
     }
+<<<<<<< HEAD
+
+    // Panggil fungsi untuk mengupdate opsi desa saat kecamatan berubah
+    document.getElementById('kecamatan').addEventListener('change', function () {
+        updateDesaOptions();
+    });
+
+    // Panggil fungsi pada saat halaman dimuat
+    updateDesaOptions();
 </script>
+=======
+</script>
+>>>>>>> 1a4823e95d604aeccd66bd51aed28c18bfb057ed
