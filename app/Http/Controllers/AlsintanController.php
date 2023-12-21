@@ -14,22 +14,24 @@ class AlsintanController extends Controller
 {
     //
       public function index(Request $request)
-    {
-        $kecamatans = Kecamatan::all();
-        $subsektorFilter = $request->input('subsektor_filter', ''); // Memberikan nilai default berupa string kosong
-        $kecamatanFilter = $request->input('kecamatan_filter', ''); // Memberikan nilai default berupa string kosong
+{
+    $kecamatans = Kecamatan::all();
+    $subsektorFilter = $request->input('subsektor_filter', '');
+    $kecamatanFilter = $request->input('kecamatan_filter', '');
 
-        $alsintans = Alsintan::when($kecamatanFilter, function ($query) use ($kecamatanFilter) {
-            return $query->where('kecamatan', $kecamatanFilter);
-        })->when($subsektorFilter, function ($query) use ($subsektorFilter) {
-            return $query->where('subsektor', $subsektorFilter);
-        })->get();
+    $alsintans = Alsintan::when($kecamatanFilter, function ($query) use ($kecamatanFilter) {
+        return $query->where('kecamatan', $kecamatanFilter);
+    })->get();
+    
+    $subsektors = Alsintan::select('subsektor')->distinct()->get();
+    $kecamatan = $request->input('kecamatan');
+$desaOptions = Desa::where('kecamatan', $kecamatan)->pluck('desa');
+$desaFilter = $request->input('desa_filter', '');
 
-        // Mendapatkan data subsektor untuk dropdown
-        $subsektors = Alsintan::select('subsektor')->distinct()->get();
+return view('alsintan.index', compact('alsintans', 'desaOptions', 'kecamatans', 'kecamatanFilter', 'subsektors', 'subsektorFilter', 'desaFilter'));
 
-        return view('alsintan.index', compact('alsintans', 'kecamatans', 'kecamatanFilter', 'subsektors', 'subsektorFilter'));
-    }   
+}
+
     
 
     public function store()
@@ -39,23 +41,34 @@ class AlsintanController extends Controller
         return view('alsintan.tambah',compact('kecamatan','desa'));
     }
 
-    public function filterByKecamatan(Request $request)
+  public function filterByKecamatan(Request $request)
 {
     $kecamatanFilter = $request->input('kecamatan_filter');
 
-    $desaOptions = Desa::where('kecamatan', $kecamatanFilter)->pluck('desa');
+    // Ambil data alsintan berdasarkan filter
+    $alsintans = Alsintan::when($kecamatanFilter, function ($query) use ($kecamatanFilter) {
+        return $query->where('kecamatan', $kecamatanFilter);
+    })->get();
 
-    return response()->json($desaOptions);
+    // Ambil semua kecamatan (untuk menampilkan pada dropdown filter)
+    $kecamatans = Kecamatan::all();
+
+    return view('alsintan.index', compact('alsintans', 'kecamatans', 'kecamatanFilter'));
 }
 
 
-    public function fetchDesaOptions(Request $request)
+
+
+
+
+public function fetchDesaOptions(Request $request)
 {
     $kecamatan = $request->input('kecamatan');
     $desaOptions = Desa::where('kecamatan', $kecamatan)->pluck('desa');
 
     return response()->json($desaOptions);
 }
+
     public function tambah(Request $request)
     {
         // Validasi request
@@ -99,35 +112,42 @@ class AlsintanController extends Controller
     return Excel::download(new AlsintanExport, 'alsintan.xlsx');
 }
 
-//     public function backend(){
-//          $kecamatans = Kecamatan::all();
-//         $subsektorFilter = $request->input('subsektor_filter', ''); // Memberikan nilai default berupa string kosong
-//         $kecamatanFilter = $request->input('kecamatan_filter', ''); // Memberikan nilai default berupa string kosong
+    public function backendIndex(){
+        $alsintans = Alsintan::all();
+        return view('backend.alsintan.index', compact('alsintans'));
+    }
 
-//         $alsintans = Alsintan::when($kecamatanFilter, function ($query) use ($kecamatanFilter) {
-//             return $query->where('kecamatan', $kecamatanFilter);
-//         })->when($subsektorFilter, function ($query) use ($subsektorFilter) {
-//             return $query->where('subsektor', $subsektorFilter);
-//         })->get();
+    public function backend(Request $request){
+         $kecamatans = Kecamatan::all();
+        $subsektorFilter = $request->input('subsektor_filter', ''); // Memberikan nilai default berupa string kosong
+        $kecamatanFilter = $request->input('kecamatan_filter', ''); // Memberikan nilai default berupa string kosong
 
-//         // Mendapatkan data subsektor untuk dropdown
-//         $subsektors = Alsintan::select('subsektor')->distinct()->get();
-//         return view('backend.alsintan.index', compact('alsintans', 'kecamatans', 'kecamatanFilter', 'subsektors', 'subsektorFilter'));
-//     }
+        $alsintans = Alsintan::when($kecamatanFilter, function ($query) use ($kecamatanFilter) {
+            return $query->where('kecamatan', $kecamatanFilter);
+        })->when($subsektorFilter, function ($query) use ($subsektorFilter) {
+            return $query->where('subsektor', $subsektorFilter);
+        })->get();
 
-// public function storeBackend()
-//     {
-//         $desa = Desa::all();
-//         $kecamatan = Kecamatan::all();
-//         return view('alsintan.tambah',compact('kecamatan','desa'));
-//     }
+        // Mendapatkan data subsektor untuk dropdown
+        $subsektors = Alsintan::select('subsektor')->distinct()->get();
+        return view('backend.alsintan.index', compact('alsintans', 'kecamatans', 'kecamatanFilter', 'subsektors', 'subsektorFilter'));
+    }
 
-//     public function filterByKecamatanBackend(Request $request)
-// {
-//     $kecamatanFilter = $request->input('kecamatan_filter');
+public function storeBackend()
+    {
+        $desa = Desa::all();
+        $kecamatan = Kecamatan::all();
+        return view('backend.alsintan.create',compact('kecamatan','desa'));
+    }
 
-//     $desaOptions = Desa::where('kecamatan', $kecamatanFilter)->pluck('desa');
+    public function filterByKecamatanBackend(Request $request)
+{
+    $kecamatanFilter = $request->input('kecamatan_filter');
 
-//     return response()->json($desaOptions);
-// }
+    $desaOptions = Desa::where('kecamatan', $kecamatanFilter)->pluck('desa');
+
+    return response()->json($desaOptions);
+}
+
+
 }

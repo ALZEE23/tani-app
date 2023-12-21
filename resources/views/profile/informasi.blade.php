@@ -28,19 +28,24 @@
 
             <label for="kecamatan">Pilih Kecamatan</label>
             <div>
-            <select name="kecamatan" id="kecamatan">
-                    <!-- Isi nilai kecamatan dari model pengguna -->
-                    <option value="{{ Auth::user()->kecamatan }}">{{ Auth::user()->kecamatan }}</option>
-                    <!-- Pastikan bahwa pilihan lainnya juga muncul sesuai kebutuhan -->
-                </select>
+           <select name="kecamatan" id="kecamatan">
+    <!-- Isi nilai kecamatan dari model pengguna -->
+    <option value="{{ Auth::user()->kecamatan }}">{{ Auth::user()->kecamatan }}</option>
+    @foreach ($kecamatans as $kecamatan)
+        <option value="{{ $kecamatan->kecamatan }}" {{ $kecamatanFilter ?? '' == $kecamatan->kecamatan ? 'selected' : '' }}>
+            {{ $kecamatan->kecamatan }}
+        </option>
+    @endforeach
+    <!-- Pastikan bahwa pilihan lainnya juga muncul sesuai kebutuhan -->
+</select>
+
             </div>
 
             <label for="desa">Jenis Desa</label>
             <div>
             <select name="desa" id="desa">
                 <!-- Tambahkan pilihan kategori sesuai kebutuhan -->
-                <option value="desa1">Desa 1</option>
-                <option value="desa2">Desa 2</option>
+                <option value="desa1">D</option>
             </select>
             </div>
 
