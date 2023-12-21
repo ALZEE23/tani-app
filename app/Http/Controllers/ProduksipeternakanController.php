@@ -198,6 +198,55 @@ class ProduksipeternakanController extends Controller
 
         return response()->json(['data_sekarang' => $filteredData, 'data_bulan_lalu' => $filteredData2]);
     }
+    function filterProduksi_kab(Request $request)
+    {
+        $data = Produksipeternakan::query();
+        $data2 = hProduksipeternakan::query();
+
+        // Lakukan filter berdasarkan permintaan
+        if ($request->desa) {
+            $data->where('kecamatan', $request->desa);
+            $data2->where('sebelum_kecamatan', $request->desa);
+        }
+
+        if ($request->jenis_ternak) {
+            $data->where('jenis_ternak', $request->jenis_ternak);
+            $data2->where('sebelum_jenis_ternak', $request->jenis_ternak);
+        }
+
+        if ($request->tahun) {
+            $data->whereYear('tanggal', $request->tahun);
+            $data2->whereYear('tanggal', $request->tahun);
+        }
+
+        if ($request->bulan) {
+            $data->whereMonth('tanggal', $request->bulan);
+            $data2->whereMonth('tanggal', $request->bulan - 1);
+        }
+
+        // Grouping data dan menjalankan query
+        $filteredData = $data->groupBy('kecamatan')->get([
+            'kecamatan',
+            DB::raw('SUM(jumlah_ternak) as total_ternak'),
+            DB::raw('SUM(jumlah_kandang) as total_kandang'),
+        ]);
+
+        $filteredData2 = null; // Default value
+
+        // Jika ada permintaan untuk data bulan lalu
+        if ($request->bulan) {
+            $filteredData2 = $data2->groupBy('sebelum_kecamatan')->get([
+                'sebelum_kecamatan',
+                DB::raw('SUM(sebelum_jumlah_ternak) as total_ternak'),
+                DB::raw('SUM(sebelum_jumlah_kandang) as total_kandang'),
+            ]);
+        }
+
+        return response()->json([
+            'data_sekarang' => $filteredData,
+            'data_bulan_lalu' => $filteredData2,
+        ]);
+    }
 
     function rekap_peternakan()
     {

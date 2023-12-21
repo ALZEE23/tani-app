@@ -39,7 +39,7 @@
             <input id="nik" type="text" name="nik" required placeholder="NIK SESUAI KTP" value="{{$daftarpoktan->nik}}">
         </div>
         <div class="">
-            <input id="nama" type="text" name="nama" required placeholder="NAMA SESUAI KTP" value="{{$daftarpoktan->foto_ktp}}">
+            <input id="nama" type="text" name="nama" required placeholder="NAMA SESUAI KTP" value="{{$daftarpoktan->nama}}">
         </div>
         <style>
             .foto-container {

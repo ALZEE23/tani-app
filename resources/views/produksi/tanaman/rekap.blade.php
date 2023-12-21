@@ -91,8 +91,14 @@
     </div>
 
     <!-- Card Profil -->
-
+    @if (auth()->user()->role == '')
+    <button id="export-excel">Excel</button>
+    <button id="export-pdf"> PDF</button>
+    <br>
+    <br>
+    @endif
 </div>
+
 <table id="data-table">
     <thead>
     </thead>
@@ -102,6 +108,11 @@
 </table>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
 
 <script>
     var nomorUrutan = 1;
@@ -191,6 +202,47 @@
             tbody.appendChild(row);
         });
     }
+
+    function exportToExcel() {
+        var wb = XLSX.utils.table_to_book(document.getElementById('data-table'), {
+            sheet: 'Sheet JS'
+        });
+        var wbout = XLSX.write(wb, {
+            bookType: 'xlsx',
+            type: 'binary'
+        });
+
+        function s2ab(s) {
+            var buf = new ArrayBuffer(s.length);
+            var view = new Uint8Array(buf);
+            for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+            return buf;
+        }
+
+        saveAs(new Blob([s2ab(wbout)], {
+            type: "application/octet-stream"
+        }), 'data.xlsx');
+    }
+
+    // Tambahkan event listener pada tombol export
+    document.getElementById('export-excel').addEventListener('click', exportToExcel);
+
+    function exportToPDF() {
+        if (typeof jsPDF !== 'undefined') {
+            const doc = new jsPDF();
+
+            doc.autoTable({
+                html: '#data-table'
+            });
+
+            doc.save('data.pdf');
+        } else {
+            console.error('Error: jsPDF is not defined.');
+        }
+    }
+
+    // Tambahkan event listener pada tombol export ke PDF
+    document.getElementById('export-pdf').addEventListener('click', exportToPDF);
 </script>
 
 <br><br><br>

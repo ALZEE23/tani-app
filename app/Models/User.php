@@ -24,6 +24,8 @@ class User extends Authenticatable
         'role',
         'nik',
         'kecamatan',
+        'username',
+        'poktan',
         'no_telepon',
     ];
 

@@ -13,8 +13,11 @@
 <div class="container">
     <h6 class="text-center">Tanaman</h6>
     <div class="select-wrapper">
+        @if (auth()->user()->role == 'petugas')
         <a href="{{route('produksi.tanaman.tambah')}}"><button class="btn btn-secondary" style="width: 300px;">Tambah</button></a><br><br>
+        @endif
         <form id="filter-form">
+            @if (auth()->user()->role == 'dinas')
             <select name="kecamatan" id="kecamatan-select">
                 <option value="">Pilih Kecamatan</option>
                 @foreach ($kecamatan as $data)
@@ -22,6 +25,7 @@
                 @endforeach
                 <!-- Tambahkan opsi desa lainnya sesuai kebutuhan -->
             </select>
+            @endif
 
             <select name="komoditas" id="komoditas-select">
                 <option value="">Pilih Komoditas</option>
@@ -75,7 +79,12 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="table-responsive">
-
+                @if (auth()->user()->role == 'petugas' || auth()->user()->role == 'dinas')
+                <button id="export-excel">Excel</button>
+                <button id="export-pdf"> PDF</button>
+                <br>
+                <br>
+                @endif
                 <table class="table table-bordered" id="data-table">
                     <thead>
                         <tr>
@@ -107,6 +116,11 @@
                     <tbody></tbody>
                 </table>
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
+                <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script> -->
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
 
                 <script>
                     var nomorUrutan = 1;
@@ -221,6 +235,47 @@
                             });
                         });
                     });
+
+                    function exportToExcel() {
+                        var wb = XLSX.utils.table_to_book(document.getElementById('data-table'), {
+                            sheet: 'Sheet JS'
+                        });
+                        var wbout = XLSX.write(wb, {
+                            bookType: 'xlsx',
+                            type: 'binary'
+                        });
+
+                        function s2ab(s) {
+                            var buf = new ArrayBuffer(s.length);
+                            var view = new Uint8Array(buf);
+                            for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+                            return buf;
+                        }
+
+                        saveAs(new Blob([s2ab(wbout)], {
+                            type: "application/octet-stream"
+                        }), 'data.xlsx');
+                    }
+
+                    // Tambahkan event listener pada tombol export
+                    document.getElementById('export-excel').addEventListener('click', exportToExcel);
+
+                    function exportToPDF() {
+                        if (typeof jsPDF !== 'undefined') {
+                            const doc = new jsPDF();
+
+                            doc.autoTable({
+                                html: '#data-table'
+                            });
+
+                            doc.save('data.pdf');
+                        } else {
+                            console.error('Error: jsPDF is not defined.');
+                        }
+                    }
+
+                    // Tambahkan event listener pada tombol export ke PDF
+                    document.getElementById('export-pdf').addEventListener('click', exportToPDF);
                 </script>
 
             </div>

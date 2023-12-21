@@ -45,14 +45,13 @@
     </script>
 
     <!-- Card Profil -->
-    @if(auth()->user()->role == (auth()->user()->role))<br>
+    @if(auth()->user()->role == 'petugas')<br>
     <a href="{{route('pasar.tambah')}}">
         <button class="btn btn-primary">tambah</button>
     </a>
     @endif
     <br>
     <br>
-    @foreach ($pasars as $data)
     <div class="table">
         <div class="table-bordered">
             <div class="row valign-wrapper">
@@ -85,7 +84,6 @@
         </div>
     </div>
 
-    @endforeach
     @if ($pasars->isEmpty())
     <div class="card">
         <div class="card-content">
@@ -107,7 +105,9 @@
                     <p>{{$data->alamat_lokasi}}</p>
                     <p>Kontak: {{$data->kontak_pemilik}}</p>
                     <a href="{{$data->link_gmap}}">Klik Lokasi</a> |
+                    @if(auth()->user()->role == 'petugas')
                     <a href="{{route('delete.pasar',$data->id)}}">Hapus</a>
+                    @endif
                 </div>
             </div>
         </div>

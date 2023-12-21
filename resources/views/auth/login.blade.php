@@ -151,8 +151,8 @@
       </div> -->
 
       <div class="input-field col s10 offset-s1">
-        <input id="email311" type="email" class="validate" name="email">
-        <label for="email311">email</label>
+        <input id="username" type="text" class="validate" name="username">
+        <label for="username">username</label>
       </div>
 
 

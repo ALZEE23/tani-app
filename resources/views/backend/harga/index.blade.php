@@ -9,7 +9,7 @@
         <div class="card-body px-4 py-3">
             <div class="row align-items-center">
                 <div class="col-9">
-                    <h4 class="fw-semibold mb-8">kecamatan</h4>
+                    <h4 class="fw-semibold mb-8">Hara Pasar</h4>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
@@ -29,7 +29,7 @@
     </div>
     <div class="card w-100 position-relative overflow-hidden">
         <div class="px-4 py-3 border-bottom">
-            <h5 class="card-title fw-semibold mb-0 lh-sm">Table Data kecamatan</h5><br>
+            <h5 class="card-title fw-semibold mb-0 lh-sm">Table Data Harga Pasar kecamatan</h5><br>
             <a href="{{route('kecamatan.create')}}"><button type="button" class="btn mb-1 waves-effect waves-light btn-success">
                     Tambah
                 </button></a>

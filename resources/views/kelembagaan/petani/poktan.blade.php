@@ -28,6 +28,7 @@
                 flex-direction: column;
             }
         </style>
+        @if (auth()->user()->role == 'dinas')
         @if (isset($key))
         <div class="select-wrapper d-flex justify-content-center">
             <label for="kecamatan">Pilih Kecamatan:</label>
@@ -48,6 +49,7 @@
                 <!-- Tambahkan opsi desa lainnya sesuai kebutuhan -->
             </select>
         </div>
+        @endif
         @endif
         @if (isset($key))
         <div class="select-wrapper d-flex justify-content-center">

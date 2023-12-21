@@ -28,6 +28,7 @@
                 flex-direction: column;
             }
         </style>
+        @if (auth()->user()->role == 'dinas')
         @if (isset($key))
         <div class="select-wrapper d-flex justify-content-center">
             <label for="desa">Pilih Desa:</label>
@@ -48,6 +49,7 @@
                 <!-- Tambahkan opsi desa lainnya sesuai kebutuhan -->
             </select>
         </div>
+        @endif
         @endif
         <!-- @ endif -->
         <script>
@@ -96,8 +98,11 @@
         <button class="btn btn-primary">tambah</button>
     </a>
     @endif
+    @if (auth()->user()->role == 'dinas' || auth()->user()->role == 'petugas')s
+
     <a href="{{route('export-excel-gakpoktan')}}"><button class="btn btn-secondary">Excel</button></a>
     <a href="{{route('export-pdf-gakpoktan')}}"><button class="btn btn-secondary">Pdf</button></a>
+    @endif
     <br>
     <br>
     <div class="container">

@@ -6,19 +6,14 @@
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 <div class="container has-pagehead is-pagetitle">
     <div class="section">
-        <h5 class="pagetitle">Produksi</h5>
+        <h5 class="pagetitle">Kritik dan Saran</h5>
     </div>
 </div>
 
 <div class="container">
-    <h6 class="text-center">peternakan</h6>
     <div class="select-wrapper">
-        @if (auth()->user()->role == 'petugas')
-        <a href="{{route('produksi.peternakan.tambah')}}"><button class="btn btn-secondary" style="width: 300px;">Tambah</button></a><br><br>
-
-        @endif
         <form id="filter-form">
-            @if (auth()->user()->role == 'dinas')
+            @if (auth()->user()->role == 'petugas' || auth()->user()->role == 'dinas')
             <select name="kecamatan" id="kecamatan-select">
                 <option value="">Pilih Kecamatan</option>
                 @foreach ($kecamatan as $data)
@@ -28,12 +23,6 @@
             </select>
             @endif
 
-            <select name="jenis_ternak" id="jenis_ternak-select">
-                <option value="">Pilih Jenis Ternak</option>
-                <option value="sapi">sapi</option>
-                <option value="kambing">kambing</option>
-                <option value="ayam">ayam</option>
-            </select>
 
             <select name="tahun" id="tahun-select">
                 <option value="">Pilih Tahun</option>
@@ -42,22 +31,6 @@
                 <!-- Tambahkan opsi tahun lainnya sesuai kebutuhan -->
             </select>
 
-            <select name="bulan" id="bulan-select">
-                <option value="">Pilih Bulan</option>
-                <option value="1">Januari</option>
-                <option value="2">Februari</option>
-                <option value="3">Maret</option>
-                <option value="4">April</option>
-                <option value="5">Mei</option>
-                <option value="6">Juni</option>
-                <option value="7">Juli</option>
-                <option value="8">Agustuus</option>
-                <option value="9">September</option>
-                <option value="10">Oktober</option>
-                <option value="11">November</option>
-                <option value="12">Desember</option>
-                <!-- Tambahkan opsi bulan lainnya sesuai kebutuhan -->
-            </select>
 
         </form>
         <br>
@@ -73,20 +46,17 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="table-responsive">
-                @if (auth()->user()->role == 'dinas'|| auth()->user()->role == 'petugas')
                 <button id="export-excel">Excel</button>
                 <button id="export-pdf"> PDF</button>
                 <br>
                 <br>
-                @endif
                 <table class="table table-bordered" id="data-table">
                     <thead>
                         <tr>
                             <td class="tg-0lax">no</td>
-                            <td class="tg-0lax">Desa</td>
-                            <td class="tg-0lax">Jenis Ternak</td>
-                            <td class="tg-0lax">Jumlah Kandang</td>
-                            <td class="tg-0lax">Jumlah Ternak</td>
+                            <td class="tg-0lax">Kecamatan</td>
+                            <td class="tg-0lax">Tanggal</td>
+                            <td class="tg-0lax">Kritik dan Saran</td>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -110,69 +80,34 @@
                             // Kirim permintaan Ajax
                             $.ajax({
                                 type: 'POST',
-                                url: '/filter-produksi-ternak',
+                                url: '/filter-kritik',
                                 data: {
                                     _token: '{{ csrf_token() }}', // Tambahkan _token untuk laravel
                                     desa: desaValue,
-                                    jenis_ternak: jenis_ternakValue,
                                     tahun: tahunValue,
-                                    bulan: bulanValue
                                 },
                                 success: function(response) {
                                     console.log(response);
                                     var data_sekarang = response.data_sekarang || [];
-                                    var data_bulan_lalu = response.data_bulan_lalu || [];
 
                                     var sekarangByDesa = {};
-                                    var bulanLaluByDesa = {};
 
                                     data_sekarang.forEach(function(item) {
                                         sekarangByDesa[item.desa] = item;
                                     });
 
-                                    data_bulan_lalu.forEach(function(item) {
-                                        bulanLaluByDesa[item.sebelum_desa] = item;
-                                    });
 
-                                    var mergedData = [];
-
-                                    Object.keys(sekarangByDesa).forEach(function(desa) {
-                                        var mergedItem = {
-                                            desa: desa,
-                                            jenis_ternak: sekarangByDesa[desa].jenis_ternak || null,
-                                            jumlah_ternak: sekarangByDesa[desa].jumlah_ternak || 0,
-                                            jumlah_kandang: sekarangByDesa[desa].jumlah_kandang || 0,
-                                            kecamatan: sekarangByDesa[desa].kecamatan || 0
-                                        };
-
-                                        if (bulanLaluByDesa[desa]) {
-                                            mergedItem.sebelum_desa = bulanLaluByDesa[desa].sebelum_desa || null;
-                                            mergedItem.sebelum_jenis_ternak = bulanLaluByDesa[desa].sebelum_jenis_ternak || null;
-                                            mergedItem.sebelum_jumlah_ternak = bulanLaluByDesa[desa].sebelum_jumlah_ternak || 0;
-                                            mergedItem.sebelum_jumlah_kandang = bulanLaluByDesa[desa].sebelum_jumlah_kandang || 0;
-                                        } else {
-                                            mergedItem.sebelum_desa = null;
-                                            mergedItem.sebelum_jenis_ternak = null;
-                                            mergedItem.sebelum_jumlah_ternak = 0;
-                                            mergedItem.sebelum_jumlah_kandang = 0;
-                                        }
-
-                                        mergedData.push(mergedItem);
-                                    });
-
-                                    console.log(mergedData);
 
                                     var tableBody = $('#data-table tbody');
                                     tableBody.empty(); // Mengosongkan isi tbody sebelum memasukkan data baru
 
 
-                                    mergedData.forEach(function(item, index) {
+                                    data_sekarang.forEach(function(item, index) {
                                         var row = '<tr>' +
                                             '<td>' + (index + 1) + '</td>' +
-                                            '<td>' + item.desa + '</td>' +
-                                            '<td>' + item.jenis_ternak + '</td>' +
-                                            '<td>' + item.jumlah_kandang + '</td>' +
-                                            '<td>' + item.jumlah_ternak + '</td>' +
+                                            '<td>' + item.kecamatan + '</td>' +
+                                            '<td>' + item.tanggal + '</td>' +
+                                            '<td>' + item.KritikDanSaran + '</td>' +
                                             '</tr>';
 
                                         tableBody.append(row);
@@ -202,10 +137,12 @@
                             return buf;
                         }
 
+                        // Untuk mengunduh file Excel
                         saveAs(new Blob([s2ab(wbout)], {
                             type: "application/octet-stream"
                         }), 'data.xlsx');
                     }
+
 
                     // Tambahkan event listener pada tombol export
                     document.getElementById('export-excel').addEventListener('click', exportToExcel);

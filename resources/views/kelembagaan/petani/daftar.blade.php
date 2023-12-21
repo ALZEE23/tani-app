@@ -30,6 +30,7 @@
                 flex-direction: column;
             }
         </style>
+        @if (auth()->user()->role == 'petugas')
         @if (isset($key))
         <div class="select-wrapper d-flex justify-content-center">
             <label for="desa">Pilih Desa:</label>
@@ -50,6 +51,7 @@
                 <!-- Tambahkan opsi desa lainnya sesuai kebutuhan -->
             </select>
         </div>
+        @endif
         @endif
         <!-- @ endif -->
         <script>
@@ -141,6 +143,9 @@
                                 <td>{{$data->status}}</td>
                                 <td>
                                     <a class="btn btn-secondary" href="{{route('detail-register-poktan',$data->id)}}">Lihat</a>
+                                    @if ($data->status != 'Anggota')
+                                    <a class="btn btn-secondary" href="{{route('acc-register',$data->id)}}">Acc</a>
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach

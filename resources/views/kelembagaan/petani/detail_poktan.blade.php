@@ -69,7 +69,9 @@
         <div class="row justify-content-center">
             <div class="col-md-10">
                 <div class="table-responsive">
+                    @if (auth()->user()->role == 'petugas')
                     <a href="{{route('edit_poktan',$poktan->id)}}" class="btn btn-primary">Edit</a>
+                    @endif
                     <br>
                     <table class="table table-bordered center">
                         <thead>
