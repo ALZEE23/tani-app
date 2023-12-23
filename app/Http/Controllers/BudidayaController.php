@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Models\Budidaya;
 
@@ -83,8 +84,8 @@ return redirect()->route($redirectRoute)->with('success', 'Pupuk berhasil ditamb
 }
 public function edit($id)
     {
-        $pencegahan = Pencegahan::findOrFail($id);
-        return view('teknologi.pencegahan.edit', compact('pencegahan'));
+        $budidaya = Budidaya::findOrFail($id);
+        return view('teknologi.budidaya.edit', compact('budidaya'));
     }
 
     public function update(Request $request, $id)
@@ -115,7 +116,7 @@ public function edit($id)
         $budidaya->judul = $request->judul;
         $budidaya>save();
 
-         $kategori = $request->kategori;
+        $kategori = $request->kategori;
 
 if ($kategori == 'Hortikultura') {
     $redirectRoute = 'hortikultura';
@@ -137,21 +138,12 @@ return redirect()->route($redirectRoute)->with('success', 'Pupuk berhasil ditamb
         Storage::disk('public')->delete([$budidaya->cover, $budidaya->file]);
         $budidaya->delete();
 
-         $kategori = $request->kategori;
-
-if ($kategori == 'Hortikultura') {
-    $redirectRoute = 'hortikultura';
-} elseif ($kategori == 'Pangan') {
-    $redirectRoute = 'pangan';
-} elseif ($kategori == 'Perkebunan') {
-    $redirectRoute = 'perkebunan';
-} else {
+        
     // Default route jika kategori tidak sesuai dengan yang diharapkan
-    $redirectRoute = 'home';
-}
+    $redirectRoute = 'budidaya';
 
 return redirect()->route($redirectRoute)->with('success', 'Pupuk berhasil ditambahkan.');
     }
 
-
+    
 }
