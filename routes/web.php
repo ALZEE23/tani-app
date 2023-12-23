@@ -32,7 +32,6 @@ use App\Http\Controllers\KritikDanSaranController;
 use App\Http\Controllers\PasarController;
 use App\Http\Controllers\ProduksitanamanController;
 use App\Http\Controllers\ProduksipeternakanController;
-
 use App\Models\Produksipeternakan;
 
 /*
@@ -191,6 +190,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::resource('harga', HargaController::class)->name('harga','index');
     Route::resource('poktan', PoktanController::class)->name('poktan','index');
     Route::resource('gakpoktan', GakpoktansController::class)->name('gakpoktan','index');
+
 
     // Additional routes specific to the admin section
 });
