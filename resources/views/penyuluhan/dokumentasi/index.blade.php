@@ -39,21 +39,12 @@
                 <!-- Tambahkan opsi bulan lainnya sesuai kebutuhan -->
             </select>
 
-            @if (auth()->user()->role == 'petugas')
             <select name="kecamatan" id="kecamatan-select">
                 <option value="">Pilih Kecamatan</option>
                 @foreach ($kecamatan as $data)
                 <option value="{{$data->kecamatan}}">{{$data->kecamatan}}</option>
                 @endforeach
                 <!-- Tambahkan opsi desa lainnya sesuai kebutuhan -->
-            </select>
-            @endif
-
-            <select name="desa" id="desa-select">
-                <option value="">Pilih Desa</option>
-                @foreach ($desa as $data)
-                <option value="{{$data}}">{{$data}}</option>
-                @endforeach
             </select>
 
 
@@ -70,38 +61,9 @@
 
 </div>
 <div class="container">
-    <div class="section pb0">
+    <div class="section pb0 cssss">
 
-        @foreach ($dokumentasi as $data)
-        <div style="background-color: #00a99d;color:white">
-            <hr>
-            <div class="row">
-                <h6 class="">{{$data->tanggal}}</h5>
-            </div>
 
-            <div class="carousel carousel-basic carousel-small rounded">
-                @php
-                $images = explode(',', $data->foto); // Memecah string menjadi array berdasarkan koma
-                @endphp
-
-                @foreach ($images as $image)
-                <a class="carousel-item" href="#!" style="z-index: 0; opacity: 1; visibility: visible;">
-                    <img alt="image" src="{{ asset('storage/dokumentasi/' . trim($image)) }}" style="border-radius: 10px;"> <!-- Tampilkan gambar -->
-                </a>
-                @endforeach
-
-                <ul class="indicators">
-                    @for ($i = 0; $i < count($images); $i++) <li class="indicator-item{{ $i === 0 ? ' active' : '' }}">
-                        </li> <!-- Tampilkan indikator -->
-                        @endfor
-                </ul>
-
-            </div>
-            <h5>{{$data->keterangan}}</h5>
-            <br>
-
-        </div>
-        @endforeach
 
     </div>
     <br>
@@ -111,12 +73,6 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="table-responsive">
-                @if (auth()->user()->role == '')
-                <button id="export-excel">Excel</button>
-                <button id="export-pdf"> PDF</button>
-                <br>
-                <br>
-                @endif
 
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -128,45 +84,33 @@
                     var nomorUrutan = 1;
                     // jQuery
                     $(document).ready(function() {
-                        $('#kecamatan-select, #penyuluh-select, #tahun-select, #bulan-select').change(function() {
+                        $('#kecamatan-select, #tahun-select, #bulan-select').change(function() {
                             var kecamatan = $('#kecamatan-select').val();
-                            var penyuluh = $('#penyuluh-select').val();
                             var tahunValue = $('#tahun-select').val();
                             var bulanValue = $('#bulan-select').val();
                             console.log(kecamatan);
                             // Kirim permintaan Ajax
                             $.ajax({
                                 type: 'POST',
-                                url: '/filter-rencana',
+                                url: '/filter-dokumentasi',
                                 data: {
                                     _token: '{{ csrf_token() }}', // Tambahkan _token untuk laravel
                                     kecamatan: kecamatan,
-                                    penyuluh: penyuluh,
                                     tahun: tahunValue,
                                     bulan: bulanValue
                                 },
-                                success: function(response) {
-                                    console.log(response);
-                                    var data_sekarang = response.data_sekarang || [];
+                                success: function(data) {
+                                    // Tanggapan dari server sukses diterima
+                                    // Manipulasi tampilan dengan data yang diterima dari server
+                                    console.log(data); // Untuk menampilkan tanggapan dari server di konsol
 
-                                    var sekarangByDesa = {};
-
-                                    data_sekarang.forEach(function(item) {
-                                        sekarangByDesa[item.desa] = item;
-                                    });
-                                    var tableBody = $('#data-table tbody');
-                                    tableBody.empty(); // Mengosongkan isi tbody sebelum memasukkan data baru
-
-
-                                    data_sekarang.forEach(function(item, index) {
-                                        var row = '<tr>' +
-                                            '<td>' + (index + 1) + '</td>' +
-                                            '<td>' + item.tanggal + '</td>' +
-                                            '<td>' + item.rencana_kegiatan + '</td>' +
-                                            '</tr>';
-
-                                        tableBody.append(row);
-                                    });
+                                    // Memasukkan data ke dalam kontainer Carousel
+                                    $('.cssss').html(data);
+                                    $('.carousel').carousel();
+                                },
+                                error: function(xhr, status, error) {
+                                    // Tanggapan dari server gagal atau terjadi kesalahan
+                                    console.error(xhr.responseText);
                                 },
 
                                 error: function(error) {

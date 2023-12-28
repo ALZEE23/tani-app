@@ -77,7 +77,7 @@
   <!-- START navigation -->
   <nav class="fix_topscroll logo_on_fixed  topbar navigation">
     <div class="nav-wrapper container">
-      <a href="{{ url()->previous() }}" class="waves-effect waves-circle navicon back-button htmlmode show-on-large">
+      <a href="{{route('home')}}" class="waves-effect waves-circle navicon back-button htmlmode show-on-large">
         <i class="mdi mdi-chevron-left" data-page=""></i>
       </a>
 
@@ -88,7 +88,7 @@
         <!-- Tambahan code untuk tombol logout -->
         <form action="{{ route('logout') }}" method="POST">
           @csrf
-          <button type="submit">X Logout</button>
+          <button type="submit">X</button>
         </form>
         @endauth
       </a>

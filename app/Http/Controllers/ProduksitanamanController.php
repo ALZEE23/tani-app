@@ -270,6 +270,9 @@ class ProduksitanamanController extends Controller
     }
 
 
-
+    function api(){
+        $data = Produksitanaman::all();
+        return response()->json($data);
+    }
     
 }

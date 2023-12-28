@@ -15,6 +15,7 @@
     <div class="image-wrapper">
         <img alt="image" src="{{ asset('images/market.png') }}" style="width: 100px; height:100px">
     </div>
+    @if (auth()->user()->role == 'dinas')
     @if (isset($key))
     <div class="select-wrapper">
         <label for="kecamatan">Pilih Kecamatan:</label>
@@ -37,6 +38,7 @@
     </div>
     @endif
 
+    @endif
     <script>
         function redirectToSelectedKecamatan() {
             const selectedKecamatan = document.getElementById('kecamatan').value;
@@ -52,6 +54,7 @@
     @endif
     <br>
     <br>
+    <h6>Harga Umum Seluruh Majalengka</h6>
     <div class="table">
         <div class="table-bordered">
             <div class="row valign-wrapper">

@@ -149,5 +149,11 @@ public function storeBackend()
     return response()->json($desaOptions);
 }
 
+function getDesaByKecamatan(Request $request){
+    $kecamatan = request()->kecamatan;
+    $desa = Desa::where('kecamatan',$kecamatan)->get();
+    return response()->json($desa);
+}
+
 
 }

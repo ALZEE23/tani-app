@@ -142,8 +142,14 @@
         <div class="row">
           <form method="POST" action="{{ route('login') }}">
             @csrf
+
+            <!-- <div class="col s10 offset-s1">  
+        <select name="" id="">
+          <option value="" class="validate">Pilih Kecamatan</option>
+        </select>
+      </div> -->
             @if ($errors->any())
-            <div class="alert alert-danger">
+            <div class="alert alert-danger text-center" style="color:white">
               <ul>
                 @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
@@ -151,13 +157,8 @@
               </ul>
             </div>
             @endif
-            <!-- <div class="col s10 offset-s1">  
-        <select name="" id="">
-          <option value="" class="validate">Pilih Kecamatan</option>
-        </select>
-      </div> -->
-
             <div class="input-field col s10 offset-s1">
+
               <input id="username" type="text" class="validate" name="username">
               <label for="username">username</label>
             </div>

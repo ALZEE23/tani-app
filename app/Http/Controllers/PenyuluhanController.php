@@ -122,6 +122,41 @@ class PenyuluhanController extends Controller
             return "Terjadi kesalahan: " . $e->getMessage(); // Memberikan pesan kesalahan umum
         }
     }
+    public function updatedok(Request $request)
+    {
+        try {
+            $documentation = Dokumentasi::find($request->id);
+            $documentation->tahun = $request->input('tanggal');
+            $documentation->desa = $request->input('desa');
+
+            $desa = Desa::where('desa', $request->desa)->first();
+            if ($desa) {
+                $documentation->kecamatan = $desa->kecamatan;
+            } else {
+                $documentation->kecamatan = 'Kecamatan Default';
+            }
+
+            $documentation->tanggal = $request->input('tanggal');
+            $documentation->keterangan = $request->input('rencana');
+
+            $gambar = [];
+            if ($request->hasFile('file')) {
+                foreach ($request->file('file') as $file) {
+                    $fileName = time() . '_' . $file->getClientOriginalName();
+                    $file->storeAs('public/dokumentasi', $fileName);
+                    $gambar[] = $fileName;
+                }
+
+                $documentation->foto = implode(',', $gambar);
+            }
+
+            $documentation->save();
+
+            return redirect()->route('penyuluhan-dokumentasi')->with('success', 'Dokumentasi kegiatan berhasil disimpan.');
+        } catch (\Exception $e) {
+            return "Terjadi kesalahan: " . $e->getMessage(); // Memberikan pesan kesalahan umum
+        }
+    }
 
     function filter_dokumentasi($key)
     {
@@ -166,4 +201,74 @@ class PenyuluhanController extends Controller
 
         return response()->json(['data_sekarang' => $filteredData]);
     }
+
+    // Di sisi server, misalnya dalam controller Laravel atau di tempat Anda memproses permintaan Ajax
+    public function handleAjaxRequest(Request $request)
+    {
+        // Lakukan logika untuk mengambil data yang sesuai dari model atau sumber data lainnya
+        // Simpan data dalam variabel $dokumentasi (berisi koleksi data dokumentasi yang sesuai)
+        $data = Dokumentasi::query();
+
+        if ($request->tahun) {
+            $data->whereYear('tanggal', $request->tahun);
+        }
+
+        if ($request->bulan) {
+            $data->whereMonth('tanggal', $request->bulan);
+        }
+        if ($request->kecamatan) {
+            $data->where('kecamatan', $request->kecamatan);
+        }
+        $dokumentasi = $data->get();
+
+        // Jika ada permintaan untuk data bulan lalu
+
+        // Susun respons dalam format HTML yang sesuai dengan struktur yang diinginkan
+        $response = '';
+        foreach ($dokumentasi as $data) {
+            $response .= '<div style="background-color: #00a99d; color: white">';
+            $response .= '<hr>';
+            $response .= '<div class="row">';
+            $response .= '<h6>' . $data->tanggal . '</h6>';
+            $response .= '</div>';
+
+            $response .= '<div class="carousel carousel-basic carousel-small rounded">';
+            $images = explode(',', $data->foto);
+            foreach ($images as $image) {
+                $response .= '<a class="carousel-item" href="#!" style="z-index: 0; opacity: 1; visibility: visible;">';
+                $response .= '<img alt="image" src="' . asset('storage/dokumentasi/' . trim($image)) . '" style="border-radius: 10px;">';
+                $response .= '</a>';
+            }
+
+            $response .= '<ul class="indicators">';
+            for ($i = 0; $i < count($images); $i++) {
+                $response .= '<li class="indicator-item' . ($i === 0 ? ' active' : '') . '"></li>';
+            }
+            $response .= '</ul>';
+            $response .= '</div>';
+
+            $response .= '<h5>' . $data->keterangan . '</h5>';
+            $response .= '<br>';
+            $response .= '<hr>';
+            $response .= '<a href="' . route('delete-dokumentasi',$data->id) . '" class="btn btn-primary">Hapus</a>';
+            $response .= '<a href="' . route('edit-dokumentasi',$data->id) . '" class="btn btn-primary">Edit</a>';
+            $response .= '</div>';
+        }
+
+        return $response;
+    }
+
+    function editdok($id)
+    {
+        $dokumentasi = Dokumentasi::find($id);
+        $desa = Desa::all();
+        return view('penyuluhan.dokumentasi.edit', compact('dokumentasi', 'desa'));
+    }
+
+    function deletedok($id)
+    {
+        $dokumentasi = Dokumentasi::find($id);
+        $dokumentasi->delete();
+        return redirect()->route('penyuluhan-dokumentasi')->with('success', 'Dokumentasi kegiatan berhasil dihapus.');
+    }   
 }

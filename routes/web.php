@@ -112,6 +112,10 @@ Route::post('/filter-rencana', [App\Http\Controllers\PenyuluhanController::class
 Route::get('/penyuluhan-dokumentasi', [App\Http\Controllers\PenyuluhanController::class, 'dokumentasi'])->name('penyuluhan-dokumentasi');
 Route::get('/tambah-dokumentasi', [App\Http\Controllers\PenyuluhanController::class, 'tambah_dokumentasi'])->name('tambah-dokumentasi');
 Route::post('/store-dokumentasi', [App\Http\Controllers\PenyuluhanController::class, 'store_dokumentasi'])->name('store-dokumentasi');
+Route::post('/filter-dokumentasi', [App\Http\Controllers\PenyuluhanController::class, 'handleAjaxRequest'])->name('filter-dokumentasi');
+Route::get('/delete-dokumentasi/{id}', [App\Http\Controllers\PenyuluhanController::class, 'deletedok'])->name('delete-dokumentasi');
+Route::get('/edit-dokumentasi/{id}', [App\Http\Controllers\PenyuluhanController::class, 'editdok'])->name('edit-dokumentasi');
+Route::put('/update-dokumentasi/{id}', [App\Http\Controllers\PenyuluhanController::class, 'updatedok'])->name('update-dokumentasi');
 
 Route::get('/teknologi', [TeknologiController::class, 'index'])->name('teknologi');
 Route::get('/pupuk', [PupukController::class, 'index'])->name('pupuk');
@@ -158,9 +162,10 @@ Route::get('/profile/sandi', [ProfileController::class, 'sandi'])->name('profile
 Route::post('/change-password', [ProfileController::class, 'changePassword'])->name('change-password');
 Route::get('/alsintan-backend', [AlsintanController::class, 'backend'])->name('alsintan.backend');
 Route::get('/alsintan-backend/tambah', [AlsintanController::class, 'storeBackend'])->name('alsintan.create');
+Route::get('/getdesa', [AlsintanController::class, 'getDesaByKecamatan'])->name('getDesaByKecamatan');
 
 
-
+Route::get('/apitest', [ProduksitanamanController::class, 'api'])->name('api');
 
 // Kecamatan
 
