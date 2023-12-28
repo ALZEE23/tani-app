@@ -118,16 +118,13 @@ Route::get('/edit-dokumentasi/{id}', [App\Http\Controllers\PenyuluhanController:
 Route::put('/update-dokumentasi/{id}', [App\Http\Controllers\PenyuluhanController::class, 'updatedok'])->name('update-dokumentasi');
 
 Route::get('/teknologi', [TeknologiController::class, 'index'])->name('teknologi');
-Route::get('/teknologi-backend', [TeknologiController::class, 'backend'])->name('teknologi.backend');
-Route::get('/pupuk/index', [PupukController::class, 'index'])->name('pupuk');
+Route::get('/pupuk', [PupukController::class, 'index'])->name('pupuk');
 Route::get('/pupuk-padat', [PupukController::class, 'padat'])->name('padat');
 Route::get('pupuks/{id}', [PupukController::class,'proudctCart'])->name('addProduct.to.cart');
 Route::post('/pupuk-padat-create', [PupukController::class, 'tambah'])->name('tambah');
 Route::get('/tambah', [PupukController::class, 'store'])->name('store');
-Route::resource('pupuk', PupukController::class);
-Route::get('/pupuk/data', [PupukController::class, 'getData']);
 Route::get('/pupuk-cair', [PupukController::class, 'cair'])->name('cair');
-Route::get('/pupuk/edit/{id}', [PupukController::class, 'edit'])->name('pupuk.edit');
+// Route::get('/pupuk/edit/{id}', [PupukController::class, 'edit'])->name('pupuk.edit');
 Route::put('/pupuk/update/{id}', [PupukController::class,'update'])->name('pupuk.update');
 Route::delete('/pupuk/delete/{id}', [PupukController::class,'delete'])->name('pupuk.delete');
 Route::get('/pestisida', [PestisidaController::class, 'index'])->name('pestisida');
@@ -142,14 +139,11 @@ Route::get('/pestisida/edit/{id}', [PestisidaController::class, 'edit'])->name('
 Route::put('/pestisida/update/{id}', [PestisidaController::class,'update'])->name('pestisida.update');
 Route::delete('/pestisida/delete/{id}', [PestisidaController::class,'delete'])->name('pestisida.delete');
 Route::get('/teknologi-budidaya', [BudidayaController::class, 'index'])->name('budidaya');
-Route::get('/teknologi-hortikultura/index', [BudidayaController::class, 'hortikultura'])->name('hortikultura');
-Route::get('/teknologi-pangan/index', [BudidayaController::class, 'pangan'])->name('pangan');
-Route::get('/teknologi-perkebunan/index', [BudidayaController::class, 'perkebunan'])->name('perkebunan');
+Route::get('/teknologi-hortikultura', [BudidayaController::class, 'hortikultura'])->name('hortikultura');
+Route::get('/teknologi-pangan', [BudidayaController::class, 'pangan'])->name('pangan');
+Route::get('/teknologi-perkebunan', [BudidayaController::class, 'perkebunan'])->name('perkebunan');
 Route::get('teknologi-tambah', [BudidayaController::class, 'store'])->name('teknologi.store');
 Route::post('teknologi-tambah', [BudidayaController::class, 'tambah'])->name('teknologi.tambah');
-Route::get('/teknologi/edit/{id}', [BudidayaController::class, 'edit'])->name('budidaya.edit');
-Route::put('/teknologi/update/{id}', [BudidayaController::class,'update'])->name('budidaya.update');
-Route::delete('/teknologi/delete/{id}', [BudidayaController::class,'delete'])->name('budidaya.delete');
 Route::get('/pencegahan', [PencegahanController::class, 'index'])->name('pencegahan');
 Route::get('/pencegahan/tambah', [PencegahanController::class, 'store'])->name('pencegahan.store');
 Route::post('/pencegahan/tambah', [PencegahanController::class, 'tambah'])->name('pencegahan.tambah');
@@ -157,10 +151,7 @@ Route::get('/pencegahan/edit/{id}', [PencegahanController::class, 'edit'])->name
 Route::put('/pencegahan/update/{id}', [PencegahanController::class,'update'])->name('pencegahan.update');
 Route::delete('/pencegahan/delete/{id}', [PencegahanController::class,'delete'])->name('pencegahan.delete');
 Route::get('/alsintan', [AlsintanController::class, 'index'])->name('alsintan');
-// Rute untuk menampilkan formulir tambah alsintan
 Route::get('/alsintan/tambah', [AlsintanController::class, 'store'])->name('alsintan.store');
-
-// Rute untuk menangani penambahan alsintan (metode POST)
 Route::post('/alsintan/tambah', [AlsintanController::class, 'tambah'])->name('alsintan.tambah');
 Route::get('/alsintan/filter', [AlsintanController::class, 'filterByKecamatan'])->name('alsintan.filterByKecamatan');
 Route::get('/export-alsintan', [AlsintanController::class, 'exportToExcel'])->name('export-alsintan');
@@ -173,9 +164,6 @@ Route::get('/alsintan-backend', [AlsintanController::class, 'backend'])->name('a
 Route::get('/alsintan-backend/tambah', [AlsintanController::class, 'storeBackend'])->name('alsintan.create');
 Route::get('/getdesa', [AlsintanController::class, 'getDesaByKecamatan'])->name('getDesaByKecamatan');
 
-Route::get('/teknologi-backend/create',[TeknologiController::class, 'store'])->name('teknologi.create');
-Route::post('/teknologi-backend/tambah',[TeknologiController::class, 'tambah'])->name('teknologi.add');
-Route::get('/teknologi-backend', [TeknologiController::class, 'backend'])->name('teknologi.backend');
 
 Route::get('/apitest', [ProduksitanamanController::class, 'api'])->name('api');
 
@@ -195,6 +183,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::resource('harga', HargaController::class)->name('harga','index');
     Route::resource('poktan', PoktanController::class)->name('poktan','index');
     Route::resource('gakpoktan', GakpoktansController::class)->name('gakpoktan','index');
+
 
 
     // Additional routes specific to the admin section
