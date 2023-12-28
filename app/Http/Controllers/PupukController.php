@@ -132,4 +132,9 @@ class PupukController extends Controller
 
         return redirect()->route('pupuk')->with('success', 'Pupuk berhasil dihapus.');
     }
+     public function getData()
+    {
+        $pupuks = Pupuk::all();
+        return response()->json($pupuks);
+    }
 }

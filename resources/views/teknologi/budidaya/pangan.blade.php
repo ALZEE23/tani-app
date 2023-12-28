@@ -12,7 +12,7 @@
 <div class="container ">
     <div class="col-lg-12">
         <div class="row">
-            <a href="{{ route('pencegahan.tambah') }}"><button class="btn btn-secondary">Tambah</button></a>
+            <a href="{{ route('teknologi.store') }}"><button class="btn btn-secondary">Tambah</button></a>
         </div>
         @foreach($budidayas as $budidaya)
             <div class="card col-lg-4" >
@@ -26,7 +26,7 @@
                                 <a class="dropdown-item" href="{{ route('budidaya.edit', $budidaya->id) }}">Edit</a>
                                 <a class="dropdown-item" href="#" onclick="confirmDelete('{{ $budidaya->id }}')">Delete</a>
                                 
-                                <form id="delete-form-{{ $budidaya->id }}" action="{{ route('budidaya.delete', $pencegahan->id) }}" method="POST" style="display: none;">
+                                <form id="delete-form-{{ $budidaya->id }}" action="{{ route('budidaya.delete', $budidaya->id) }}" method="POST" style="display: none;">
                                     @csrf
                                     @method('DELETE')
                                 </form>

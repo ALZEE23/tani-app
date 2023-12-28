@@ -11,11 +11,12 @@
 
 <div class="container">
 <div class="row">
-<form action="{{ route('teknologi.tambah') }}" method="POST" enctype="multipart/form-data">
+<form action="{{ route('budidaya.update', $budidaya->id) }}" method="POST" enctype="multipart/form-data">
     @csrf
+    @method('PUT')
     
     <label for="judul">Judul:</label>
-    <input type="text" name="judul" id="judul" required>
+    <input type="text" name="judul" id="judul" value="{{$budidaya->judul}}" required>
 
     <label for="cover">Cover:</label>
     <div class="file-input" id="coverInput">
@@ -33,12 +34,12 @@
     <div>
     <select name="kategori" id="kategori">
         <!-- Tambahkan pilihan kategori sesuai kebutuhan -->
-        <option value="Hortikultura" id="kategori" name="kategori" >Hortikultura</option>
-        <option value="Pangan" id="kategori" name="kategori" >Pangan</option>
-        <option value="Perkebunan" id="kategori" name="kategori">Perkebunan</option>
+        <option value="Hortikultura" {{ $budidaya->kategori === 'Hortikultura' ? 'selected' : '' }} id="kategori" name="kategori" >Hortikultura</option>
+        <option value="Pangan" {{ $budidaya->kategori === 'Pangan' ? 'selected' : '' }} id="kategori" name="kategori" >Pangan</option>
+        <option value="Perkebunan" {{ $budidaya->kategori === 'Perkebunan' ? 'selected' : '' }} id="kategori" name="kategori">Perkebunan</option>
     </select>
     </div>
-    <button type="submit">Submit</button>
+    <button type="submit">Update</button>
 </form>
 </div>
 </div>
