@@ -14,7 +14,6 @@ class NotifController extends Controller
     {
         // Mengambil notifikasi dengan status 0 berdasarkan user_id
         $notif = Notif::where('user_id', auth()->user()->id)
-            ->where('status', 1)
             ->get();
 
         // Update semua notifikasi dengan status 0 menjadi status 1

@@ -157,8 +157,8 @@
       @if ($notif_count > 0)
       <li>
         <a href="{{route('notif')}}" style="color:var(--primary-color)">
-          <i class="mdi mdi-bell"></i>
-          <span>Pemberitahuan {{$notif_count}}</span></span>
+          <i class="mdi mdi-bell" style="color:#96cf66"></i>
+          <span style="color:#96cf66">Pemberitahuan {{$notif_count}}</span></span>
         </a>
       </li>
       @else
@@ -171,9 +171,9 @@
       @endif
       <li>
         <a href="{{route('profile.index')}}">
-            <i class="mdi mdi-account-circle"></i>
-            <span>Profile</span>
-          </a>
+          <i class="mdi mdi-account-circle"></i>
+          <span>Profile</span>
+        </a>
       </li>
     </ul>
   </div>

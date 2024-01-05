@@ -143,9 +143,9 @@
                                 <td>{{$data->status}}</td>
                                 <td>
                                     <a class="btn btn-secondary" href="{{route('detail-register-poktan',$data->id)}}">Lihat</a>
-                                    @if ($data->status != 'Anggota')
+                                    @if ($data->status != 'Anggota' && auth()->user()->role == 'petugas_poktan')
                                     <br>
-                                    <a style="margin-top: 10px;" class="btn btn-secondary" href="{{route('acc-register',$data->id)}}">Acc</a>
+                                    <a style="margin-top: 10px; background-color:#96cf66" class="btn btn-danger" href="{{route('acc-register',$data->id)}}">Acc</a>
                                     @endif
                                 </td>
                             </tr>

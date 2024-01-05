@@ -10,35 +10,67 @@
 </div>
 
 <div class="container">
-<div class="row">
-<form action="{{ route('tambah') }}" method="POST" enctype="multipart/form-data">
-    @csrf
-    
-    <label for="judul">Judul:</label>
-    <input type="text" name="judul" id="judul" required>
+    <div class="row">
+        <form action="{{ route('tambah') }}" method="POST" enctype="multipart/form-data" id="myForm">
+            @csrf
 
-    <label for="cover">Cover:</label>
-    <div class="file-input" id="coverInput">
-        <input type="file" name="cover" id="cover" accept="image/*" required>
-        <div class="drop-zone" id="coverDropZone">Seret dan lepas file di sini</div>
+            <label for="judul">Judul:</label>
+            <input type="text" name="judul" id="judul" required>
+
+            <label for="cover">Cover:</label>
+            <div class="file-input" id="coverInput">
+                <input type="file" name="cover" id="cover" accept="image/*" required>
+                <div class="drop-zone" id="coverDropZone">Seret dan lepas file di sini</div>
+            </div>
+
+            <div id="fileTypeSelection">
+                <label for="fileType">Pilih jenis file:</label>
+                <select name="fileType" id="fileType">
+                    <option value="file">File</option>
+                    <option value="video">Video</option>
+                </select>
+            </div>
+
+            <div id="fileInput" style="display: none;">
+                <label for="file">File:</label>
+                <div class="file-input">
+                    <input type="file" name="file" id="file" accept=".pdf, .doc, .docx">
+                    <div class="drop-zone" id="fileDropZone">Seret dan lepas file di sini</div>
+                </div>
+            </div>
+
+            <div id="videoInput" style="display: none;">
+                <label for="videoLink">Link Video:</label>
+                <input type="text" name="link" id="videoLink">
+            </div>
+
+            <label for="kategori">Kategori:</label>
+            <select name="kategori" id="kategori">
+                <option value="Padat">Padat</option>
+                <option value="Cair">Cair</option>
+            </select>
+
+            <button type="submit">Submit</button>
+        </form>
+
+        <script>
+            const fileTypeSelection = document.getElementById('fileTypeSelection');
+            const fileInput = document.getElementById('fileInput');
+            const videoInput = document.getElementById('videoInput');
+
+            const fileType = document.getElementById('fileType');
+            fileType.addEventListener('change', function() {
+                if (fileType.value === 'file') {
+                    fileInput.style.display = 'block';
+                    videoInput.style.display = 'none';
+                } else if (fileType.value === 'video') {
+                    fileInput.style.display = 'none';
+                    videoInput.style.display = 'block';
+                }
+            });
+        </script>
+
     </div>
-
-    <label for="file">File:</label>
-    <div class="file-input" id="fileInput">
-        <input type="file" name="file" id="file" accept=".pdf, .doc, .docx, .mp4" required>
-        <div class="drop-zone" id="fileDropZone">Seret dan lepas file di sini</div>
-    </div>
-
-    <label for="kategori">Kategori:</label>
-    <select name="kategori" id="kategori">
-        <!-- Tambahkan pilihan kategori sesuai kebutuhan -->
-        <option value="Padat">Padat</option>
-        <option value="Cair">Cair</option>
-    </select>
-
-    <button type="submit">Submit</button>
-</form>
-</div>
 </div>
 <br><br><br>
 
@@ -61,7 +93,8 @@
         margin-bottom: 5px;
     }
 
-    input, select {
+    input,
+    select {
         width: 100%;
         padding: 8px;
         margin-bottom: 15px;
@@ -90,22 +123,22 @@
         border-radius: 8px;
     }
 
-    .file-input > * {
+    .file-input>* {
         grid-area: stack;
     }
 
-    .file-input > input {
+    .file-input>input {
         opacity: 0;
     }
 
-    .file-input > .drop-zone {
+    .file-input>.drop-zone {
         margin: 12px;
         border: dashed 2px #aaaaaa;
         border-radius: 4px;
         transition: margin 200ms;
     }
 
-    .file-input.active > .drop-zone {
+    .file-input.active>.drop-zone {
         margin: 14px;
         background-color: #dadada;
     }
@@ -115,7 +148,7 @@
     const label = document.querySelector('label');
     const coverInput = document.getElementById('coverInput');
     const fileInput = document.getElementById('fileInput');
-    
+
     function onEnter(element) {
         element.classList.add('active');
     }
@@ -143,13 +176,29 @@
         }
     }
 
-    label.addEventListener('dragenter', function () { onEnter(coverInput); onEnter(fileInput); });
-    label.addEventListener('dragleave', function () { onLeave(coverInput); onLeave(fileInput); });
+    label.addEventListener('dragenter', function() {
+        onEnter(coverInput);
+        onEnter(fileInput);
+    });
+    label.addEventListener('dragleave', function() {
+        onLeave(coverInput);
+        onLeave(fileInput);
+    });
 
-    coverInput.addEventListener('dragover', function (e) { e.preventDefault(); });
-    coverInput.addEventListener('drop', function (e) { e.preventDefault(); handleFile(coverInput, e); });
+    coverInput.addEventListener('dragover', function(e) {
+        e.preventDefault();
+    });
+    coverInput.addEventListener('drop', function(e) {
+        e.preventDefault();
+        handleFile(coverInput, e);
+    });
 
-    fileInput.addEventListener('dragover', function (e) { e.preventDefault(); });
-    fileInput.addEventListener('drop', function (e) { e.preventDefault(); handleFile(fileInput, e); });
+    fileInput.addEventListener('dragover', function(e) {
+        e.preventDefault();
+    });
+    fileInput.addEventListener('drop', function(e) {
+        e.preventDefault();
+        handleFile(fileInput, e);
+    });
 </script>
 @endsection

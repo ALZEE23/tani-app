@@ -49,6 +49,9 @@
                                 <h6 class="fs-4 fw-semibold mb-0">Produk</h6>
                             </th>
                             <th>
+                                <h6 class="fs-4 fw-semibold mb-0">Produk Kode</h6>
+                            </th>
+                            <th>
                                 <h6 class="fs-4 fw-semibold mb-0">Harga</h6>
                             </th>
                             <th>
@@ -69,6 +72,7 @@
                             </td>
                             <td>{{$data->komoditas}}</td>
                             <td>{{$data->produk}}</td>
+                            <td>{{$data->kode_produk}}</td>
                             <td>{{$data->harga}}</td>
                             <td>{{$data->kecamatan}}</td>
                             <td>

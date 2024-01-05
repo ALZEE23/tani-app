@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Desa;
-use App\Models\Kecamatan;
 use App\Models\Rencana;
 use App\Models\Penyuluh;
+use App\Models\Kecamatan;
 use App\Models\Dokumentasi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PenyuluhanController extends Controller
 {
@@ -201,7 +202,27 @@ class PenyuluhanController extends Controller
 
         return response()->json(['data_sekarang' => $filteredData]);
     }
+    public function downloadAllImages($id)
+    {
+        // Temukan data dokumentasi berdasarkan ID
+        $dokumentasi = Dokumentasi::findOrFail($id);
 
+        // Pisahkan nama file gambar dari string yang berisi nama-nama file
+        $images = explode(',', $dokumentasi->foto);
+
+        // Loop untuk men-download setiap gambar
+        foreach ($images as $image) {
+            $filePath = 'public/dokumentasi/' . trim($image);
+
+            // Lakukan pengecekan apakah file ada sebelum men-download
+            if (Storage::exists($filePath)) {
+                return response()->download(storage_path('app/' . $filePath));
+            }
+        }
+
+        // Jika ada masalah dalam proses pengunduhan, Anda bisa mengarahkan ke halaman tertentu atau memberikan pesan error.
+        return redirect()->back()->with('error', 'Gagal mengunduh gambar-gambar.');
+    }
     // Di sisi server, misalnya dalam controller Laravel atau di tempat Anda memproses permintaan Ajax
     public function handleAjaxRequest(Request $request)
     {
@@ -225,6 +246,7 @@ class PenyuluhanController extends Controller
 
         // Susun respons dalam format HTML yang sesuai dengan struktur yang diinginkan
         $response = '';
+
         foreach ($dokumentasi as $data) {
             $response .= '<div style="background-color: #00a99d; color: white">';
             $response .= '<hr>';
@@ -250,8 +272,20 @@ class PenyuluhanController extends Controller
             $response .= '<h5>' . $data->keterangan . '</h5>';
             $response .= '<br>';
             $response .= '<hr>';
-            $response .= '<a href="' . route('delete-dokumentasi',$data->id) . '" class="btn btn-primary">Hapus</a>';
-            $response .= '<a href="' . route('edit-dokumentasi',$data->id) . '" class="btn btn-primary">Edit</a>';
+            $response .= '<a href="' . route('delete-dokumentasi', $data->id) . '" class="btn btn-primary">Hapus</a>';
+            $response .= '<a href="' . route('edit-dokumentasi', $data->id) . '" class="btn btn-primary">Edit</a>';
+
+            // Tambahkan tautan "Download Semua" dan tautan download untuk setiap gambar
+            $response .= '<a href="' . route('download-all-images', $data->id) . '" class="btn btn-primary save-all">Download</a>';
+
+            $response .= '<div class="download-links" style="display: none;">';
+            foreach ($images as $image) {
+                $response .= '<div>';
+                $response .= '<a href="' . asset('storage/dokumentasi/' . trim($image)) . '" download="' . $image . '">Download</a>';
+                $response .= '</div>';
+            }
+            $response .= '</div>';
+
             $response .= '</div>';
         }
 

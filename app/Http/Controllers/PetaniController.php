@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PetaniController extends Controller
@@ -11,7 +12,8 @@ class PetaniController extends Controller
      */
     public function index()
     {
-        //
+        $petani = User::where('role', 'petani')->get();
+        return view('petani.index', compact('petani'));
     }
 
     /**

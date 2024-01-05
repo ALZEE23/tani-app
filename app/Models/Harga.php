@@ -15,5 +15,6 @@ class Harga extends Model
         'produk',
         'harga',
         'kecamatan',
+        'kode_produk',
     ];
 }

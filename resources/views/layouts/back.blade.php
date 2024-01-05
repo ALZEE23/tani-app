@@ -97,14 +97,7 @@
                 </a>
               </li>
               @endif
-              {{-- <li class="sidebar-item">
-                <a class="sidebar-link" href="./page-user-profile.html" aria-expanded="false">
-                  <span>
-                    <i class="ti ti-user-circle"></i>
-                  </span>
-                  <span class="hide-menu">Users</span>
-                </a>
-              </li> --}}
+
               <!-- ============================= -->
               <!-- PAGES -->
               <!-- ============================= -->
@@ -123,9 +116,17 @@
               </li>
               @else
               <li class="sidebar-item">
+                <a class="sidebar-link" href="{{route('showUploadForm')}}" aria-expanded="false">
+                  <span>
+                    <i class="ti ti-user-circle"></i>
+                  </span>
+                  <span class="hide-menu">Import Petani</span>
+                </a>
+              </li>
+              <li class="sidebar-item">
                 <a class="sidebar-link {{ request()->is('harga.index') ? 'active' : '' }}" href="{{route('harga.index')}}" aria-expanded="false">
                   <span>
-                    <i class="ti ti-report"></i>
+                    <i class="ti ti-shopping-cart"></i>
                   </span>
                   <span class="hide-menu">Harga Pasar</span>
                 </a>
@@ -133,7 +134,7 @@
               <li class="sidebar-item">
                 <a class="sidebar-link {{ request()->is('petani.index') ? 'active' : '' }}" href="{{route('petani.index')}}" aria-expanded="false">
                   <span>
-                    <i class="ti ti-report"></i>
+                    <i class="ti ti-user"></i>
                   </span>
                   <span class="hide-menu">Petani</span>
                 </a>
@@ -141,7 +142,7 @@
               <li class="sidebar-item">
                 <a class="sidebar-link {{ request()->is('petugas.index') ? 'active' : '' }}" href="{{route('petugas.index')}}" aria-expanded="false">
                   <span>
-                    <i class="ti ti-report"></i>
+                    <i class="ti ti-user"></i>
                   </span>
                   <span class="hide-menu">Petugas</span>
                 </a>
@@ -149,7 +150,7 @@
               <li class="sidebar-item">
                 <a class="sidebar-link {{ request()->is('dinas.index') ? 'active' : '' }}" href="{{route('dinas.index')}}" aria-expanded="false">
                   <span>
-                    <i class="ti ti-report"></i>
+                    <i class="ti ti-user"></i>
                   </span>
                   <span class="hide-menu">Dinas</span>
                 </a>
@@ -157,7 +158,7 @@
               <li class="sidebar-item">
                 <a class="sidebar-link {{ request()->is('penyuluh.index') ? 'active' : '' }}" href="{{route('penyuluh.index')}}" aria-expanded="false">
                   <span>
-                    <i class="ti ti-report"></i>
+                    <i class="ti ti-user"></i>
                   </span>
                   <span class="hide-menu">Penyuluh</span>
                 </a>
@@ -192,14 +193,6 @@
                     <i class="ti ti-report"></i>
                   </span>
                   <span class="hide-menu">Teknologi Pertanian</span>
-                </a>
-              </li>
-              <li class="sidebar-item">
-                <a class="sidebar-link {{ request()->is('market.index') ? 'active' : '' }}" href="" aria-expanded="false">
-                  <span>
-                    <i class="ti ti-report"></i>
-                  </span>
-                  <span class="hide-menu">Market</span>
                 </a>
               </li>
               @endif

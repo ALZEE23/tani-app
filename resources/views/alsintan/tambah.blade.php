@@ -11,7 +11,7 @@
 
 <div class="container">
     <!-- Form Tambah Data -->
-    <form action="{{ route('alsintan.tambah') }}" method="POST">
+    <form action="{{ route('alsintan.tambah') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">
             <label for="kecamatan" class="form-label">Kecamatan</label>
@@ -74,6 +74,10 @@
         <div class="mb-3">
             <label for="tahun" class="form-label">Tahun</label>
             <input type="number" class="form-control" id="tahun" name="tahun" required>
+        </div>
+        <div class="mb-3">
+            <label for="Gambar" class="form-label">Gambar</label>
+            <input type="file" class="form-control" id="Gambar" name="gambar" required>
         </div>
         <!-- Sisanya formulir tetap sama -->
         <!-- ... -->

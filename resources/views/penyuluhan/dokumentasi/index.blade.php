@@ -120,11 +120,28 @@
                         });
                     });
                 </script>
+                <script>
+                    // Ambil semua elemen dengan kelas "download-all"
+                    const downloadAllButtons = document.querySelectorAll('.download-all');
+
+                    // Loop melalui setiap tombol "Download Semua"
+                    downloadAllButtons.forEach(button => {
+                        // Tambahkan event listener untuk klik pada setiap tombol
+                        button.addEventListener('click', function(event) {
+                            // Dapatkan elemen div yang berisi tautan unduhan
+                            const downloadLinks = event.target.nextElementSibling;
+
+                            // Ubah tampilan dari 'none' menjadi 'block' untuk menampilkan tautan unduhan
+                            downloadLinks.style.display = 'block';
+                        });
+                    });
+                </script>
 
             </div>
         </div>
     </div>
 </div>
+
 <br><br><br>
 <style>
     /* Sesuaikan style card dengan desain yang diinginkan */

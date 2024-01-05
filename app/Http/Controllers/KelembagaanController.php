@@ -523,7 +523,7 @@ class KelembagaanController extends Controller
 
         $poktan->save();
         // Redirect user dan menampilkan pesan sesuai status
-        return redirect()->route('daftar_poktan')->with('success', 'Data penyuluh berhasil ditambahkan');
+        return redirect()->route('poktan-daftar')->with('success', 'Data penyuluh berhasil ditambahkan');
     }
 
     function detail_register_poktan($id){
@@ -551,7 +551,6 @@ class KelembagaanController extends Controller
         $daftarpoktan = DaftarAnggotaPoktan::find($id);
         $daftarpoktan->status = "Anggota";
         $daftarpoktan->save();
-
         $notif = new Notif();
         $notif->user_id = $daftarpoktan->user_id;
         $notif->judul = "Pendaftaran Poktan";

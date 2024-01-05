@@ -39,6 +39,7 @@
     @endif
 
     @endif
+
     <script>
         function redirectToSelectedKecamatan() {
             const selectedKecamatan = document.getElementById('kecamatan').value;
@@ -52,37 +53,127 @@
         <button class="btn btn-primary">tambah</button>
     </a>
     @endif
+    <div class="select-wrapper">
+        <label for="komoditas">Pilih Komoditas:</label>
+        <select id="komoditas-select" name="komoditas-select">
+            <option value="Hortikultura">Hortikultura</option>
+            <option value="Pangan">Pangan</option>
+            <option value="Perkebunan">Perkebunan</option>
+            <!-- Tambahkan opsi kecamatan lainnya sesuai kebutuhan -->
+        </select>
+    </div>
     <br>
     <br>
     <h6>Harga Umum Seluruh Majalengka</h6>
+    @php
+    $isoDate = $last->updated_at;
+
+    // Buat objek DateTime dari tanggal ISO 8601
+    $date = new DateTime($isoDate);
+
+    // Ubah ke format yang diinginkan (misalnya: '4 January 2024')
+    $formattedDate = $date->format('j F Y');
+
+    // Ubah format tanggal menjadi '4 jan 2024' dalam bahasa Indonesia
+    setlocale(LC_TIME, 'id_ID'); // Set lokalisasi ke bahasa Indonesia
+    $formattedDateIndo = strftime('%e %b %Y', strtotime($formattedDate));
+
+    @endphp
+    <h6 id="last">Update : {{$formattedDateIndo}}</h6>
     <div class="table">
         <div class="table-bordered">
             <div class="row valign-wrapper">
 
-                <table>
+                <table id="your-table-id">
                     <thead>
                         <tr>
-                            <th>No</th>
-                            <th>Produk</th>
+                            <th>Kode Produk</th>
                             <th>Harga</th>
-                            <th>Update</th>
                         </tr>
                     </thead>
                     @php
-                    $no=1;
                     @endphp
                     <tbody>
                         @foreach ($harga as $h)
                         <tr>
-                            <td>{{$no++}}</td>
-                            <td>{{$h->produk}}</td>
+                            <td>{{$h->kode_produk}}</td>
                             <td>Rp.{{$h->harga}}</td>
-                            <td>{{substr($h->updated_at,0,10)}}</td>
                         </tr>
                         @endforeach
                     </tbody>
 
                 </table>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+                <script>
+                    $(document).ready(function() {
+                                $('#komoditas-select, #jenis_ternak-select, #tahun-select, #bulan-select').change(function() {
+                                        var komoditasValue = $(this).val();
+                                        console.log(komoditasValue);
+
+                                        // Kirim permintaan Ajax
+                                        $.ajax({
+                                                type: 'POST',
+                                                url: '{{route("pasar.filter_komoditas")}}',
+                                                data: {
+                                                    _token: '{{ csrf_token() }}',
+                                                    komoditas: komoditasValue,
+                                                },
+                                                success: function(response) {
+                                                    console.log(response);
+                                                    const isoDate = response.last;
+
+                                                    // Buat objek Date dari tanggal ISO 8601
+                                                    const date = new Date(isoDate);
+
+                                                    // Daftar nama bulan dalam bahasa Indonesia
+                                                    const monthsInIndonesian = [
+                                                        'jan', 'feb', 'mar', 'apr', 'mei', 'jun',
+                                                        'jul', 'ags', 'sep', 'okt', 'nov', 'des'
+                                                    ];
+
+                                                    // Dapatkan komponen tanggal, bulan, dan tahun
+                                                    const day = date.getDate();
+                                                    const monthIndex = date.getMonth();
+                                                    const year = date.getFullYear();
+
+                                                    // Buat format tanggal '4 jan 2024'
+                                                    const formattedDate = `${day} ${monthsInIndonesian[monthIndex]} ${year}`;
+
+                                                    console.log(formattedDate);
+                                                    $('#last').empty();
+                                                    $('#last').append("Update : "+formattedDate);
+
+                                                            // Ambil array dari properti harga
+                                                            var hargaArray = response.harga;
+
+                                                            // Proses array jika ada data di dalamnya
+                                                            if (Array.isArray(hargaArray) && hargaArray.length > 0) {
+                                                                // Kosongkan tabel sebelum menambahkan data baru
+                                                                $('#your-table-id tbody').empty();
+
+                                                                // Loop melalui array hargaArray
+                                                                hargaArray.forEach(function(data) {
+                                                                    var newRow = '<tr>' +
+                                                                        '<td>' + data.kode_produk + '</td>' +
+                                                                        '<td>Rp.' + data.harga + '</td>' +
+                                                                        '</tr>';
+                                                                    $('#your-table-id tbody').append(newRow);
+                                                                });
+                                                            } else {
+                                                                console.log("Array harga kosong atau tidak ada data");
+                                                                $('#your-table-id tbody').empty();
+
+                                                                // Lakukan penanganan jika array kosong atau tidak ada data
+                                                            }
+                                                        },
+                                                        error: function(error) {
+                                                            console.log(error);
+                                                        }
+                                                });
+                                        });
+                                });
+                </script>
             </div>
         </div>
     </div>
@@ -121,6 +212,7 @@
 
 </div>
 <br><br><br>
+
 <style>
     /* Sesuaikan style card dengan desain yang diinginkan */
     .card {

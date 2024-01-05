@@ -86,18 +86,24 @@ public function fetchDesaOptions(Request $request)
         ]);
 
         // Membuat instance Pestisida
-        $alsintan = new Alsintan([
-            'kecamatan' => $request->kecamatan,
-            'desa' => $request->desa,
-            'subsektor' => $request->subsektor,
-            'gapoktan' => $request->gapoktan,
-            'ketua_gapoktan' => $request->ketua_gapoktan,
-            'kontak' => $request->kontak,
-            'alat' => $request->alat,
-            'jumlah_alat' => $request->jumlah_alat,
-            'tahun' => $request->tahun,
-            // Sesuaikan atribut dengan kolom lainnya
-        ]);
+        
+        $alsintan = new Alsintan();
+            $alsintan->kecamatan = $request->kecamatan;
+            $alsintan->desa = $request->desa;
+            $alsintan->subsektor = $request->subsektor;
+            $alsintan->gapoktan = $request->gapoktan;
+            $alsintan->ketua_gapoktan = $request->ketua_gapoktan;
+            $alsintan->kontak = $request->kontak;
+            $alsintan->alat = $request->alat;
+            $alsintan->jumlah_alat = $request->jumlah_alat;
+            $alsintan->tahun = $request->tahun;
+        // Sesuaikan atribut dengan kolom lainnya
+        if ($request->hasFile('gambar')) {
+            $gambar = $request->file('gambar');
+            $nama = time() . '_' . $gambar->getClientOriginalName();
+            $gambar->storeAs('public/gambar', $nama);
+            $alsintan->gambar = $nama;
+        }
 
         // Menyimpan Pestisida ke database
         $alsintan->save();

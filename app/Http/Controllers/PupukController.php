@@ -35,24 +35,35 @@ class PupukController extends Controller
     $request->validate([
         'judul' => 'required|string|max:255',
         'cover' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:204800',
-        'file' => 'required|mimes:pdf,doc,docx,mp4,mov,avi|max:20480000', // Menambahkan tipe file video
+        // 'file' => 'required|mimes:pdf,doc,docx,mp4,mov,avi|max:20480000', // Menambahkan tipe file video
         'kategori' => 'required|string',
     ]);
 
     // Menyimpan file cover dan file
-    $coverPath = $request->file('cover')->store('covers', 'public');
-    $fileType = $request->file('file')->extension(); // Mendapatkan ekstensi file
 
     // Menyimpan file sesuai jenisnya
-    $filePath = $request->file('file')->storeAs('files', "file_".time().".".$fileType, 'public');
-
+        
     // Membuat instance Pupuk
-    $pupuk = new Pupuk([
-        'judul' => $request->judul,
-        'cover' => $coverPath,
-        'file' => $filePath,
-        'kategori' => $request->kategori,
-    ]);
+        $pupuk = new Pupuk();
+        $pupuk->judul = $request->judul;
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $namafile = time() . '_' . $file->getClientOriginalName();
+            $file->storeAs('public/files', $namafile);
+            $pupuk->file = $namafile;
+        }
+        else{
+            $pupuk->file = null;
+            $pupuk->type = 'link';
+            $pupuk->link = $request->link;
+        }
+        if ($request->hasFile('cover')) {
+            $file2 = $request->file('cover');
+            $namafile2 = time() . '_' . $file2->getClientOriginalName();
+            $file2->storeAs('public/files', $namafile2);
+            $pupuk->cover = $namafile2;
+        }
+        $pupuk->kategori = $request->kategori;
 
     // Menyimpan Pupuk ke database
     $pupuk->save();

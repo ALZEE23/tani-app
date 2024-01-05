@@ -46,6 +46,8 @@
 
                             <label for="harga" class="form-label">Harga</label>
                             <input type="number" name="harga" class="form-control">
+                            <label for="harga" class="form-label">Kode Produk</label>
+                            <input type="text" name="kode_produk" class="form-control">
                             <label for="kecamatan" class="form-label">Kecamatan</label>
                             <input type="text" name="kecamatan" class="form-control" value="{{session('kecamatan')}}">
                         </div>

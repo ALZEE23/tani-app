@@ -42,51 +42,16 @@
                             </select>
 
                             <label for="produk" class="form-label">Produk</label>
-                            <select name="produk" id="produk" class="form-select"></select>
+                            <input type="text" name="produk" id="produk" class="form-control" value="{{$harga->produk}}">
 
 
                             <label for="harga" class="form-label">Harga</label>
-                            <input type="number" name="harga" class="form-control">
+                            <input type="number" name="harga" class="form-control" value="{{$harga->harga}}">
+                            <label for="" class="form-label">Kode Produk</label>
+                            <input type="text" name="kode_produk" class="form-control" value="{{$harga->kode_produk}}">
                             <label for="kecamatan" class="form-label">Kecamatan</label>
                             <input type="text" name="kecamatan" class="form-control" value="{{session('kecamatan')}}">
                         </div>
-                        <script>
-                            document.getElementById('komoditas').addEventListener('change', function() {
-                                var komoditas = this.value;
-                                var produkDropdown = document.getElementById('produk');
-                                produkDropdown.innerHTML = '';
-
-                                if (komoditas === 'Perkebunan') {
-                                    createOptions([
-                                        'PADI', 'KEDELAI', 'KACANG TANAH', 'KACANG HIJAU',
-                                        'UBI KAYU', 'UBI JALAR'
-                                    ]);
-                                } else if (komoditas === 'Pangan') {
-                                    createOptions([
-                                        'PADI', 'KEDELAI', 'KACANG TANAH', 'KACANG HIJAU',
-                                        'UBI KAYU', 'UBI JALAR'
-                                    ]);
-                                } else if (komoditas === 'Hortikultura') {
-                                    createOptions([
-                                        'Bawang Daun', 'Bawang Merah', 'Bawang Putih', 'Kembang Kol',
-                                        'Kentang', 'Kubis', 'Petsai/Sawi', 'Wortel', 'Bayam', 'Buncis',
-                                        'Cabe Besar/TW/Teropong', 'Cabai Keriting', 'Cabe Rawit', 'Jamur Tiram*)',
-                                        'Jamur Merang*)', 'Jamur Lainnya*)', 'Kacang Panjang', 'Kangkung',
-                                        'Mentimun', 'Labu Siam', 'Paprika', 'Terung', 'Tomat'
-                                    ]);
-                                }
-                            });
-
-                            function createOptions(options) {
-                                var produkDropdown = document.getElementById('produk');
-                                options.forEach(function(option) {
-                                    var opt = document.createElement('option');
-                                    opt.appendChild(document.createTextNode(option));
-                                    opt.value = option;
-                                    produkDropdown.appendChild(opt);
-                                });
-                            }
-                        </script>
                         <br>
                         <button type="submit" class="btn btn-success font-medium rounded-pill px-4">
                             <div class="d-flex align-items-center">

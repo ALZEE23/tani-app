@@ -108,6 +108,7 @@ Route::get('/penyuluhan-rencana', [App\Http\Controllers\PenyuluhanController::cl
 Route::get('/tambah-rencana', [App\Http\Controllers\PenyuluhanController::class, 'tambah_rencana'])->name('tambah-rencana');
 Route::post('/store-rencana', [App\Http\Controllers\PenyuluhanController::class, 'store_rencana'])->name('rencana-store');
 Route::post('/filter-rencana', [App\Http\Controllers\PenyuluhanController::class, 'filter'])->name('rencana-filter');
+Route::get('/download-all-images/{id}', [App\Http\Controllers\PenyuluhanController::class, 'downloadAllImages'])->name('download-all-images');
 
 Route::get('/penyuluhan-dokumentasi', [App\Http\Controllers\PenyuluhanController::class, 'dokumentasi'])->name('penyuluhan-dokumentasi');
 Route::get('/tambah-dokumentasi', [App\Http\Controllers\PenyuluhanController::class, 'tambah_dokumentasi'])->name('tambah-dokumentasi');
@@ -163,6 +164,8 @@ Route::post('/change-password', [ProfileController::class, 'changePassword'])->n
 Route::get('/alsintan-backend', [AlsintanController::class, 'backend'])->name('alsintan.backend');
 Route::get('/alsintan-backend/tambah', [AlsintanController::class, 'storeBackend'])->name('alsintan.create');
 Route::get('/getdesa', [AlsintanController::class, 'getDesaByKecamatan'])->name('getDesaByKecamatan');
+Route::post('/import-user', [HomeController::class, 'importUsers'])->name('importUsers');
+Route::get('/back-import-user', [HomeController::class, 'showUploadForm'])->name('showUploadForm');
 
 
 Route::get('/apitest', [ProduksitanamanController::class, 'api'])->name('api');
@@ -218,6 +221,7 @@ Route::get('/pasar_tambah', [PasarController::class, 'create'])->name('pasar.tam
 Route::post('/pasar_store', [PasarController::class, 'store'])->name('pasar.store');
 Route::post('/filter-pasar-ternak', [PasarController::class, 'filterpasar'])->name('filter.pasar');
 Route::get('/delete/pasar/{id}', [PasarController::class, 'delete_pasar'])->name('delete.pasar');
+Route::post('/pasar/filter-komoditas', [PasarController::class, 'filter_komoditas'])->name('pasar.filter_komoditas');
 
 
 // Route::resource('penyuluhan', PenyuluhanController::class)->name('penyulihan', 'index');
