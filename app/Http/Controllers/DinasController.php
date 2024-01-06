@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DinasController extends Controller
@@ -11,7 +12,8 @@ class DinasController extends Controller
      */
     public function index()
     {
-        //
+        $dinas = User::where('role', 'dinas')->get();
+        return view('backend.dinas.index', compact('dinas'));
     }
 
     /**
@@ -19,7 +21,7 @@ class DinasController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.dinas.create');
     }
 
     /**
@@ -27,7 +29,17 @@ class DinasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $dinas = new User();
+        $dinas->name = $request->nama;
+        $dinas->email = $request->email;
+        $dinas->username = $request->username;
+        $dinas->nik = $request->nik;
+        $dinas->no_telepon = $request->no_telepon;
+        $dinas->password = bcrypt($request->password);
+        $dinas->role = 'dinas';
+        $dinas->save();
+        return redirect()->route('dinas.index')->with('success', 'Data dinas berhasil ditambahkan');
+
     }
 
     /**
@@ -43,7 +55,8 @@ class DinasController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $dinas = User::find($id);
+        return view('backend.dinas.edit', compact('dinas'));
     }
 
     /**
@@ -51,7 +64,16 @@ class DinasController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $dinas = User::find($id);
+        $dinas->name = $request->nama;
+        $dinas->email = $request->email;
+        $dinas->username = $request->username;
+        $dinas->nik = $request->nik;
+        $dinas->no_telepon = $request->no_telepon;
+        $dinas->password = bcrypt($request->password);
+        $dinas->role = 'dinas';
+        $dinas->save();
+        return redirect()->route('dinas.index')->with('success', 'Data dinas berhasil diubah');
     }
 
     /**
@@ -59,6 +81,8 @@ class DinasController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $dinas = User::find($id);
+        $dinas->delete();
+        return redirect()->route('dinas.index')->with('success', 'Data dinas berhasil dihapus');
     }
 }

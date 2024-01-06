@@ -140,10 +140,10 @@ class PenyuluhController extends Controller
             $penyuluh->file_program_desa = $filenameProgramDaerah;
         }
         if ($request->hasFile('foto')) {
-            $fileFoto = $request->file('file_program_daerah');
-            $filenamefoto = time() . '_' . $fileProgramDaerah->getClientOriginalName();
-            $fileFoto->storeAs('public/file_program_daerah', $filenameProgramDaerah);
-            $penyuluh->file_program_desa = $filenamefoto;
+            $fileFoto = $request->file('foto');
+            $filenamefoto = time() . '_' . $fileFoto->getClientOriginalName();
+            $fileFoto->storeAs('public/foto', $filenamefoto);
+            $penyuluh->foto = $filenamefoto;
         }
         $penyuluh->save();
         return redirect()->route('penyuluh.index')->with('success', 'Data penyuluh berhasil diubah');   

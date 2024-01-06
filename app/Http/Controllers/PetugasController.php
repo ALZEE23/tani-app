@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PetugasController extends Controller
@@ -11,7 +12,8 @@ class PetugasController extends Controller
      */
     public function index()
     {
-        //
+        $petugas = User::where('role', 'petugas')->get();
+        return view('backend.petugas.index', compact('petugas'));
     }
 
     /**
@@ -19,7 +21,7 @@ class PetugasController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.petugas.create');
     }
 
     /**
@@ -27,7 +29,16 @@ class PetugasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $petugas = new User();
+        $petugas->name = $request->nama;
+        $petugas->email = $request->email;
+        $petugas->username = $request->username;
+        $petugas->nik = $request->nik;
+        $petugas->no_telepon = $request->no_telepon;
+        $petugas->password = bcrypt($request->password);
+        $petugas->role = 'petugas';
+        $petugas->save();
+        return redirect()->route('petugas.index')->with('success', 'Data petugas berhasil ditambahkan');
     }
 
     /**
@@ -43,7 +54,8 @@ class PetugasController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $petugas = User::find($id);
+        return view('backend.petugas.edit', compact('petugas'));
     }
 
     /**
@@ -51,7 +63,14 @@ class PetugasController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $petugas = User::find($id);
+        $petugas->name = $request->nama;
+        $petugas->email = $request->email;
+        $petugas->username = $request->username;
+        $petugas->nik = $request->nik;
+        $petugas->no_telepon = $request->no_telepon;
+        $petugas->save();
+        return redirect()->route('petugas.index')->with('success', 'Data petugas berhasil diubah');
     }
 
     /**
@@ -59,6 +78,8 @@ class PetugasController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $petugas = User::find($id);
+        $petugas->delete();
+        return redirect()->route('petugas.index')->with('success', 'Data petugas berhasil dihapus');
     }
 }

@@ -13,7 +13,7 @@ class PetaniController extends Controller
     public function index()
     {
         $petani = User::where('role', 'petani')->get();
-        return view('petani.index', compact('petani'));
+        return view('backend.petani.index', compact('petani'));
     }
 
     /**
