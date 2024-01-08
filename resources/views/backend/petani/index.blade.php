@@ -42,10 +42,13 @@
                                 <h6 class="fs-4 fw-semibold mb-0">Nama</h6>
                             </th>
                             <th>
-                                <h6 class="fs-4 fw-semibold mb-0">Poktan</h6>
+                                <h6 class="fs-4 fw-semibold mb-0">Desa</h6>
                             </th>
                             <th>
                                 <h6 class="fs-4 fw-semibold mb-0">Nama Ibu</h6>
+                            </th>
+                            <th>
+                                <h6 class="fs-4 fw-semibold mb-0">Penyuluh</h6>
                             </th>
                             <th>
                                 <h6 class="fs-4 fw-semibold mb-0">Komoditas MT1</h6>
@@ -67,8 +70,9 @@
                             <td>{{$no++}}</td>
                             </td>
                             <td>{{$data->name}}</td>
-                            <td>{{$data->poktan}}</td>
+                            <td>{{$data->desa}}</td>
                             <td>{{$data->nama_ibu}}</td>
+                            <td>{{$data->nama_penyuluh}}</td>
                             <td>{{$data->komoditas_mt1}}</td>
                             <td>{{$data->komoditas_mt2}}</td>
                             <td>{{$data->komoditas_mt3}}</td>
@@ -96,7 +100,7 @@
                 <script>
                     $(document).ready(function() {
                         var table = $('#example').DataTable({
-                            pageLength: 5,
+                            pageLength: 10,
                             lengthMenu: [
                                 [5, 10, 20, -1],
                                 [5, 10, 20, 'Todos']

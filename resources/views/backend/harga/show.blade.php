@@ -73,7 +73,7 @@
                             <td>{{$data->komoditas}}</td>
                             <td>{{$data->produk}}</td>
                             <td>{{$data->kode_produk}}</td>
-                            <td>{{$data->harga}}</td>
+                            <td>Rp.{{number_format($data->harga,0,',','.');}}</td>
                             <td>{{$data->kecamatan}}</td>
                             <td>
                                 <div>

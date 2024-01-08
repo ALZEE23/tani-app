@@ -22,6 +22,12 @@
 
     <form action="{{ route('store-KritikDanSaran') }}" method="post">
         @csrf
+        <h6 class="select-title">Desa</h6>
+        <select name="desa" id="">
+            @foreach ($desa as $data)
+                <option value="{{$data->desa}}">{{$data->desa}}</option>
+            @endforeach
+        </select>
         <h6 class="select-title">Masukkan Kritik Dan Saran Terkait Kegiatan</h6>
         <textarea class="form-control" name="KritikDanSaran" style="height: 121px;" rows="2">Masukan Kritik dan Saran</textarea>
         <br>

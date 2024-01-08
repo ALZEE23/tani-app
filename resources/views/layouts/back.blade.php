@@ -187,14 +187,7 @@
                   <span class="hide-menu">Alsintan</span>
                 </a>
               </li>
-              <li class="sidebar-item">
-                <a class="sidebar-link {{ request()->is('teknologi.backend') ? 'active' : '' }}" href="{{route('teknologi.backend')}}" aria-expanded="false">
-                  <span>
-                    <i class="ti ti-report"></i>
-                  </span>
-                  <span class="hide-menu">Teknologi Pertanian</span>
-                </a>
-              </li>
+              
               @endif
 
               <li class="sidebar-item">
@@ -212,20 +205,6 @@
               </li>
             </ul>
           </nav>
-          <div class="fixed-profile p-3 bg-light-secondary rounded sidebar-ad mt-3">
-            <div class="hstack gap-3">
-              <div class="john-img">
-                <img src="dist/images/profile/user-1.jpg" class="rounded-circle" width="40" height="40" alt="">
-              </div>
-              <div class="john-title">
-                <h6 class="mb-0 fs-4 fw-semibold">Mathew</h6>
-                <span class="fs-2 text-dark">Designer</span>
-              </div>
-              <button class="border-0 bg-transparent text-primary ms-auto" tabindex="0" type="button" aria-label="logout" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="logout">
-                <i class="ti ti-power fs-6"></i>
-              </button>
-            </div>
-          </div>
           <!-- End Sidebar navigation -->
         </div>
         <!-- End Sidebar scroll-->
@@ -244,8 +223,6 @@
               </li>
             </ul>
             <div class="d-block d-lg-none">
-              <img src="{{asset('dist/images/logos/dark-logo.svg')}}" class="dark-logo" width="180" alt="" />
-              <img src="{{asset('dist/images/logos/light-logo.svg')}}" class="light-logo" width="180" alt="" />
             </div>
             <button class="navbar-toggler p-0 border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
               <span class="p-2">

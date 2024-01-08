@@ -1,142 +1,315 @@
 @extends('layouts.masuk')
 
 @section('content')
- <div class="pagehead-bg primary-bg" style="min-height: 147px;">
+<div class="pagehead-bg   primary-bg" style="min-height: 147px;">
+</div>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<div class="container has-pagehead is-pagetitle">
+    <div class="section">
+        <h5 class="pagetitle">Alsintan</h5>
     </div>
+</div>
 
-    <div class="container has-pagehead is-pagetitle">
-        <div class="section">
-            <h5 class="pagetitle">Teknologi Pertanian</h5>
-        </div>
-    </div>
+<div class="container">
+    <div class="select-wrapper">
+        @if (auth()->user()->role == 'petugas')
+        <a href="{{route('alsintan.store')}}"><button class="btn btn-secondary" style="width: 300px;">Tambah</button></a><br><br>
 
-    <div class="container">
-        <h6 class="text-center">Alsintan</h6>
+        @endif
+        <form id="filter-form">
+            @if (auth()->user()->role == 'dinas')
+            <select name="kecamatan" id="kecamatan-select">
+                <option value="">Pilih Kecamatan</option>
+                @foreach ($kecamatans as $data)
+                <option value="{{$data->kecamatan}}">{{$data->kecamatan}}</option>
+                @endforeach
+                <!-- Tambahkan opsi desa lainnya sesuai kebutuhan -->
+            </select>
+            @endif
 
-        <!-- Form Pencarian -->
+            <select name="desa" id="desa-select">
+                <option value="">Pilih Desa</option>
+            </select>
+
+            <select name="komoditas" id="komoditas-select">
+                <option value="">Pilih Subsektor</option>
+                <option value="Perkebunan">Perkebunan</option>
+                <option value="Pangan">Pangan</option>
+                <option value="Hortikultura">Hortikultura</option>
+                <!-- Tambahkan opsi tahun lainnya sesuai kebutuhan -->
+            </select>
+        </form>
         <br>
-
-        <div class="row">
-            <div class="mb-3">
-                <label for="filter_kecamatan" class="form-label">Filter Kecamatan</label>
-                <select class="form-select" id="filter_kecamatan" name="kecamatan_filter">
-                    <option value="">Semua Kecamatan</option>
-                    @foreach ($kecamatans as $kecamatan)
-                    <option value="{{ $kecamatan->kecamatan }}" {{ $kecamatanFilter == $kecamatan->kecamatan ? 'selected' : '' }}>
-                        {{ $kecamatan->kecamatan }}
-                    </option>
-                    @endforeach
-                </select>
-            </div>
-            <div id="tempat_ditampilkan"></div>
-
-            <form action="{{ route('alsintan.filterByKecamatan') }}" method="GET">
+        <!-- Pastikan ini di atas penutup tag </body> -->
 
 
-
-                <div class="mb-3">
-                    <label for="filter_subsektor" class="form-label">Filter Subsektor</label>
-                    <select class="form-select" id="filter_subsektor" name="subsektor_filter">
-                        <option value="" {{ !$subsektorFilter ? 'selected' : '' }}>Semua Subsektor</option>
-                        @foreach ($subsektors as $subsektor)
-                        <option value="{{ $subsektor->subsektor }}" {{ $subsektorFilter == $subsektor->subsektor ? 'selected' : '' }}>
-                            {{ $subsektor->subsektor }}
-                        </option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <button type="submit" class="btn btn-primary">Filter</button>
-            </form>
-        </div>
-
-        <div class="row">
-            <a href="{{ route('alsintan.store') }}"><button class="btn btn-secondary">Tambah</button></a>
-            <!-- Add this button wherever you want in your view -->
-            <a href="{{ route('export-alsintan') }}" class="btn btn-success">Export to Excel</a>
-        </div>
-
-        <div class="table-responsive">
-            <table class="table" id="alsintanTable">
-                <thead>
-                    <tr>
-                        <th scope="col">No</th>
-                        <th scope="col">Desa</th>
-                        <th scope="col">Nama Gapoktan</th>
-                        <th scope="col">Ketua Gapoktan</th>
-                        <th scope="col">Kontak</th>
-                        <th scope="col">Jenis Alat Dan Mesin</th>
-                        <th scope="col">Jumlah Alat Dan Mesin</th>
-                        <th scope="col">Tahun Bantuan</th>
-                        <th scope="col">Foto</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($alsintans as $index => $alsintan)
-                    <tr>
-                        <td>{{ $index + 1 }}</td>
-                        <td>{{ $alsintan->desa }}</td>
-                        <td>{{ $alsintan->gapoktan }}</td>
-                        <td>{{ $alsintan->ketua_gapoktan }}</td>
-                        <td>{{ $alsintan->kontak }}</td>
-                        <td>{{ $alsintan->alat }}</td>
-                        <td>{{ $alsintan->jumlah_alat }}</td>
-                        <td>{{ $alsintan->tahun }}</td>
-                        <td>
-                            <img style="width: 100px;" src="{{asset('storage/gambar/'.$alsintan->gambar)}}">
-
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-            <br><br><br><br>
-        </div>
     </div>
-    <!-- Pastikan jQuery sudah di-load sebelumnya -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-    <script>
-        $(document).ready(function() {
-            $('#filter_kecamatan').on('change', function() {
-                var kecamatan = $(this).val();
+    <!-- Card Profil -->
 
-                $.ajax({
-                    url: "/getdesa",
-                    method: 'GET',
-                    data: {
-                        kecamatan: kecamatan
-                    },
-                    success: function(response) {
-                        console.log(response);
+</div>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="table-responsive">
+                @if (auth()->user()->role == 'dinas'|| auth()->user()->role == 'petugas')
+                <button id="export-excel">Excel</button>
+                <button id="export-pdf"> PDF</button>
+                <br>
+                <br>
+                @endif
+                <h6>Geser >></h6>
 
-                        var filterDesa = $('<select id="filter_desa"></select>'); // Membuat elemen <select>
+                <table class="table table-bordered" id="data-table">
+                    <thead>
+                        <tr>
+                            <td class="tg-0lax">no</td>
+                            <td class="tg-0lax">Desa</td>
+                            <td class="tg-0lax">Poktan</td>
+                            <td class="tg-0lax">Ketua Poktan</td>
+                            <td class="tg-0lax">Kontak</td>
+                            <td class="tg-0lax">Jenis Alat/Mesin</td>
+                            <td class="tg-0lax">Jumlah</td>
+                            <td class="tg-0lax">Tahun Bantuan</td>
+                            <td class="tg-0lax">Foto</td>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
+                <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script> -->
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
+                <script>
+                    var nomorUrutan = 1;
+                    // jQuery
+                    $(document).ready(function() {
+                        $('#kecamatan-select').change(function() {
+                            var kecValue = $('#kecamatan-select').val();
+                            // Kirim permintaan Ajax
+                            $.ajax({
+                                type: 'POST',
+                                url: '/get-desa',
+                                data: {
+                                    _token: '{{ csrf_token() }}', // Tambahkan _token untuk laravel
+                                    kecamatan: kecValue,
+                                },
+                                success: function(response) {
+                                    console.log(response);
+                                    $('#desa-select').empty();
+                                    // Tambahkan opsi pertama sebagai default
+                                    $('#desa-select').append('<option value="">Pilih Desa</option>');
+                                    $('#data-table tbody').empty();
 
-                        // Tambahkan opsi default
-                        filterDesa.append('<option value="">Pilih Desa</option>');
+                                    // Tambahkan data ke dalam tbody
+                                    $.each(response.alsintans, function(key, value) {
+                                        $('#data-table tbody').append(`
+                                        <tr>
+                                            <td class="tg-0lax">${key + 1}</td>
+                                            <td class="tg-0lax">${value.desa}</td>
+                                            <td class="tg-0lax">${value.gapoktan}</td>
+                                            <td class="tg-0lax">${value.ketua_gapoktan}</td>
+                                            <td class="tg-0lax">${value.kontak}</td>
+                                            <td class="tg-0lax">${value.alat}</td>
+                                            <td class="tg-0lax">${value.jumlah_alat}</td>
+                                            <td class="tg-0lax">${value.tahun}</td>
+                                            <td class="tg-0lax"><img style="width: 100px;" src="{{asset('storage/gambar/${value.gambar}')}}"></td>
+                                        </tr>
+                                    `);
+                                    });
+                                    // Loop melalui response dan tambahkan opsi untuk setiap elemen dalam response
+                                    $.each(response.desa, function(key, value) {
+                                        $('#desa-select').append('<option value="' + value + '">' + value + '</option>');
+                                    });
+                                    $('#desa-select').formSelect();
+                                }
+                            });
+                        });
+                    });
+                    $(document).ready(function() {
+                        $('#desa-select').change(function() {
+                            var desaValue = $('#desa-select').val();
+                            // Kirim permintaan Ajax
+                            $.ajax({
+                                type: 'POST',
+                                url: '/get-alsintan',
+                                data: {
+                                    _token: '{{ csrf_token() }}', // Tambahkan _token untuk laravel
+                                    desa: desaValue,
+                                },
+                                success: function(response) {
+                                    console.log(response);
+                                    $('#data-table tbody').empty();
 
-                        // Tambahkan opsi desa dari respons
-                        response.forEach(function(data) {
-                            var option = $('<option></option>').attr('value', data.desa).text(data.desa);
-                            filterDesa.append(option);
+                                    // Tambahkan data ke dalam tbody
+                                    $.each(response.alsintans, function(key, value) {
+                                        $('#data-table tbody').append(`
+                                        <tr>
+                                            <td class="tg-0lax">${key + 1}</td>
+                                            <td class="tg-0lax">${value.desa}</td>
+                                            <td class="tg-0lax">${value.gapoktan}</td>
+                                            <td class="tg-0lax">${value.ketua_gapoktan}</td>
+                                            <td class="tg-0lax">${value.kontak}</td>
+                                            <td class="tg-0lax">${value.alat}</td>
+                                            <td class="tg-0lax">${value.jumlah_alat}</td>
+                                            <td class="tg-0lax">${value.tahun}</td>
+                                            <td class="tg-0lax"><img style="width: 100px;" src="{{asset('storage/gambar/${value.gambar}')}}"></td>
+                                        </tr>
+                                    `);
+                                    });
+                                    // Loop melalui response dan tambahkan opsi untuk setiap elemen dalam response
+                                    $.each(response.desa, function(key, value) {
+                                        $('#desa-select').append('<option value="' + key + '">' + value + '</option>');
+                                    });
+                                    $('#desa-select').formSelect();
+                                }
+                            });
+                        });
+                    });
+                    $(document).ready(function() {
+                        $('#komoditas-select').change(function() {
+                            var desaValue = $('#desa-select').val();
+                            var komoditasValue = $('#komoditas-select').val();
+                            // Kirim permintaan Ajax
+                            $.ajax({
+                                type: 'POST',
+                                url: '/get-alsintan2',
+                                data: {
+                                    _token: '{{ csrf_token() }}', // Tambahkan _token untuk laravel
+                                    desa: desaValue,
+                                    komoditas: komoditasValue,
+                                },
+                                success: function(response) {
+                                    console.log(response);
+                                    $('#data-table tbody').empty();
+
+                                    // Tambahkan data ke dalam tbody
+                                    $.each(response.alsintans, function(key, value) {
+                                        $('#data-table tbody').append(`
+                                        <tr>
+                                            <td class="tg-0lax">${key + 1}</td>
+                                            <td class="tg-0lax">${value.desa}</td>
+                                            <td class="tg-0lax">${value.gapoktan}</td>
+                                            <td class="tg-0lax">${value.ketua_gapoktan}</td>
+                                            <td class="tg-0lax">${value.kontak}</td>
+                                            <td class="tg-0lax">${value.alat}</td>
+                                            <td class="tg-0lax">${value.jumlah_alat}</td>
+                                            <td class="tg-0lax">${value.tahun}</td>
+                                            <td class="tg-0lax"><img style="width: 100px;" src="{{asset('storage/gambar/${value.gambar}')}}"></td>
+                                        </tr>
+                                    `);
+                                    });
+                                    // Loop melalui response dan tambahkan opsi untuk setiap elemen dalam response
+                                    $.each(response.desa, function(key, value) {
+                                        $('#desa-select').append('<option value="' + key + '">' + value + '</option>');
+                                    });
+                                    $('#desa-select').formSelect();
+                                }
+                            });
+                        });
+                    });
+
+                    function exportToExcel() {
+                        var wb = XLSX.utils.table_to_book(document.getElementById('data-table'), {
+                            sheet: 'Sheet JS'
+                        });
+                        var wbout = XLSX.write(wb, {
+                            bookType: 'xlsx',
+                            type: 'binary'
                         });
 
-                        // Masukkan elemen <select> beserta opsi-opsinya ke dalam halaman
-                        $('#tempat_ditampilkan').append(filterDesa); // Ganti '#tempat_ditampilkan' dengan ID tempat di mana kamu ingin menampilkan dropdown
-                    },
+                        function s2ab(s) {
+                            var buf = new ArrayBuffer(s.length);
+                            var view = new Uint8Array(buf);
+                            for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+                            return buf;
+                        }
 
-
-
-                    error: function(xhr, status, error) {
-                        console.error(error);
-                        // Jika terjadi kesalahan, tambahkan opsi default
-                        $('#filter_desa').empty().append('<option value="" >Error retrieving data</option>');
+                        saveAs(new Blob([s2ab(wbout)], {
+                            type: "application/octet-stream"
+                        }), 'data.xlsx');
                     }
-                });
-            });
-        });
-    </script>
 
+                    // Tambahkan event listener pada tombol export
+                    document.getElementById('export-excel').addEventListener('click', exportToExcel);
 
+                    function exportToPDF() {
+                        if (typeof jsPDF !== 'undefined') {
+                            const doc = new jsPDF();
 
-    @endsection
+                            doc.autoTable({
+                                html: '#data-table'
+                            });
+
+                            doc.save('data.pdf');
+                        } else {
+                            console.error('Error: jsPDF is not defined.');
+                        }
+                    }
+
+                    // Tambahkan event listener pada tombol export ke PDF
+                    document.getElementById('export-pdf').addEventListener('click', exportToPDF);
+                </script>
+
+            </div>
+        </div>
+    </div>
+</div>
+<br><br><br>
+<style>
+    /* Sesuaikan style card dengan desain yang diinginkan */
+    .card {
+        margin-top: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-content {
+        padding: 10px;
+    }
+
+    /* Style untuk gambar profile */
+    img {
+        border-radius: 50%;
+        /* Untuk membuat gambar menjadi bulat */
+    }
+
+    .container {
+        text-align: center;
+    }
+
+    .image-wrapper {
+        display: inline-block;
+        margin-top: 10px;
+        /* Sesuaikan jarak antara teks dan gambar */
+    }
+
+    .select-wrapper {
+        margin-top: 20px;
+        /* Sesuaikan jarak dari gambar ke select */
+    }
+
+    /* Style untuk label select */
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    /* Style untuk select */
+    select {
+        width: 200px;
+        /* Sesuaikan lebar select */
+        padding: 5px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+    }
+
+    .imgp {
+        margi
+    }
+</style>
+
+@endsection

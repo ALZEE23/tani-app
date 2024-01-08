@@ -75,7 +75,7 @@
   <!--  SIDEBAR - END -->
 
   <!-- START navigation -->
-  <nav class="fix_topscroll logo_on_fixed  topbar navigation">
+  <nav class="logo_on_fixed  topbar navigation">
     <div class="nav-wrapper container">
       <a href="{{route('home')}}" class="waves-effect waves-circle navicon back-button htmlmode show-on-large">
         <i class="mdi mdi-chevron-left" data-page=""></i>

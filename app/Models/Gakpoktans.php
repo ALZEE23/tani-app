@@ -9,5 +9,5 @@ class Gakpoktans extends Model
 {
     use HasFactory;
     public $timestamps = false;
-    public  $fillable = ['desa', 'nama_gakpoktan', 'nama_ketua', 'pangan', 'berkebunan', 'hortikultura', 'peternakan', 'perikanan', 'kwt', 'no_telepopn'];
+    public  $fillable = ['desa','kecamatan', 'nama_gakpoktan', 'nama_ketua', 'pangan', 'berkebunan', 'hortikultura', 'peternakan', 'perikanan', 'kwt', 'no_telepopn'];
 }

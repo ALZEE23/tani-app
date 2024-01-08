@@ -31,20 +31,20 @@
         @if (auth()->user()->role == 'dinas')
         @if (isset($key))
         <div class="select-wrapper d-flex justify-content-center">
-            <label for="desa">Pilih Desa:</label>
-            <select id="desa" name="desa" onchange="redirectToSelecteddesa()">
-                @foreach ($desa as $data)
-                <option {{ $key == $data->desa ? 'selected' : '' }} value="{{$data->desa}}">{{$data->desa}}</option>
+            <label for="kecamatan">Pilih Kecamatan:</label>
+            <select id="kecamatan" name="kecamatan" onchange="redirectToSelectedkecamatan()">
+                @foreach ($kecamatan as $data)
+                <option {{ $key == $data->kecamatan ? 'selected' : '' }} value="{{$data->kecamatan}}">{{$data->kecamatan}}</option>
                 @endforeach
                 <!-- Tambahkan opsi desa lainnya sesuai kebutuhan -->
             </select>
         </div>
         @else
         <div class="select-wrapper d-flex justify-content-center">
-            <label for="desa">Pilih Desa:</label>
-            <select id="desa" name="desa" onchange="redirectToSelecteddesa()">
-                @foreach ($desa as $data)
-                <option value="{{$data->desa}}">{{$data->desa}}</option>
+            <label for="desa">Pilih kecamatan:</label>
+            <select id="kecamatan" name="kecamatan" onchange="redirectToSelectedkecamatan()">
+                @foreach ($kecamatan as $data)
+                <option value="{{$data->kecamatan}}">{{$data->kecamatan}}</option>
                 @endforeach
                 <!-- Tambahkan opsi desa lainnya sesuai kebutuhan -->
             </select>
@@ -53,8 +53,8 @@
         @endif
         <!-- @ endif -->
         <script>
-            function redirectToSelecteddesa() {
-                const selecteddesa = document.getElementById('desa').value;
+            function redirectToSelectedkecamatan() {
+                const selecteddesa = document.getElementById('kecamatan').value;
                 window.location.href = "{{ url('gakpoktan-filter') }}/" + encodeURIComponent(selecteddesa);
             }
         </script>
@@ -98,7 +98,7 @@
         <button class="btn btn-primary">tambah</button>
     </a>
     @endif
-    @if (auth()->user()->role == 'dinas' || auth()->user()->role == 'petugas')s
+    @if (auth()->user()->role == 'dinas' || auth()->user()->role == 'petugas')
 
     <a href="{{route('export-excel-gakpoktan')}}"><button class="btn btn-secondary">Excel</button></a>
     <a href="{{route('export-pdf-gakpoktan')}}"><button class="btn btn-secondary">Pdf</button></a>
@@ -114,7 +114,7 @@
                             <tr>
                                 <th scope="col">No</th>
                                 <th scope="col">Desa</th>
-                                <th scope="col">Nama Gapoktan</th>
+                                <th scope="col">Nama Gapotan</th>
                                 <th scope="col">Nama Ketua</th>
                                 <th scope="col">Pangan</th>
                                 <th scope="col">Perkebunan</th>

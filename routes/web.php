@@ -18,6 +18,7 @@ use App\Http\Controllers\PetaniController;
 use App\Http\Controllers\PoktanController;
 use App\Http\Controllers\PetugasController;
 use App\Http\Controllers\AlsintanController;
+use App\Http\Controllers\AlsintanController2;
 use App\Http\Controllers\BudidayaController;
 use App\Http\Controllers\PenyuluhController;
 use App\Http\Controllers\KecamatanController;
@@ -89,7 +90,9 @@ Route::get('/gakpoktan', [App\Http\Controllers\KelembagaanController::class, 'ga
 Route::get('/tambah-gakpoktan', [App\Http\Controllers\KelembagaanController::class, 'tambah_gakpoktan'])->name('tambah-gakpoktan');
 Route::post('/store-gakpoktan', [App\Http\Controllers\KelembagaanController::class, 'store_gakpoktan'])->name('store-gakpoktan');
 Route::get('/export-excel-gakpoktan', [KelembagaanController::class, 'export_excel_gakpoktans'])->name('export-excel-gakpoktan');
+Route::get('/export-excel-poktan', [KelembagaanController::class, 'export_excel_poktans'])->name('export-excel-poktan');
 Route::get('/export-pdf-gakpoktan', [KelembagaanController::class, 'export_pdf_gakpoktans'])->name('export-pdf-gakpoktan');
+Route::get('/export-pdf-poktan', [KelembagaanController::class, 'export_pdf_poktans'])->name('export-pdf-poktan');
 Route::get('/gakpoktan-filter/{id}', [App\Http\Controllers\KelembagaanController::class, 'filter_gakpoktan'])->name('gakpoktan-filter');
 Route::get('/csdesa/session/{id}', [App\Http\Controllers\KelembagaanController::class, 'csdesa'])->name('csdesa');
 Route::get('/cskecamatan/session/{id}', [App\Http\Controllers\KelembagaanController::class, 'cskecamatan'])->name('cskecamatan');
@@ -111,6 +114,7 @@ Route::post('/filter-rencana', [App\Http\Controllers\PenyuluhanController::class
 Route::get('/download-all-images/{id}', [App\Http\Controllers\PenyuluhanController::class, 'downloadAllImages'])->name('download-all-images');
 
 Route::get('/penyuluhan-dokumentasi', [App\Http\Controllers\PenyuluhanController::class, 'dokumentasi'])->name('penyuluhan-dokumentasi');
+Route::get('/download/{id}/docs', [App\Http\Controllers\PenyuluhanController::class, 'downloadBundle'])->name('dokumentasi.download');
 Route::get('/tambah-dokumentasi', [App\Http\Controllers\PenyuluhanController::class, 'tambah_dokumentasi'])->name('tambah-dokumentasi');
 Route::post('/store-dokumentasi', [App\Http\Controllers\PenyuluhanController::class, 'store_dokumentasi'])->name('store-dokumentasi');
 Route::post('/filter-dokumentasi', [App\Http\Controllers\PenyuluhanController::class, 'handleAjaxRequest'])->name('filter-dokumentasi');
@@ -154,6 +158,11 @@ Route::delete('/pencegahan/delete/{id}', [PencegahanController::class,'delete'])
 Route::get('/alsintan', [AlsintanController::class, 'index'])->name('alsintan');
 Route::get('/alsintan/tambah', [AlsintanController::class, 'store'])->name('alsintan.store');
 Route::post('/alsintan/tambah', [AlsintanController::class, 'tambah'])->name('alsintan.tambah');
+Route::post('/alsintan/tambah2', [AlsintanController2::class, 'tambah'])->name('alsintan.tambah2');
+Route::get('/edit/alsintan/{id}', [AlsintanController2::class, 'edit'])->name('alsintan.edit');
+
+Route::delete('/delete/alsintan/{id}', [AlsintanController2::class, 'destroy'])->name('alsintan.destroy');
+
 Route::get('/alsintan/filter', [AlsintanController::class, 'filterByKecamatan'])->name('alsintan.filterByKecamatan');
 Route::get('/export-alsintan', [AlsintanController::class, 'exportToExcel'])->name('export-alsintan');
 Route::get('/fetch-desa-options', [AlsintanController::class, 'fetchDesaOptions']);
@@ -169,6 +178,9 @@ Route::get('/back-import-user', [HomeController::class, 'showUploadForm'])->name
 
 
 Route::get('/apitest', [ProduksitanamanController::class, 'api'])->name('api');
+Route::post('/get-desa', [DesaController::class, 'getdesa'])->name('get.desa');
+Route::post('/get-alsintan', [DesaController::class, 'getalsintan'])->name('get.alsintan');
+Route::post('/get-alsintan2', [DesaController::class, 'getalsintan2'])->name('get.alsintan2');
 
 // Kecamatan
 

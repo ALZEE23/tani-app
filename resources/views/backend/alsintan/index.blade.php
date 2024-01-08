@@ -67,6 +67,9 @@
                                 <h6 class="fs-4 fw-semibold mb-0">Tahun Bantuan</h6>
                             </th>
                             <th>
+                                <h6 class="fs-4 fw-semibold mb-0">Foto</h6>
+                            </th>
+                            <th>
                                 <h6 class="fs-4 fw-semibold mb-0">Opsi</h6>
                             </th>
                         </tr>
@@ -87,13 +90,17 @@
                             <td>{{$alsintan->jumlah_alat}}</td>
                             <td>{{$alsintan->tahun}}</td>
                             <td>
+                                <img style="width: 100px;" src="{{asset('storage/gambar/'.$alsintan->gambar)}}">
+
+                            </td>
+                            <td>
                                 <div>
-                                    <form action="{{ route('kecamatan.edit', $alsintan->id) }}" method="GET" class="d-inline">
+                                    <form action="{{ route('alsintan.edit', $alsintan->id) }}" method="GET" class="d-inline">
                                         <button type="submit" class="btn btn-warning">
                                             <i class="ti ti-edit"></i>
                                         </button>
                                     </form>
-                                    <form action="{{ route('kecamatan.destroy', $alsintan->id) }}" method="POST" class="d-inline">
+                                    <form action="{{ route('alsintan.destroy', $alsintan->id) }}" method="POST" class="d-inline">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin untuk menghapus data ini?')">
@@ -113,33 +120,55 @@
     <!--  Form Basic End -->
     <!-- --------------------------------------------------- -->
     <script>
-    $(document).ready(function () {
-        var table = $('#example').DataTable({
-            pageLength: 5,
-            lengthMenu: [
-                [5, 10, 20, -1],
-                [5, 10, 20, -1],
-                [5, 10, 20, -1],
-                [5, 10, 20, -1],
-                [5, 10, 20, -1],
-                [5, 10, 20, -1],
-                [5, 10, 20, 'Todos']
-            ],
-            columns: [
-                { data: 'No' },
-                { data: 'Kecamatan' },
-                { data: 'Desa' },
-                { data: 'Nama Gapoktan' },
-                { data: 'Ketua Gapoktan' },
-                { data: 'Kontak' },
-                { data: 'Jenis Alat Dan Mesin' },
-                { data: 'Jumlah Alat Dan Mesin' },
-                { data: 'Tahun Bantuan' },
-                { data: 'Opsi' },
-            ],
+        $(document).ready(function() {
+            var table = $('#example').DataTable({
+                pageLength: 5,
+                lengthMenu: [
+                    [5, 10, 20, -1],
+                    [5, 10, 20, -1],
+                    [5, 10, 20, -1],
+                    [5, 10, 20, -1],
+                    [5, 10, 20, -1],
+                    [5, 10, 20, -1],
+                    [5, 10, 20, 'Todos']
+                ],
+                columns: [{
+                        data: 'No'
+                    },
+                    {
+                        data: 'Kecamatan'
+                    },
+                    {
+                        data: 'Desa'
+                    },
+                    {
+                        data: 'Nama Gapoktan'
+                    },
+                    {
+                        data: 'Ketua Gapoktan'
+                    },
+                    {
+                        data: 'Kontak'
+                    },
+                    {
+                        data: 'Jenis Alat Dan Mesin'
+                    },
+                    {
+                        data: 'Jumlah Alat Dan Mesin'
+                    },
+                    {
+                        data: 'Tahun Bantuan'
+                    },
+                    {
+                        data: 'Foto'
+                    },
+                    {
+                        data: 'Opsi'
+                    },
+                ],
+            });
         });
-    });
-</script>
+    </script>
 
 </div>
 @endsection

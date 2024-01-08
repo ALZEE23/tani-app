@@ -9,7 +9,6 @@ use App\Models\Kecamatan;
 use App\Models\Dokumentasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-
 class PenyuluhanController extends Controller
 {
     function index()
@@ -71,15 +70,58 @@ class PenyuluhanController extends Controller
         return view('penyuluhan.rencana.index', compact('rencana', 'key', 'kecamatan', 'desa', 'penyuluh'));
     }
 
+    public function downloadBundle($id)
+    {
+        // Ambil nama file dari database
+        $dokumentasi = Dokumentasi::find($id);
+        if (!$dokumentasi) {
+            return redirect()->back()->with('error', 'Dokumentasi tidak ditemukan.');
+        }
+
+        // Pisahkan nama file yang dipisahkan dengan koma menjadi array
+        $namaFile = $dokumentasi->foto;
+        $namaFileArray = explode(',', $namaFile);
+
+        // Inisialisasi objek ZipArchive
+        $zip = new \ZipArchive();
+
+        // Buat nama file zip dan path penyimpanannya
+        $zipFileName = "File Dokumentasi" .$dokumentasi->keterangan  . '.zip';
+        $zipFilePath = public_path($zipFileName); // Lokasi penyimpanan sementara di public
+
+        // Path dasar ke folder gambar
+        $baseImagePath = public_path('storage/dokumentasi') . DIRECTORY_SEPARATOR;
+
+        // Buat file zip dan tambahkan file-file gambar ke dalamnya
+        if ($zip->open($zipFilePath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) === true) {
+            foreach ($namaFileArray as $namaFile) {
+                $fullImagePath = $baseImagePath . trim($namaFile);
+                if (file_exists($fullImagePath) && is_file($fullImagePath)) {
+                    $zip->addFile($fullImagePath, basename($fullImagePath));
+                } else {
+                    // Debugging: Tampilkan pesan jika file tidak ditemukan
+                    dd('File tidak ditemukan: ' . $fullImagePath);
+                }
+            }
+            $zip->close();
+        } else {
+            // Debugging: Tampilkan pesan jika gagal membuat file ZIP
+            dd('Gagal membuat file ZIP');
+        }
+
+        // Setelah membuat zip, kirimkan file bundle kepada pengguna
+        return response()->download($zipFilePath)->deleteFileAfterSend(true);
+    }
+
 
     function dokumentasi()
-    { {
+    { 
             $dokumentasi = Dokumentasi::all();
             $desa = Desa::pluck('desa');
             $kecamatan = Kecamatan::all();
             // dd($dokumentasi);
             return view('penyuluhan.dokumentasi.index', compact('dokumentasi', 'kecamatan', 'desa'));
-        }
+        
     }
 
     function tambah_dokumentasi()
@@ -276,7 +318,7 @@ class PenyuluhanController extends Controller
             $response .= '<a href="' . route('edit-dokumentasi', $data->id) . '" class="btn btn-primary">Edit</a>';
 
             // Tambahkan tautan "Download Semua" dan tautan download untuk setiap gambar
-            $response .= '<a href="' . route('download-all-images', $data->id) . '" class="btn btn-primary save-all">Download</a>';
+            $response .= '<a href="' . route('dokumentasi.download', $data->id) . '" class="btn btn-primary save-all">Download</a>';
 
             $response .= '<div class="download-links" style="display: none;">';
             foreach ($images as $image) {

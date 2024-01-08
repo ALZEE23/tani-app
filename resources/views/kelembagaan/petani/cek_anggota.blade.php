@@ -16,7 +16,7 @@
         <img alt="image" src="{{ asset('images/menu-petani.png') }}" style="width: 100px; height:100px">
     </div>
     <div class="select-wrapper">
-        <a href="{{route('cek-anggota')}}"><button class="btn btn-secondary" style="width: 300px;">Cek Keanggotaan Poktan</button></a>
+        <a href="{{route('cek-anggota')}}"><button class="btn btn-secondary" style="width: 300px;">Cek Keanggotaan Petani</button></a>
     </div>
 
     <!-- Card Profil -->

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class PetugasController extends Controller
 {
@@ -35,7 +36,7 @@ class PetugasController extends Controller
         $petugas->username = $request->username;
         $petugas->nik = $request->nik;
         $petugas->no_telepon = $request->no_telepon;
-        $petugas->password = bcrypt($request->password);
+        $petugas->password = Hash::make($request->password);
         $petugas->role = 'petugas';
         $petugas->save();
         return redirect()->route('petugas.index')->with('success', 'Data petugas berhasil ditambahkan');

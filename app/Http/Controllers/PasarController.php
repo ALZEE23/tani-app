@@ -401,6 +401,7 @@ class PasarController extends Controller
 
     public function filter($id)
     {
+        session(['kecamatan' => $id]);
         $kecamatan = Kecamatan::all();
         $pasars = Pasar::where('kecamatan', $id)->get();
         $harga = Harga::where('kecamatan', $id)->get();
@@ -413,8 +414,14 @@ class PasarController extends Controller
                 $data = Harga::query();
 
                 // Lakukan filter berdasarkan permintaan
-                if ($request->komoditas) {
-                    $data->where('kecamatan', Auth::user()->kecamatan);
+                if ($request->kecamatan) {
+                  $data->where('kecamatan', $request->kecamatan);
+                }
+                else{
+                $data->where('kecamatan', Auth::user()->kecamatan);
+
+                }
+                if($request->komoditas){
                     $data->where('komoditas', $request->komoditas);
                 }
             $harga = $data->get();

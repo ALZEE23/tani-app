@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\desa;
 use App\Models\Kecamatan;
+use App\Models\Alsintan;
 use Illuminate\Http\Request;
 
 class DesaController extends Controller
@@ -11,6 +12,26 @@ class DesaController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function getdesa(Request $request)
+    {   
+        $alsintans = Alsintan::where('kecamatan', $request->kecamatan)->get();
+        $desa = Desa::where("kecamatan",$request->kecamatan)->pluck("desa","id");
+
+        return response()->json(["desa" => $desa, "alsintans" => $alsintans]);
+    }
+    public function getalsintan(Request $request)
+    {   
+        $alsintans = Alsintan::where('desa', $request->desa)->get();
+
+        return response()->json(["desa" => $request->desa, "alsintans" => $alsintans]);
+    }
+    public function getalsintan2(Request $request)
+    {   
+        $alsintans = Alsintan::where('desa', $request->desa)->where('subsektor',$request->komoditas)->get();
+
+        return response()->json(["desa" => $request->komoditas, "alsintans" => $alsintans]);
+    }
+
     public function index()
     {
         $desa = Desa::all();

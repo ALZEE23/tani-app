@@ -55,6 +55,7 @@
                         <tr>
                             <td class="tg-0lax">no</td>
                             <td class="tg-0lax">Kecamatan</td>
+                            <td class="tg-0lax">Desa</td>
                             <td class="tg-0lax">Tanggal</td>
                             <td class="tg-0lax">Kritik dan Saran</td>
                         </tr>
@@ -106,6 +107,7 @@
                                         var row = '<tr>' +
                                             '<td>' + (index + 1) + '</td>' +
                                             '<td>' + item.kecamatan + '</td>' +
+                                            '<td>' + item.desa + '</td>' +
                                             '<td>' + item.tanggal + '</td>' +
                                             '<td>' + item.KritikDanSaran + '</td>' +
                                             '</tr>';

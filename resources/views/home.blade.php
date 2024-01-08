@@ -48,12 +48,7 @@
 
 
 <body class=" menu-full header-image html" data-header="light" data-footer="light" data-header_align="app" data-menu_type="left" data-menu="light" data-menu_icons="on" data-footer_type="left" data-site_mode="light" data-footer_menu="show" data-footer_menu_style="light">
-  <div class="preloader-background">
-    <div class="preloader-wrapper">
-      <div class="loader">
-      </div>
-    </div>
-  </div>
+ 
 
 
 
@@ -92,10 +87,8 @@
           </g>
         </svg>Jendela tani</a>
 
-      <a href="#" data-target="" class="waves-effect waves-circle navicon back-button htmlmode show-on-large "><i class="mdi mdi-chevron-left" data-page=""></i></a>
 
 
-      <a href="#" data-target="slide-nav" class="waves-effect waves-circle navicon sidenav-trigger show-on-large"><i class="app-icon-menu61"></i></a>
 
       <a href="#" data-target="slide-settings" class="waves-effect waves-circle navicon right sidenav-trigger show-on-large">
         @auth

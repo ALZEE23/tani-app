@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Desa;
 use App\Models\Kecamatan;
-use App\Models\KritikDanSaran;
 use Illuminate\Http\Request;
+use App\Models\KritikDanSaran;
 
 class KritikDanSaranController extends Controller
 {
@@ -16,7 +17,8 @@ class KritikDanSaranController extends Controller
             return view('KritikDanSaran.index1',compact('kritikdansaran','kecamatan'));
 
         }
-        return view('KritikDanSaran.index');
+        $desa = Desa::all();
+        return view('KritikDanSaran.index',compact('desa'));
     }
 
     public function store_KritikDanSaran(Request $request)
@@ -27,10 +29,12 @@ class KritikDanSaranController extends Controller
         ]);
 
         // Create a new Saran record
+        $desa = Desa::where('desa', $request->desa)->first();
         KritikDanSaran::create([
             'tanggal' => now(),
             'KritikDanSaran' => $request->input('KritikDanSaran'),
-            'kecamatan' => auth()->user()->kecamatan,
+            'desa' => $request->desa,
+            'kecamatan' => $desa->kecamatan,
         ]);
 
         // You can add additional logic or redirect here

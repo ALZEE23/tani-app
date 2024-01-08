@@ -10,9 +10,8 @@ use App\Models\Desa;
 use App\Exports\AlsintanExport;
 use Maatwebsite\Excel\Facades\Excel;
 
-class AlsintanController extends Controller
+class AlsintanController2 extends Controller
 {
-    //
       public function index(Request $request)
 {
     $kecamatans = Kecamatan::all();
@@ -108,7 +107,7 @@ public function fetchDesaOptions(Request $request)
 
         
         // Redirect dengan pesan sukses
-        return redirect()->route('alsintan')->with('success', 'Pestisida berhasil ditambahkan.');
+        return redirect()->route('alsintan.backend')->with('success', 'Pestisida berhasil ditambahkan.');
     }
 
     public function exportToExcel()
@@ -159,5 +158,11 @@ function getDesaByKecamatan(Request $request){
     return response()->json($desa);
 }
 
+    public function destroy(string $id)
+    {
+        $alsintan = Alsintan::find($id);
+        $alsintan->delete();
+        return redirect()->route('backend.alsintan')->with('success', 'Data penyuluh berhasil dihapus');
+    }
 
 }

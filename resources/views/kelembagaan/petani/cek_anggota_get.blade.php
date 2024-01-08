@@ -16,14 +16,14 @@
         <img alt="image" src="{{ asset('images/menu-petani.png') }}" style="width: 100px; height:100px">
     </div>
     <div class="select-wrapper">
-        <a href="{{route('cek-anggota')}}"><button class="btn btn-secondary" style="width: 300px;">Cek Keanggotaan Poktan</button></a>
+        <a href="{{route('cek-anggota')}}"><button class="btn btn-secondary" style="width: 300px;">Cek Keanggotaan Petani</button></a>
     </div>
 
     <!-- Card Profil -->
     <div class=""><br>
         <label for=" poktan">MASUKAN NIK SESUAI KTP:</label>
         <form action="{{route('procek')}}" method="get">
-            <input type="text" name="nik" style="width: 200px;">
+            <input type="text" name="nik" style="width: 200px;" value="{{$_GET['nik']}}">
             <button type="submit" class="btn btn-secondary">cari</button>
         </form>
     </div>
@@ -46,12 +46,45 @@
     @if(count($daftarpoktan) > 0)
     @foreach ($daftarpoktan as $data)
     <div class="card">
-        <span class="info">Nama : {{$data->nama}}</span><br>
-        <span class="info">NNik : {{$data->nik}}</span><br>
-        <span class="info">Nama Poktan : {{$data->poktan}}</span><br>
+        <br>
+        <span class="info">Nama : {{$data->name}}</span><br>
+        <span class="info">Nik : {{$data->nik}}</span><br>
+        <span class="info">Nama Ibu Kandung : {{$data->nama_ibu}}</span><br>
         <span class="info">Desa : {{$data->desa}}</span><br>
-        <span class="info">Status : {{$data->status}}</span>
+        <!-- <span class="info">Status : {{$data->status}}</span> -->
+        <br>
+        <span class="info">MT1</span><br>
+        <span class="info">Komoditas : {{$data->komoditas_mt1}}</span><br>
+        <span class="info">Kios : {{$data->nama_kios_pengecer}}</span><br>
+        <span class="info">Luasan : {{$data->rencana_mt1}}</span><br>
+        @if (auth()->user()->role == 'dinas' || auth()->user()->role == 'petugas')
+
+        <span class="info">Urea : {{$data->pupuk_urea_mt1}} Kg</span><br>
+        <span class="info">Phonska : {{$data->pupuk_npk_formula_mt1}} Kg</span><br>
+        <br>
+        @endif
+
+        <span class="info">MT2</span><br>
+        <span class="info">Komoditas : {{$data->komoditas_mt2}}</span><br>
+        <span class="info">Kios : {{$data->nama_kios_pengecer}}</span><br>
+        <span class="info">Luasan : {{$data->rencana_mt2}}</span><br>
+
+        @if (auth()->user()->role == 'dinas' || auth()->user()->role == 'petugas')
+        <span class="info">Urea : {{$data->pupuk_urea_mt2}} Kg</span><br>
+        <span class="info">Phonska : {{$data->pupuk_npk_formula_mt2}}</span><br>
+        <br>
+        @endif
+
+        <span class="info">MT3</span><br>
+        <span class="info">Komoditas : {{$data->komoditas_mt3}}</span><br>
+        <span class="info">Kios : {{$data->nama_kios_pengecer}}</span><br>
+        <span class="info">Luasan : {{$data->rencana_mt3}}</span><br>
+
+        @if (auth()->user()->role == 'dinas' || auth()->user()->role == 'petugas')
+        <span class="info">Urea : {{$data->pupuk_urea_mt3}} Kg</span><br>
+        <span class="info">Phonska : {{$data->pupuk_npk_formula_mt3}} Kg</span><br>
     </div>
+    @endif
     @endforeach
     @else
     <div class="card" style="background-color:green;">

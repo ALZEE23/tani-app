@@ -8,11 +8,11 @@
         <div class="card-body px-4 py-3">
             <div class="row align-items-center">
                 <div class="col-9">
-                    <h4 class="fw-semibold mb-8">Form gakpoktan</h4>
+                    <h4 class="fw-semibold mb-8">Form poktan</h4>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a class="text-muted text-decoration-none" href="/">Dashboard</a></li>
-                            <li class="breadcrumb-item" aria-current="page">gakpoktans/create</li>
+                            <li class="breadcrumb-item" aria-current="page">poktans/create</li>
                         </ol>
                     </nav>
                 </div>
@@ -28,62 +28,100 @@
         <div class="row">
             <div class="col-12">
                 <div class="card card-body">
-                    <h5 class="mb-3">Tambah gakpoktan</h5>
-                    <form action="{{ route('gakpoktan.update',$gakpoktan->id) }}" method="post" enctype="multipart/form-data">
+                    <h5 class="mb-3">Tambah poktan</h5>
+                    <form action="{{ route('poktan.update',$poktan->id) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="mb-3">
                             <label for="formFile" class="form-label">Desa</label>
                             <select name="desa" id="" class="form-control">
                                 @foreach ($desa as $data)
-                                <option {{ $data->desa == $gakpoktan->desa ? 'selected' : '' }} value="{{ $data->desa }}">{{ $data->desa }}</option>
-                                    @endforeach
+                                <option {{ $poktan->desa == $data->desa ? 'selected':''}} value="{{$data->desa}}">{{$data->desa}}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="formFile" class="form-label">Nama Gakpoktan</label>
-                            <input class="form-control" type="text" name="nama_gakpoktan" id="formFile" value="{{$gakpoktan->nama_gakpoktan}}">
+                            <label for="formFile" class="form-label">Nama poktan</label>
+                            <input class="form-control" type="text" value="{{$poktan->nama_poktan}}" name="nama_poktan" id="formFile">
                         </div>
                         <div class="mb-3">
-                            <label for="formFile" class="form-label">Nama Ketua</label>
-                            <input class="form-control" type="text" name="nama_ketua" id="formFile" value="{{$gakpoktan->nama_ketua}}">
+                            <label for="formFile" class="form-label">Nama ketua poktan</label>
+                            <input class="form-control" type="text" value="{{$poktan->ketua_poktan}}" name="nama_ketua_poktan" id="formFile">
                         </div>
-                        <div class=" mb-3">
-                            <label for="formFile" class="form-label">Jumlah Poktan Pangan</label>
-                            <input class="form-control" type="text" name="pangan" id="formFile" value="{{$gakpoktan->pangan}}">
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">No telepon ketua poktan</label>
+                            <input class="form-control" type="text" value="{{$poktan->nomor_telepon_ketua_poktan}}" name="no_telepon_ketua_poktan" id="formFile">
                         </div>
-                        <div class=" mb-3">
-                            <label for="formFile" class="form-label">Jumlah Poktan Perkebunan</label>
-                            <input class="form-control" type="text" name="berkebunan" id="formFile" value="{{$gakpoktan->berkebunan}}">
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">Nama Sekretaris poktan</label>
+                            <input class="form-control" type="text" value="{{$poktan->nama_sekretaris_poktan}}" name="nama_sektretaris_poktan" id="formFile">
                         </div>
-                        <div class=" mb-3">
-                            <label for="formFile" class="form-label">Jumlah Poktan Hortiluktura</label>
-                            <input class="form-control" type="text" name="holtikultura" id="formFile" value="{{$gakpoktan->hortikultura}}">
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">No telepon sekretaris poktan</label>
+                            <input class="form-control" type="text" value="{{$poktan->nomor_telepon_sekretaris_poktan}}" name="no_telepon_sekretaris_poktan" id="formFile">
                         </div>
-                        <div class=" mb-3">
-                            <label for="formFile" class="form-label">Jumlah Poktan Ternak</label>
-                            <input class="form-control" type="text" name="peternakan" id="formFile" value="{{$gakpoktan->peternakan}}">
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">Nama bendahara poktan</label>
+                            <input class="form-control" type="text" value="{{$poktan->nama_bendahara_poktan}}" name="nama_bendahara_poktan" id="formFile">
                         </div>
-                        <div class=" mb-3">
-                            <label for="formFile" class="form-label">Jumlah Poktan Perikanan</label>
-                            <input class="form-control" type="text" name="perikanan" id="formFile" value="{{$gakpoktan->perikanan}}">
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">No telepon bendahara poktan</label>
+                            <input class="form-control" type="text" value="{{$poktan->nomor_telepon_bendahara_poktan}}" name="no_telepon_bendahara_poktan" id="formFile">
                         </div>
-                        <div class=" mb-3">
-                            <label for="formFile" class="form-label">Kwt</label>
-                            <input class="form-control" type="text" name="kwt" id="formFile" value="{{$gakpoktan->kwt}}">
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">Titik Koordinat Usaha Tani</label>
+                            <input class="form-control" type="text" value="{{$poktan->titik_koordinat}}" name="koordinat" id="formFile">
                         </div>
-                        <div class=" mb-3">
-                            <label for="formFile" class="form-label">No Telepon</label>
-                            <input class="form-control" type="text" name="notelepon" id="formFile" value="{{$gakpoktan->no_telepopn}}">
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">Jumlah Anggota Poktan</label>
+                            <input class="form-control" type="text" value="{{$poktan->jumlah_anggota}}" name="jumlah_anggota" id="formFile">
                         </div>
-
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">kelas poktan</label>
+                            <select name="kelas" id="" class="form-select">
+                                <option value="Baru">Baru</option>
+                                <option value="Senior">Senior</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">Nilai Kelas Poktan</label>
+                            <input class="form-control" type="text" value="{{$poktan->nilai_kelas_poktan}}" name="nilai" id="formFile">
+                        </div>
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">SK Pembentukan Poktan</label>
+                            <input class="form-control" type="file" name="skpp" id="formFile">
+                        </div>
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">SK Pengukuhan poktan</label>
+                            <input class="form-control" type="file" name="skpp2" id="formFile">
+                        </div>
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">Berkas penilaian poktan</label>
+                            <input class="form-control" type="file" name="bpp" id="formFile">
+                        </div>
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">AD / ART</label>
+                            <input class="form-control" type="file" name="adart" id="formFile">
+                        </div>
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">RDK</label>
+                            <input class="form-control" type="file" name="rdk" id="formFile">
+                        </div>
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">RDKK</label>
+                            <input class="form-control" type="file" name="rdkk" id="formFile">
+                        </div>
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">Surat Pendampigan penyusunan RDKK</label>
+                            <input class="form-control" type="file" name="sppr" id="formFile">
+                        </div>
                         <br>
-                        <button type=" submit" class="btn btn-success font-medium rounded-pill px-4">
+                        <button type="submit" class="btn btn-success font-medium rounded-pill px-4">
                             <div class="d-flex align-items-center">
                                 <i class="ti ti-send me-2 fs-4"></i>
                                 Submit
                             </div>
-                            </button>
+                        </button>
                     </form>
                 </div>
                 <!-- ---------------------

@@ -64,8 +64,27 @@
         <div class="file-field ">
             <div class="btn">
                 <span>Foto SPPT terbaru</span>
-                <input type="file" name="foto_sppt">
+                <div class="">
+                    <input type="file" name="foto_sppt[]" id="fileInput" multiple />
+                    <!-- Kontainer untuk pratinjau gambar -->
+                    <style>
+                        .image-preview {
+                            display: flex;
+                            flex-wrap: wrap;
+                            gap: 10px;
+                        }
+
+                        .preview-image {
+                            max-width: 200px;
+                            max-height: 200px;
+                            width: auto;
+                            height: auto;
+                        }
+                    </style>
+                </div>
             </div>
+
+
             <div class="file-path-wrapper">
                 <input class="file-path validate" type="text">
             </div>
@@ -88,6 +107,9 @@
                 <input class="file-path validate" type="text">
             </div>
         </div>
+        <br>
+        <span>Foto SPPT :</span><br>
+        <div id="imagePreview"></div><br>
 
         <button class="btn waves-effect waves-light" type="submit">Submit</button>
         <br>
@@ -102,10 +124,30 @@
     .container {
         padding-top: 20px;
     }
-
+.preview-image{
+    margin-right: 8px;
+}
 
     .btn {
         margin-top: 20px;
     }
 </style>
+<script>
+    document.getElementById('fileInput').addEventListener('change', function(event) {
+        var preview = document.getElementById('imagePreview');
+        preview.innerHTML = ''; // Membersihkan pratinjau sebelum menambahkan yang baru
+
+        var files = event.target.files; // Mengambil file yang dipilih
+        for (var i = 0; i < files.length; i++) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var image = new Image();
+                image.src = e.target.result;
+                image.classList.add('preview-image');
+                preview.appendChild(image);
+            };
+            reader.readAsDataURL(files[i]);
+        }
+    });
+</script>
 @endsection
