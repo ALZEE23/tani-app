@@ -16,6 +16,7 @@ class AlsintanController extends Controller
       public function index(Request $request)
 {
     $kecamatans = Kecamatan::all();
+    $desa = Desa::all();
     $subsektorFilter = $request->input('subsektor_filter', '');
     $kecamatanFilter = $request->input('kecamatan_filter', '');
 

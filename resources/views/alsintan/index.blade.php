@@ -29,6 +29,10 @@
 
             <select name="desa" id="desa-select">
                 <option value="">Pilih Desa</option>
+                @foreach ($desa as $data)
+                <option value="{{$data->desa}}">{{$data->desa}}</option>
+                    
+                @endforeach
             </select>
 
             <select name="komoditas" id="komoditas-select">
