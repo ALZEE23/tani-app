@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Desa;
 use App\Models\Kecamatan;
+use App\Imports\UsersImport;
 use Illuminate\Http\Request;
+use App\Imports\TanamanImport;
 use App\Models\Produksitanaman;
 use App\Models\hProduksitanaman;
+use App\Models\Produksitanaman2;
 use Illuminate\Support\Facades\DB;
 use App\Models\RekapProduksitanaman;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProduksitanamanController extends Controller
 {
@@ -21,6 +26,9 @@ class ProduksitanamanController extends Controller
     }
     public function tanaman()
     {
+        if(auth()->user()->role != 'dinas'){
+            return redirect()->route('produksi.tanaman.kecamatann');
+        }
         return view('produksi.tanaman');
     }
 
@@ -74,113 +82,104 @@ class ProduksitanamanController extends Controller
 
     function kecamatan(){
         $kecamatan = Kecamatan::all();
-        return view('produksi.tanaman.kecamatan',compact('kecamatan'));
+        $data2 = new Produksitanaman2();
+        $belum_panen = $data2->whereBetween('tanggal', [
+            Carbon::now()->subDays(120)->toDateString(),
+            Carbon::now()->subDays(90)->toDateString(),
+        ])->where('jumlah_sudah_dipanen', 0)->get();
+
+        return view('produksi.tanaman.kecamatan',compact('kecamatan','belum_panen'));
     }
     function tambah_tanaman(){
-        $desa = Desa::all();
+        $desa = Desa::where('kecamatan', auth()->user()->kecamatan)->get();
         return view('produksi.tanaman.tambah',compact('desa'));
     }
+    function tambah_tanamanexel(){
+        $desa = Desa::where('kecamatan', auth()->user()->kecamatan)->get();
+        return view('produksi.tanaman.tambahexel',compact('desa'));
+    }
+    public function importTanaman(Request $request)
+    {
+        $request->validate([
+            'excel_file' => 'required|mimes:xlsx,xls', // Validasi tipe file
+        ]);
 
+        $file = $request->file('excel_file');
+
+        Excel::import(new UsersImport, $file);
+
+        return redirect()->back()->with('success', 'Data berhasil diimpor!');
+    }
     function store_tanaman(Request $request){
-        $bulan = date('m', strtotime($request->tanggal)); // Mengambil bulan dari tanggal
-
+        $bulan = Carbon::now()->subDays(0)->toDateString(); // Mengambil bulan dari tanggal
         $desa = Desa::where('desa', $request->desa)->first();
-
-    
         // ////////////////////////////////////////
-        $data = ProduksiTanaman::where('desa', $desa->desa)
-        ->where('komoditas', $request->komoditas)
-            ->whereMonth('tanggal', $bulan) // Menyaring berdasarkan bulan
-            ->first();
-        $data2 = hProduksiTanaman::where('sebelum_desa', $desa->desa)
-        ->where('sebelum_komoditas', $request->komoditas)
-            ->whereMonth('tanggal', $bulan) // Menyaring berdasarkan bulan
-            ->first();
-        if($data2 == null){
-            $data2 = new hProduksitanaman();
-            $data2->sebelum_desa = $request->desa;
-            $data2->sebelum_tanam = $request->tanam;
-            $data2->sebelum_panen = $request->panen;
-            $data2->sebelum_gagal_panen = $request->gagal_panen;
-            $data2->sebelum_produksi = $request->produksi;
-            $data2->sebelum_provitas = $request->provitas;
-            $data2->tanggal = $request->tanggal;
-            $data2->sebelum_kecamatan = $desa->kecamatan;
-            $data2->sebelum_komoditas = $request->komoditas;
-            $data2->save();
-        }else{
-            $data2->sebelum_tanam = $data2->sebelum_tanam + $request->tanam;
-            $data2->sebelum_panen = $data2->sebelum_panen + $request->panen;
-            $data2->sebelum_gagal_panen = $data2->sebelum_gagal_panen + $request->gagal_panen;
-            $data2->sebelum_produksi = $data2->sebelum_produksi + $request->produksi;
-            $data2->sebelum_provitas = $data2->sebelum_provitas + $request->provitas;
-            $data2->save();
-        }
-        if($data == null){
-            $data = new Produksitanaman();
-            $data->desa = $request->desa;
-            $data->tanam = $request->tanam;
-            $data->panen = $request->panen;
-            $data->gagal_panen = $request->gagal_panen;
-            $data->produksi = $request->produksi;
-            $data->provitas = $request->provitas;
-            $data->tanggal = $request->tanggal;
-            $data->kecamatan = $desa->kecamatan;
-            $data->komoditas = $request->komoditas;
-            $data->save();
-        }else{
-            $data->tanam = $data->tanam + $request->tanam;
-            $data->panen = $data->panen + $request->panen;
-            $data->gagal_panen = $data->gagal_panen + $request->gagal_panen;
-            $data->produksi = $data->produksi + $request->produksi;
-            $data->provitas = $data->provitas + $request->provitas;
-            $data->save();
-        }
+        // dd($desa);
+        $data = Produksitanaman2::create([
+            'desa' => $desa->desa,
+            'kecamatan' => $desa->kecamatan,
+            'subsektor' => $request->subsektor,
+            'komoditas' => $request->komoditas,
+            'tanam_bulan_lalu' => $request->tanam_bulan_lalu,
+            'tanam_bulan_sekarang' => $request->tanam_bulan_sekarang,
+            'panen_bulan_terakhir' => $request->panan_bulan_terakhir,
+            'panen_dari_data_tanam_yang_bulan' => $request->panen_dari_data_tanam_yang_bulan,
+            'panen_bulan_sekarang' => $request->panen_bulan_sekarang,
+            'panen_bulan_terakhir' => $request->panen_bulan_terakhir,
+            'gagal_panen_bulan_terakhir' => $request->gagal_panen_bulan_terakhir,
+            'gagal_panen_terakhir_dari_bulan' => $request->gagal_panen_dari_data_tanam_yang_bulan,
+            'gagal_panen_bulan_sekarang' => $request->gagal_panen_bulan_sekarang,
+            'produksi_bulan_terakhir' => $request->produksi_bulan_terakhir,
+            'produksi_bulan_sekarang' => $request->produksi_bulan_sekarang,
+            'tanggal' => $bulan,
+            
+        ]);
+        $data->save();
+
+        $updatepanen = Produksitanaman2::find($request->id_panen);
+        $updatepanen->jumlah_sudah_dipanen = $request->panen_bulan_sekarang;
+        $updatepanen->tanggal_panen = $bulan;
+        $updatepanen->save();
+
+        $updatepanen = Produksitanaman2::find($request->id_gagal_panen);
+        $updatepanen->tanggal_gagal_panen = $bulan;
+        $updatepanen->gagal_panen_tanam_bulan_ini = $request->gagal_panen_bulan_sekarang;
+        $updatepanen->save();
 
 
-        $bulan = date('m', strtotime($request->tanggal)); // Mengambil bulan dari tanggal
-
-        // Melakukan pencarian data berdasarkan bulan dari tanggal
-        $rekap = RekapProduksiTanaman::where('kecamatan', $desa->kecamatan)
-            ->where('komoditas', $request->komoditas)
-            ->whereMonth('tanggal', $bulan) // Menyaring berdasarkan bulan
-            ->first();
-
-        if($rekap == null){
-            $rekap = new RekapProduksitanaman();
-            $rekap->kecamatan = $desa->kecamatan;
-            $rekap->komoditas = $request->komoditas;
-            $rekap->tanam = $request->tanam;
-            $rekap->panen = $request->panen;
-            $rekap->gagal_panen = $request->gagal_panen;
-            $rekap->produksi = $request->produksi;
-            $rekap->provitas = $request->provitas;
-            $rekap->tanggal = $request->tanggal;
-            $rekap->save();
-        }else{
-            $rekap->tanam = $rekap->tanam + $request->tanam;
-            $rekap->panen = $rekap->panen + $request->panen;
-            $rekap->gagal_panen = $rekap->gagal_panen + $request->gagal_panen;
-            $rekap->produksi = $rekap->produksi + $request->produksi;
-            $rekap->provitas = $rekap->provitas + $request->provitas;
-            $rekap->save();
-        }
-        return redirect()->route('produksi.tanaman.kecamatan');
+        return redirect()->route('produksi.tanaman.kecamatann');
     }
 
+    public function import(Request $request)
+    {
+        try {
+            // Validate the request to ensure it contains a valid Excel file
+            $file = $request->file('tanaman');
+
+            // Use the Excel facade to import data from the file using the TanamanImport class
+            Excel::import(new TanamanImport, $file);
+
+            // Redirect back to the previous page with a success message
+            return redirect()->back()->with('success', 'Data berhasil diimpor!');
+        } catch (\Exception $e) {
+            // Handle any exception that might occur during the import process
+            return $e->getMessage();
+        }
+    }
 
      function filterProduksi(Request $request)
     {
-        $data = Produksitanaman::query();
-        $data2 = hProduksitanaman::query();
-
+        $data = Produksitanaman2::query();
         // Lakukan filter berdasarkan permintaan
-        if ($request->desa) {
-            $data->where('kecamatan', $request->desa);
+        if ($request->kecamatan) {
+            $data->where('kecamatan', $request->kecamatan);
         }
 
         if ($request->komoditas) {
-            $data->where('komoditas', $request->komoditas);
+            $data->where('subsektor', $request->komoditas);
+        }
+        if ($request->komoditas2) {
+            $data->where('komoditas', $request->komoditas2);
         }
 
         if ($request->tahun) {
@@ -190,29 +189,10 @@ class ProduksitanamanController extends Controller
         if ($request->bulan) {
             $data->whereMonth('tanggal', $request->bulan);
         }
-        if ($request->desa) {
-            $data2->where('sebelum_kecamatan', $request->desa);
-        }
-
-        if ($request->komoditas) {
-            $data2->where('sebelum_komoditas', $request->komoditas);
-        }
-
-        if ($request->tahun) {
-            $data2->whereYear('tanggal', $request->tahun);
-        }
-
-        if ($request->bulan) {
-            $data2->whereMonth('tanggal', $request->bulan-1);
-            $filteredData2 = $data2->get();
-
-        }else{
-            $filteredData2 = null;
-        }
-
+        $data->orderBy('tanggal');
         $filteredData = $data->get();
         
-        return response()->json(['data_sekarang' => $filteredData,'data_bulan_lalu' => $filteredData2]);
+        return response()->json(['data_sekarang' => $filteredData]);
     }
 
     function rekap_tanaman(){
@@ -223,7 +203,7 @@ class ProduksitanamanController extends Controller
     function rekap_proses(Request $request)
     {
         try {
-        $data = RekapProduksitanaman::query();
+        $data = Produksitanaman2::query();
 
         // Lakukan filter berdasarkan permintaan
         if ($request->komoditas) {
@@ -246,11 +226,14 @@ class ProduksitanamanController extends Controller
 
         // Array untuk menyimpan hasil grup data per kecamatan
         $groupedByKecamatan = [];
+        $test = [];
 
         // Proses pengelompokan data per kecamatan
         foreach ($groupedData as $item) {
             $kecamatan = $item->kecamatan;
+            $tahun = date('Y', strtotime($item->tanggal));
             $bulan = date('F', strtotime($item->tanggal));
+            $test[$tahun][$bulan][$kecamatan] = $item->{$request->kolom};
 
             if (!isset($groupedByKecamatan[$kecamatan])) {
                 $groupedByKecamatan[$kecamatan] = [];
@@ -263,7 +246,7 @@ class ProduksitanamanController extends Controller
             $groupedByKecamatan[$kecamatan][$bulan] += $item->{$request->kolom};
         }
 
-        return response()->json(['grouped_data' => $groupedByKecamatan]);
+        return response()->json(['grouped_data' => $groupedByKecamatan,'test' => $test]);
     } catch (\Exception $e) {
         return response()->json(['error' => $e->getMessage()]);
     }

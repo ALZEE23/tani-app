@@ -15,7 +15,6 @@
                             <li class="breadcrumb-item">
                                 <a class="text-muted " href="/">Dashboard</a>
                             </li>
-                            <li class="breadcrumb-item" aria-current="page">{{$kecamatan}}</li>
                         </ol>
                     </nav>
                 </div>
@@ -29,72 +28,75 @@
     </div>
     <div class="card w-100 position-relative overflow-hidden">
         <div class="px-4 py-3 border-bottom">
-            <h5 class="card-title fw-semibold mb-0 lh-sm">Table Data Harga di {{$kecamatan}}</h5><br>
+            <h5 class="card-title fw-semibold mb-0 lh-sm">Table Data Harga</h5><br>
             <a href="{{route('harga.create')}}"><button type="button" class="btn mb-1 waves-effect waves-light btn-success">
                     Tambah
                 </button></a>
         </div>
         <div class="card-body p-4">
             <div class="table rounded-2 mb-4">
-                <table class="table border text-nowrap customize-table mb-0 align-middle" id="example">
-                    <thead class="text-dark fs-4">
-                        <tr>
-                            <th>
-                                <h6 class="fs-4 fw-semibold mb-0">No</h6>
-                            </th>
-                            <th>
-                                <h6 class="fs-4 fw-semibold mb-0">Komoditas</h6>
-                            </th>
-                            <th>
-                                <h6 class="fs-4 fw-semibold mb-0">Produk</h6>
-                            </th>
-                            <th>
-                                <h6 class="fs-4 fw-semibold mb-0">Produk Kode</h6>
-                            </th>
-                            <th>
-                                <h6 class="fs-4 fw-semibold mb-0">Harga</h6>
-                            </th>
-                            <th>
-                                <h6 class="fs-4 fw-semibold mb-0">Kecamatan</h6>
-                            </th>
-                            <th>
-                                <h6 class="fs-4 fw-semibold mb-0">Opsi</h6>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @php
-                        $no = 1;
-                        @endphp
-                        @foreach ($hargas as $data)
-                        <tr>
-                            <td>{{$no++}}</td>
-                            </td>
-                            <td>{{$data->komoditas}}</td>
-                            <td>{{$data->produk}}</td>
-                            <td>{{$data->kode_produk}}</td>
-                            <td>Rp.{{number_format($data->harga,0,',','.');}}</td>
-                            <td>{{$data->kecamatan}}</td>
-                            <td>
-                                <div>
-                                    <form action="{{ route('harga.edit', $data->id) }}" method="GET" class="d-inline">
-                                        <button type="submit" class="btn btn-warning">
-                                            <i class="ti ti-edit"></i>
-                                        </button>
-                                    </form>
-                                    <form action="{{ route('harga.destroy', $data->id) }}" method="POST" class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin untuk menghapus data ini?')">
-                                            <i class="ti ti-trash"></i>
-                                        </button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table  border text-nowrap customize-table mb-0 align-middle" id="example">
+                        <thead class="text-dark fs-4">
+                            <tr>
+                                <th>
+                                    <h6 class="fs-4 fw-semibold mb-0">No</h6>
+                                </th>
+                                <th>
+                                    <h6 class="fs-4 fw-semibold mb-0">Subsektor</h6>
+                                </th>
+                                <th>
+                                    <h6 class="fs-4 fw-semibold mb-0">Komoditas</h6>
+                                </th>
+                                <th>
+                                    <h6 class="fs-4 fw-semibold mb-0">Produk Kode</h6>
+                                </th>
+                                <th>
+                                    <h6 class="fs-4 fw-semibold mb-0">Harga</h6>
+                                </th>
+                                <th>
+                                    <h6 class="fs-4 fw-semibold mb-0">Kecamatan</h6>
+                                </th>
+                                <th>
+                                    <h6 class="fs-4 fw-semibold mb-0">Opsi</h6>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php
+                            $no = 1;
+                            @endphp
+                            @foreach ($hargas as $data)
+                            <tr>
+                                <td>{{$no++}}</td>
+                                </td>
+                                <td>{{$data->komoditas}}</td>
+                                <td>{{$data->produk}}</td>
+                                <td>{{$data->kode_produk}}</td>
+                                <td>Rp.{{number_format($data->harga,0,',','.');}}</td>
+                                <td>{{$data->kecamatan}}</td>
+                                <td>
+                                    <div>
+                                        <form action="{{ route('harga.edit', $data->id) }}" method="GET" class="d-inline">
+                                            <button type="submit" class="btn btn-warning">
+                                                <i class="ti ti-edit"></i>
+                                            </button>
+                                        </form>
+                                        <form action="{{ route('harga.destroy', $data->id) }}" method="POST" class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin untuk menghapus data ini?')">
+                                                <i class="ti ti-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
         </div>
     </div>
@@ -104,7 +106,7 @@
     <script>
         $(document).ready(function() {
             var table = $('#example').DataTable({
-                pageLength: 5,
+                pageLength: 10,
                 lengthMenu: [
                     [5, 10, 20, -1],
                     [5, 10, 20, 'Todos']

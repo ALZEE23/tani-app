@@ -38,7 +38,7 @@
         </div>
 
         <div class="">
-            <input id="nik" type="text" name="nik" required placeholder="NIK SESUAI KTP">
+            <input id="nik" type="text" name="nik" required placeholder="NIK SESUAI KTP" value="{{auth()->user()->nik}}">
         </div>
         <div class="">
             <input id="nama" type="text" name="nama" required placeholder="NAMA SESUAI KTP">

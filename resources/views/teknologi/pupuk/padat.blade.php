@@ -12,6 +12,7 @@
 <div class="container -bottom-32">
     <div class="col-lg-12">
         <div class="row">
+            <br>
             @if(auth()->user()->role == 'petugas')
             <a href="{{ route('store') }}"><button class="btn btn-secondary">Tambah</button></a>
             @endif
@@ -26,7 +27,7 @@
                         <!-- Icon titik tiga secara vertikal -->
                         &#8942;
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <div class="dropdown-menu" style="background-color: white;" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="{{ route('pupuk.edit', $pupuk->id) }}">Edit</a>
                         <a class="dropdown-item" href="{{ route('pupuk.delete', $pupuk->id) }}" onclick="event.preventDefault(); document.getElementById('delete-form-{{ $pupuk->id }}').submit();">Delete</a>
                         <form id="delete-form-{{ $pupuk->id }}" action="{{ route('pupuk.delete', $pupuk->id) }}" method="POST" style="display: none;">
@@ -57,7 +58,8 @@
                     <iframe width="100%" height="auto" src="https://www.youtube.com/embed/{{$videoId}}" frameborder="0" allowfullscreen></iframe>
                     @else
                     <!-- Jika bukan MP4, tampilkan gambar -->
-                    <img src="{{ asset('storage/files/' . $pupuk->cover) }}" />
+                    <img src="{{ asset('storage/files/' . $pupuk->cover) }}" /><br>
+                    <a href="{{ asset('storage/files/' . $pupuk->file) }}">Download</a>
                     @endif
                 </div>
                 <div class="header">

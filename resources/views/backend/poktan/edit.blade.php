@@ -40,6 +40,15 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="">
+                            <label for="subsektor">Subsektor:</label>
+                            <select id="subsektor" name="subsektor">
+                                <option value="Pangan">Pangan</option>
+                                <option value="Perkebunan">Perkebunan</option>
+                                <option value="Hortikultura">Hortikultura</option>
+                                <!-- Tambahkan opsi kecamatan lainnya sesuai kebutuhan -->
+                            </select>
+                        </div>
                         <div class="mb-3">
                             <label for="formFile" class="form-label">Nama poktan</label>
                             <input class="form-control" type="text" value="{{$poktan->nama_poktan}}" name="nama_poktan" id="formFile">
@@ -71,6 +80,9 @@
                         <div class="mb-3">
                             <label for="formFile" class="form-label">Titik Koordinat Usaha Tani</label>
                             <input class="form-control" type="text" value="{{$poktan->titik_koordinat}}" name="koordinat" id="formFile">
+                        </div>
+                        <div class="">
+                            <input id="luas" type="text" name="luas" required placeholder="Luas Lahan (HA)" value="{{$poktan->luas}}">
                         </div>
                         <div class="mb-3">
                             <label for="formFile" class="form-label">Jumlah Anggota Poktan</label>

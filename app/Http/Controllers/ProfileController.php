@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Desa;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 use App\Models\Kecamatan;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 
 class ProfileController extends Controller
@@ -18,10 +19,10 @@ class ProfileController extends Controller
     public function informasi()
     {
         // Ambil data kecamatan dari model Kecamatan
-        $kecamatans = Kecamatan::all();
 
         // Tampilkan view 'profile.informasi' dengan data kecamatan
-        return view('profile.informasi', ['kecamatans' => $kecamatans]);
+        $desa = Desa::where('kecamatan', auth()->user()->kecamatan)->get();
+        return view('profile.informasi', ['desa' => $desa]);
     }
 
     public function sandi(){
@@ -30,6 +31,29 @@ class ProfileController extends Controller
 
     public function edit(){
         
+    }
+
+    function informasiupdate($id,Request $request){
+        $user = User::find($id);
+        $user->kecamatan = $request->kecamatan;
+        $user->desa = $request->desa;
+        $user->jenis_kelamin = $request->jenis_kelamin;
+        if ($request->hasFile('foto')) {
+            $gambar = $request->file('foto');
+            $nama = time() . '_' . $gambar->getClientOriginalName();
+            $gambar->storeAs('public/gambar', $nama);
+            $user->foto = $nama;
+        }
+        $user->save();
+
+        return back();
+    }
+    function informasiupdatepw($id,Request $request){
+        $user = User::find($id);
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return back();
     }
 
     public function changePassword(Request $request)

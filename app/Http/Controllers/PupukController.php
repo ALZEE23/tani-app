@@ -10,19 +10,18 @@ class PupukController extends Controller
 {
     public function index()
     {
-        $pupuks = Pupuk::all();
-        return view('teknologi.pupuk.index', compact('pupuks'));
+        return view('teknologi.pupuk.index');
     }
 
     public function padat()
     {
-        $pupuks = Pupuk::where('kategori', 'padat')->get();
+        $pupuks = Pupuk::where('kategori', 'padat')->where('kecamatan',auth()->user()->kecamatan)->get();
         return view('teknologi.pupuk.padat', compact('pupuks'));
     }
 
     public function cair()
     {
-        $pupuks = Pupuk::where('kategori', 'cair')->get();
+        $pupuks = Pupuk::where('kategori', 'cair')->where('kecamatan', auth()->user()->kecamatan)->get();
         return view('teknologi.pupuk.cair', compact('pupuks'));
     }
 
@@ -64,6 +63,8 @@ class PupukController extends Controller
             $pupuk->cover = $namafile2;
         }
         $pupuk->kategori = $request->kategori;
+        $pupuk->kecamatan = auth()->user()->kecamatan;
+        
 
     // Menyimpan Pupuk ke database
     $pupuk->save();

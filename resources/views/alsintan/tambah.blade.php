@@ -11,7 +11,7 @@
 
 <div class="container">
     <!-- Form Tambah Data -->
-    <form action="{{ route('alsintan.tambah2') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('alsintan.tambah') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">
             <label for="desa" class="form-label">Desa</label>
@@ -29,13 +29,23 @@
                 <option value="Pangan">Pangan</option>
                 <option value="Perkebunan">Perkebunan</option>
                 <option value="Hortikultura">Hortikultura</option>
+                <option value="Perikanan">Perikanan</option>
+                <option value="Peternakan">Peternakan</option>
+                <option value="KWT">KWT</option>
+                <option value="UPJA">UPJA</option>
             </select>
         </div>
         <div class="mb-3">
             <label for="gapoktan" class="form-label">Gapoktan</label>
             <select class="form-select" id="gapoktan" name="gapoktan" required>
-                <option value="" selected disabled>Pilih Gapoktan</option>
-                <option value="Gebyog">Gebyog</option>
+                <option value="" selected disabled>Pilih Gapoktan / Poktan</option>
+                @foreach ($result as $data)
+                    @if ($data->nama_poktan == null)
+                        <option value="{{$data->nama_gakpoktan}}">{{$data->nama_gakpoktan}}</option>
+                    @else
+                        <option value="{{$data->nama_poktan}}">{{$data->nama_poktan}}</option>    
+                    @endif
+                @endforeach
             </select>
         </div>
         <div class="mb-3">
@@ -71,44 +81,6 @@
 @endsection
 <!-- Script JavaScript -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script>
-
-
-    $(document).ready(function() {
-        // Fungsi untuk memuat opsi desa berdasarkan kecamatan yang dipilih
-        function fetchDesaOptions() {
-            var kecamatan = $('#kecamatan').val();
-
-            $.ajax({
-                url: '/fetch-desa-options',
-                type: 'GET',
-                data: {
-                    kecamatan: kecamatan
-                },
-                success: function(data) {
-                    // Hapus opsi desa yang ada sebelumnya
-                    $('#desa').empty();
-
-                    // Tambahkan opsi desa baru
-                    $.each(data, function(key, value) {
-                        $('#desa').append('<option value="' + value + '">' + value + '</option>');
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error(xhr.responseText);
-                }
-            });
-        }
-
-        // Panggil fungsi fetchDesaOptions saat kecamatan berubah
-        $('#kecamatan').change(function() {
-            fetchDesaOptions();
-        });
-
-        // Panggil fungsi fetchDesaOptions untuk memuat opsi desa awal saat halaman dimuat
-        fetchDesaOptions();
-    });
-</script>
 <script>
     // Fungsi untuk mengambil data desa dari server menggunakan AJAX
     function getDesaOptionsFromServer(kecamatan, callback) {

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Alsintan;
 use App\Controllers\KecamatanController;
 use App\Models\Kecamatan;
+use App\Models\Poktan;
+use App\Models\Gakpoktans;
 use App\Models\Desa;
 use App\Exports\AlsintanExport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -26,7 +28,13 @@ class AlsintanController extends Controller
     
     $subsektors = Alsintan::select('subsektor')->distinct()->get();
     $kecamatan = $request->input('kecamatan');
-$desaOptions = Desa::where('kecamatan', $kecamatan)->pluck('desa');
+    if(auth()->user()->role != 'dinas'){
+            $desaOptions = Desa::where('kecamatan', auth()->user()->kecamatan)->get();
+
+    }else{
+
+            $desaOptions = Desa::where('kecamatan', $kecamatan)->pluck('desa');
+    }
 $desaFilter = $request->input('desa_filter', '');
 
 return view('alsintan.index', compact('alsintans', 'desaOptions', 'kecamatans', 'kecamatanFilter', 'subsektors', 'subsektorFilter', 'desaFilter'));
@@ -37,8 +45,13 @@ return view('alsintan.index', compact('alsintans', 'desaOptions', 'kecamatans', 
 
     public function store()
     {
-        $desa = Desa::all();
-        return view('alsintan.tambah',compact('desa'));
+        $desa = Desa::where('kecamatan', auth()->user()->kecamatan)->get();
+        $poktan = Poktan::where('desa', $desa->pluck('desa')->toArray())->get();
+        $gakpoktans = Gakpoktans::whereIn('desa', $desa->pluck('desa')->toArray())->get();
+
+        // Combine the results into a single collection
+        $result = $poktan->concat($gakpoktans);
+        return view('alsintan.tambah',compact('desa','result'));
     }
 
   public function filterByKecamatan(Request $request)
@@ -160,5 +173,50 @@ function getDesaByKecamatan(Request $request){
     return response()->json($desa);
 }
 
+function edit($id){
+        $desa = Desa::where('kecamatan', auth()->user()->kecamatan)->get();
+        $poktan = Poktan::where('desa', $desa->pluck('desa')->toArray())->get();
+        $gakpoktans = Gakpoktans::whereIn('desa', $desa->pluck('desa')->toArray())->get();
 
+        // Combine the results into a single collection
+        $alsintan = Alsintan::find($id);
+        $result = $poktan->concat($gakpoktans);
+        return view('alsintan.edit',compact('desa','result','id','alsintan'));
+
+}
+
+    function update($id, Request $request){
+        $desa = Desa::where('desa', $request->desa)->first();
+
+        $alsintan = Alsintan::where('id',$id)->first();
+        $alsintan->kecamatan = $desa->kecamatan;
+        $alsintan->desa = $request->desa;
+        $alsintan->subsektor = $request->subsektor;
+        $alsintan->gapoktan = $request->gapoktan;
+        $alsintan->ketua_gapoktan = $request->ketua_gapoktan;
+        $alsintan->kontak = $request->kontak;
+        $alsintan->alat = $request->alat;
+        $alsintan->jumlah_alat = $request->jumlah_alat;
+        $alsintan->tahun = $request->tahun;
+        // Sesuaikan atribut dengan kolom lainnya
+        if ($request->hasFile('gambar')) {
+            $gambar = $request->file('gambar');
+            $nama = time() . '_' . $gambar->getClientOriginalName();
+            $gambar->storeAs('public/gambar', $nama);
+            $alsintan->gambar = $nama;
+        }
+
+        // Menyimpan Pestisida ke database
+        $alsintan->save();
+
+
+        // Redirect dengan pesan sukses
+        return redirect()->route('alsintan')->with('success', 'Alsintan berhasil ditambahkan.');
+    }
+
+    function hapus($id){
+        $alsintan = Alsintan::find($id);
+        $alsintan->delete();
+        return redirect()->route('alsintan')->with('success', 'Alsintan berhasil dihapus.');
+    }
 }

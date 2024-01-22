@@ -117,7 +117,7 @@ class PenyuluhanController extends Controller
     function dokumentasi()
     { 
             $dokumentasi = Dokumentasi::all();
-            $desa = Desa::pluck('desa');
+            $desa = Desa::where('kecamatan', auth()->user()->kecamatan)->get();
             $kecamatan = Kecamatan::all();
             // dd($dokumentasi);
             return view('penyuluhan.dokumentasi.index', compact('dokumentasi', 'kecamatan', 'desa'));
@@ -126,7 +126,7 @@ class PenyuluhanController extends Controller
 
     function tambah_dokumentasi()
     {
-        $desa = Desa::all();
+        $desa = Desa::where('kecamatan', auth()->user()->kecamatan)->get();
         return view('penyuluhan.dokumentasi.tambah', compact('desa'));
     }
 
@@ -282,6 +282,9 @@ class PenyuluhanController extends Controller
         if ($request->kecamatan) {
             $data->where('kecamatan', $request->kecamatan);
         }
+        if ($request->desa) {
+            $data->where('desa', $request->desa);
+        }
         $dokumentasi = $data->get();
 
         // Jika ada permintaan untuk data bulan lalu
@@ -314,9 +317,10 @@ class PenyuluhanController extends Controller
             $response .= '<h5>' . $data->keterangan . '</h5>';
             $response .= '<br>';
             $response .= '<hr>';
-            $response .= '<a href="' . route('delete-dokumentasi', $data->id) . '" class="btn btn-primary">Hapus</a>';
+            if(auth()->user()->role == 'petugas'){
+                $response .= '<a href="' . route('delete-dokumentasi', $data->id) . '" class="btn btn-primary">Hapus</a>';
             $response .= '<a href="' . route('edit-dokumentasi', $data->id) . '" class="btn btn-primary">Edit</a>';
-
+        }
             // Tambahkan tautan "Download Semua" dan tautan download untuk setiap gambar
             $response .= '<a href="' . route('dokumentasi.download', $data->id) . '" class="btn btn-primary save-all">Download</a>';
 

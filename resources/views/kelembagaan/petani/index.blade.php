@@ -18,7 +18,9 @@
     <div class="select-wrapper">
         <a href="{{route('kelembagaan-gakpoktan')}}"><button class="btn btn-secondary" style="width: 300px;">Gapoktan</button></a><br><br>
         <a href="{{route('kelembagaan-poktan')}}"><button class="btn btn-secondary" style="width: 300px;">Poktan</button></a><br><br>
+        @if(auth()->user()->role != 'dinas')
         <a href="{{route('poktan-daftar')}}"><button class="btn btn-secondary" style="width: 300px;">Daftar Menjadi Anggota Poktan</button></a><br><br>
+        @endif
         <a href="{{route('cek-anggota')}}"><button class="btn btn-secondary" style="width: 300px;">Cek Keanggotaan Petani</button></a>
     </div>
 

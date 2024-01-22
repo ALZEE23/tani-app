@@ -30,7 +30,7 @@ class KelembagaanController extends Controller
     }
     function poktan_register()
     {
-        $desa = Desa::all();
+        $desa = Desa::where('kecamatan', auth()->user()->kecamatan)->get();
         if(session('desa') == null){
             $desaPertama = $desa->first();
             $poktan = Poktan::where('desa', $desaPertama->desa)->get();
@@ -45,7 +45,8 @@ class KelembagaanController extends Controller
     function penyuluh()
     {
         $kecamatan = Kecamatan::all();
-        $penyuluhs = Penyuluh::all();
+        $desa = Desa::where('kecamatan', auth()->user()->kecamatan)->get();
+        $penyuluhs = Penyuluh::where('wilayah',)->get();
 
         if(Auth::user()->role == 'petani'){
             $penyuluhs = Penyuluh::where('wilayah', Auth::user()->kecamatan)->get();
@@ -65,8 +66,8 @@ class KelembagaanController extends Controller
 
     function tambah_penyuluh()
     {
-        $kecamatan = Kecamatan::all();
-        return view('kelembagaan.penyuluh.tambah', compact('kecamatan'));
+        $desa = Desa::where('kecamatan', auth()->user()->kecamatan)->get();
+        return view('kelembagaan.penyuluh.tambah', compact('desa'));
     }
 
     public function store(Request $request)
@@ -76,9 +77,7 @@ class KelembagaanController extends Controller
             'nama' => 'required',
             'jabatan' => 'required',
             'wilayah' => 'required',
-            'notelepon' => 'required|numeric',
-            'file_rktp' => 'file|mimes:pdf', // Sesuaikan dengan jenis file yang diizinkan
-            'file_program_daerah' => 'file|mimes:pdf', // Sesuaikan dengan jenis file yang diizinkan
+          
         ]);
 
         // Simpan data menggunakan Eloquent pada model Penyuluh
@@ -169,16 +168,20 @@ class KelembagaanController extends Controller
         // Redirect atau respons sesuai kebutuhan Anda
         return redirect('kelembagaan-penyuluh')->with('success', 'Data berhasil disimpan.');
     }
-    
+
     function gakpoktan()
     {
         $kecamatan = Kecamatan::all();
-        $gakpoktans = Gakpoktans::all();
+        $desa = Desa::where('kecamatan', auth()->user()->kecamatan)->get();
+
+        // Use get() to execute the query and retrieve results
+        $gakpoktans = Gakpoktans::whereIn('desa', $desa->pluck('desa')->toArray())->get();
+
         return view('kelembagaan.petani.gakpoktan', compact('kecamatan', 'gakpoktans'));
     }
 
     function edit_penyuluh($id){
-        $kecamatan = Kecamatan::all();
+        $kecamatan = desa::where('kecamatan', auth()->user()->kecamatan)->get();
         $penyuluh = Penyuluh::find($id);
         return view('kelembagaan.penyuluh.edit', compact('penyuluh','kecamatan'));
     }
@@ -191,12 +194,12 @@ class KelembagaanController extends Controller
 
     function tambah_gakpoktan()
     {
-        $desa = Desa::all();
+        $desa = Desa::where('kecamatan', auth()->user()->kecamatan)->get();
         return view('kelembagaan.petani.tambah-gakpoktan', compact('desa'));
     }
     function tambah_poktan()
     {
-        $desa = Desa::all();
+        $desa = Desa::where('kecamatan', auth()->user()->kecamatan)->get();
         return view('kelembagaan.petani.tambah_poktan', compact('desa'));
     }
     function edit_poktan($id)
@@ -213,29 +216,25 @@ class KelembagaanController extends Controller
             'desa' => 'required',
             'nama_gakpoktan' => 'required',
             'nama_ketua' => 'required',
-            'pangan' => 'required|numeric',
-            'berkebunan' => 'required|numeric',
-            'holtikultura' => 'required|numeric',
-            'peternakan' => 'required|numeric',
-            'perikanan' => 'required|numeric',
-            'kwt' => 'required|numeric',
             'notelepon' => 'required|numeric',
         ]);
 
         // Simpan data ke dalam model Gapoktan
         $desa = Desa::where('desa', $validatedData['desa'])->first();
-
+        $perkebunan = Poktan::where('subsektor', 'Perkebunan')->where('desa', $validatedData['desa'])->count();
+        $pangan = Poktan::where('subsektor', 'Pangan')->where('desa', $validatedData['desa'])->count();
+        $hortikultura = Poktan::where('subsektor', 'Hortikultura')->where('desa', $validatedData['desa'])->count();
         $gapoktan = new Gakpoktans();
         $gapoktan->kecamatan = $desa->kecamatan;
         $gapoktan->desa = $validatedData['desa'];
         $gapoktan->nama_gakpoktan = $validatedData['nama_gakpoktan'];
         $gapoktan->nama_ketua = $validatedData['nama_ketua'];
-        $gapoktan->pangan = $validatedData['pangan'];
-        $gapoktan->berkebunan = $validatedData['berkebunan'];
-        $gapoktan->hortikultura = $validatedData['holtikultura'];
-        $gapoktan->peternakan = $validatedData['peternakan'];
-        $gapoktan->perikanan = $validatedData['perikanan'];
-        $gapoktan->kwt = $validatedData['kwt'];
+        $gapoktan->pangan = $pangan;
+        $gapoktan->berkebunan = $perkebunan;
+        $gapoktan->hortikultura = $hortikultura;
+        // $gapoktan->peternakan = $validatedData['peternakan'];
+        // $gapoktan->perikanan = $validatedData['perikanan'];
+        // $gapoktan->kwt = $validatedData['kwt'];
         $gapoktan->no_telepopn = $validatedData['notelepon'];
 
         // Simpan data ke dalam database
@@ -285,36 +284,49 @@ class KelembagaanController extends Controller
     function poktan()
     {
         $kecamatan = Kecamatan::all();
-        if (session('kecamatan') == null) {
-            $kecamatanPertama = $kecamatan->first();
-            session()->put('kecamatan', $kecamatanPertama->kecamatan);
+       
+        if(auth()->user()->role == 'dinas'){
+            if (session('kecamatan') == null) {
+                $kecamatanPertama = $kecamatan->first();
+                session()->put('kecamatan', $kecamatanPertama->kecamatan);
+            }
+            
+            $desa = Desa::where('kecamatan', session('kecamatan'))->get();
+        }else{
+            $desa = Desa::where('kecamatan', auth()->user()->kecamatan)->get();
         }
-
-        $desa = Desa::where('kecamatan', session('kecamatan'))->get();
+       
         // dd(session('desa'));
         if (session('desa') == null) {
             $desaPertama = $desa->first();
             session()->put('desa', $desaPertama->desa);
         }
 
-        $poktans = poktan::where('desa', session('desa'))->get();
-
+        if (session('subcek') != null) {
+            $poktans = poktan::where('desa', session('desa'))->where('subsektor',session('subcek'))->get();
+        }else
+        {
+            $poktans = poktan::where('desa', session('desa'))->get();
+        }
         return view('kelembagaan.petani.poktan', compact('kecamatan', 'poktans', 'desa'));
     }
     function daftar_poktan()
     {
 
-        $desa = Desa::all();
+        $desa = Desa::where('kecamatan', auth()->user()->kecamatan)->get();
         // dd(session('desa'));
         if (session('desa') == null) {
             $desaPertama = $desa->first();
             session()->put('desa', $desaPertama->desa);
         }
 
-        $daftarpoktans = DaftarAnggotaPoktan::where('desa', session('desa'))->where('user_id',auth()->user()->id)->where('poktan',auth()->user()->poktan)->get();
-        if(auth()->user()->poktan != ''){
-            $daftarpoktans = DaftarAnggotaPoktan::where('poktan', auth()->user()->poktan)->where('poktan', auth()->user()->poktan)->get();
+        if(auth()->user()->role == 'petani'){
+            $daftarpoktans = DaftarAnggotaPoktan::where('desa', session('desa'))->where('user_id',auth()->user()->id)->get();
+        }else{
+
+        $daftarpoktans = DaftarAnggotaPoktan::where('desa', session('desa'))->get();
         }
+
         return view('kelembagaan.petani.daftar', compact('daftarpoktans', 'desa'));
     }
 
@@ -335,7 +347,18 @@ class KelembagaanController extends Controller
         $poktan->jumlah_anggota = $request->jumlah_anggota_poktan;
         $poktan->nilai_kelas_poktan = $request->nilai_kelas_poktan;
         $poktan->ad_art = $request->ad_art;
+        $poktan->luas = $request->luas;
         $poktan->kelas_poktan = $request->kelas_poktan;
+        $poktan->subsektor = $request->subsektor;
+        if ($request->subsektor == 'Pangan') {
+            Gakpoktans::where('desa', $request->desa)->increment('pangan');
+        }
+        if ($request->subsektor == 'Perkebunan') {
+            Gakpoktans::where('desa', $request->desa)->increment('berkebunan');
+        }
+        if ($request->subsektor == 'Hortikultura') {
+            Gakpoktans::where('desa', $request->desa)->increment('hortikultura');
+        }
         $desa = Desa::where('desa', $request->desa)->first();
         $user = new User();
         $user->username = $request->username;
@@ -406,8 +429,10 @@ class KelembagaanController extends Controller
         $poktan->titik_koordinat = $request->titik_koordinat;
         $poktan->jumlah_anggota = $request->jumlah_anggota_poktan;
         $poktan->nilai_kelas_poktan = $request->nilai_kelas_poktan;
-        $poktan->ad_art = $request->ad_art;
+        $poktan->ad_art = $request->luas;
+        $poktan->luas = $request->ad_art;
         $poktan->kelas_poktan = $request->kelas_poktan;
+        $poktan->subsektor = $request->subsektor;
         $poktan->username = $request->username;
         $poktan->password = $request->password;
 
@@ -470,6 +495,11 @@ class KelembagaanController extends Controller
 
     function cskecamatan($kecamatan){
         session()->put('kecamatan', $kecamatan);
+        session()->forget('desa');
+        return back();
+    }
+    function subcek($subcek){
+        session()->put('subcek', $subcek);
         return back();
     }
     function csdesa($desa){

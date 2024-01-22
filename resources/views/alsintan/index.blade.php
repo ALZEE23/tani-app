@@ -29,9 +29,9 @@
 
             <select name="desa" id="desa-select">
                 <option value="">Pilih Desa</option>
-                @foreach ($desa as $data)
+                @foreach ($desaOptions as $data)
                 <option value="{{$data->desa}}">{{$data->desa}}</option>
-                    
+
                 @endforeach
             </select>
 
@@ -40,6 +40,10 @@
                 <option value="Perkebunan">Perkebunan</option>
                 <option value="Pangan">Pangan</option>
                 <option value="Hortikultura">Hortikultura</option>
+                <option value="Perikanan">Perikanan</option>
+                <option value="Peternakan">Peternakan</option>
+                <option value="KWT">KWT</option>
+                <option value="UPJA">UPJA</option>
                 <!-- Tambahkan opsi tahun lainnya sesuai kebutuhan -->
             </select>
         </form>
@@ -76,6 +80,7 @@
                             <td class="tg-0lax">Jumlah</td>
                             <td class="tg-0lax">Tahun Bantuan</td>
                             <td class="tg-0lax">Foto</td>
+                            <td class="tg-0lax">Opsi</td>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -97,41 +102,46 @@
                                 type: 'POST',
                                 url: '/get-desa',
                                 data: {
-                                    _token: '{{ csrf_token() }}', // Tambahkan _token untuk laravel
+                                    _token: '{{ csrf_token() }}',
                                     kecamatan: kecValue,
                                 },
                                 success: function(response) {
                                     console.log(response);
                                     $('#desa-select').empty();
-                                    // Tambahkan opsi pertama sebagai default
                                     $('#desa-select').append('<option value="">Pilih Desa</option>');
                                     $('#data-table tbody').empty();
 
-                                    // Tambahkan data ke dalam tbody
                                     $.each(response.alsintans, function(key, value) {
                                         $('#data-table tbody').append(`
-                                        <tr>
-                                            <td class="tg-0lax">${key + 1}</td>
-                                            <td class="tg-0lax">${value.desa}</td>
-                                            <td class="tg-0lax">${value.gapoktan}</td>
-                                            <td class="tg-0lax">${value.ketua_gapoktan}</td>
-                                            <td class="tg-0lax">${value.kontak}</td>
-                                            <td class="tg-0lax">${value.alat}</td>
-                                            <td class="tg-0lax">${value.jumlah_alat}</td>
-                                            <td class="tg-0lax">${value.tahun}</td>
-                                            <td class="tg-0lax"><img style="width: 100px;" src="{{asset('storage/gambar/${value.gambar}')}}"></td>
-                                        </tr>
-                                    `);
+                <tr>
+                    <td class="tg-0lax">${key + 1}</td>
+                    <td class="tg-0lax">${value.desa}</td>
+                    <td class="tg-0lax">${value.gapoktan}</td>
+                    <td class="tg-0lax">${value.ketua_gapoktan}</td>
+                    <td class="tg-0lax">${value.kontak}</td>
+                    <td class="tg-0lax">${value.alat}</td>
+                    <td class="tg-0lax">${value.jumlah_alat}</td>
+                    <td class="tg-0lax">${value.tahun}</td>
+                    <td class="tg-0lax">
+                        <img style="width: 100px;" src="{{asset('storage/gambar/${value.gambar}')}}">
+                    </td>
+                    <td class="tg-0lax">
+                        <a href="/edit-alsintan/${value.id}" class="btn btn-primary" style="margin-bottom:5px;">Edit</a>
+                        <a href="/hapus-alsintan/${value.id}" class="btn btn-danger">Hapus</a>
+                    </td>
+                </tr>
+            `);
                                     });
-                                    // Loop melalui response dan tambahkan opsi untuk setiap elemen dalam response
-                                    $.each(response.desa, function(key, value) {
-                                        $('#desa-select').append('<option value="' + value + '">' + value + '</option>');
-                                    });
-                                    $('#desa-select').formSelect();
                                 }
                             });
+
                         });
-                    });
+                        // Loop melalui response dan tambahkan opsi untuk setiap elemen dalam response
+                        $.each(response.desa, function(key, value) {
+                            $('#desa-select').append('<option value="' + value + '">' + value + '</option>');
+                        });
+                        $('#desa-select').formSelect();
+                    })
                     $(document).ready(function() {
                         $('#desa-select').change(function() {
                             var desaValue = $('#desa-select').val();
@@ -150,17 +160,23 @@
                                     // Tambahkan data ke dalam tbody
                                     $.each(response.alsintans, function(key, value) {
                                         $('#data-table tbody').append(`
-                                        <tr>
-                                            <td class="tg-0lax">${key + 1}</td>
-                                            <td class="tg-0lax">${value.desa}</td>
-                                            <td class="tg-0lax">${value.gapoktan}</td>
-                                            <td class="tg-0lax">${value.ketua_gapoktan}</td>
-                                            <td class="tg-0lax">${value.kontak}</td>
-                                            <td class="tg-0lax">${value.alat}</td>
-                                            <td class="tg-0lax">${value.jumlah_alat}</td>
-                                            <td class="tg-0lax">${value.tahun}</td>
-                                            <td class="tg-0lax"><img style="width: 100px;" src="{{asset('storage/gambar/${value.gambar}')}}"></td>
-                                        </tr>
+                                         <tr>
+                    <td class="tg-0lax">${key + 1}</td>
+                    <td class="tg-0lax">${value.desa}</td>
+                    <td class="tg-0lax">${value.gapoktan}</td>
+                    <td class="tg-0lax">${value.ketua_gapoktan}</td>
+                    <td class="tg-0lax">${value.kontak}</td>
+                    <td class="tg-0lax">${value.alat}</td>
+                    <td class="tg-0lax">${value.jumlah_alat}</td>
+                    <td class="tg-0lax">${value.tahun}</td>
+                    <td class="tg-0lax">
+                      <img style="width: 100px;" src="{{asset('storage/gambar/${value.gambar}')}}">
+                    </td>
+                    <td class="tg-0lax">
+                        <a href="/edit-alsintan/${value.id}" class="btn btn-primary" style="margin-bottom:5px;">Edit</a>
+                        <a href="/hapus-alsintan/${value.id}" class="btn btn-danger">Hapus</a>
+                    </td>
+                </tr>
                                     `);
                                     });
                                     // Loop melalui response dan tambahkan opsi untuk setiap elemen dalam response
@@ -192,17 +208,23 @@
                                     // Tambahkan data ke dalam tbody
                                     $.each(response.alsintans, function(key, value) {
                                         $('#data-table tbody').append(`
-                                        <tr>
-                                            <td class="tg-0lax">${key + 1}</td>
-                                            <td class="tg-0lax">${value.desa}</td>
-                                            <td class="tg-0lax">${value.gapoktan}</td>
-                                            <td class="tg-0lax">${value.ketua_gapoktan}</td>
-                                            <td class="tg-0lax">${value.kontak}</td>
-                                            <td class="tg-0lax">${value.alat}</td>
-                                            <td class="tg-0lax">${value.jumlah_alat}</td>
-                                            <td class="tg-0lax">${value.tahun}</td>
-                                            <td class="tg-0lax"><img style="width: 100px;" src="{{asset('storage/gambar/${value.gambar}')}}"></td>
-                                        </tr>
+                                         <tr>
+                    <td class="tg-0lax">${key + 1}</td>
+                    <td class="tg-0lax">${value.desa}</td>
+                    <td class="tg-0lax">${value.gapoktan}</td>
+                    <td class="tg-0lax">${value.ketua_gapoktan}</td>
+                    <td class="tg-0lax">${value.kontak}</td>
+                    <td class="tg-0lax">${value.alat}</td>
+                    <td class="tg-0lax">${value.jumlah_alat}</td>
+                    <td class="tg-0lax">${value.tahun}</td>
+                    <td class="tg-0lax">
+                        <img style="width: 100px;" src="{{asset('storage/gambar/${value.gambar}')}}">
+                    </td>
+                    <td class="tg-0lax">
+                        <a href="/edit-alsintan/${value.id}" class="btn btn-primary" style="margin-bottom:5px;">Edit</a>
+                        <a href="/hapus-alsintan/${value.id}" class="btn btn-danger">Hapus</a>
+                    </td>
+                </tr>
                                     `);
                                     });
                                     // Loop melalui response dan tambahkan opsi untuk setiap elemen dalam response

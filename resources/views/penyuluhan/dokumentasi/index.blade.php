@@ -39,10 +39,19 @@
                 <!-- Tambahkan opsi bulan lainnya sesuai kebutuhan -->
             </select>
 
+            @if (auth()->user()->role == 'dinas')
             <select name="kecamatan" id="kecamatan-select">
                 <option value="">Pilih Kecamatan</option>
                 @foreach ($kecamatan as $data)
                 <option value="{{$data->kecamatan}}">{{$data->kecamatan}}</option>
+                @endforeach
+                <!-- Tambahkan opsi desa lainnya sesuai kebutuhan -->
+            </select>
+            @endif
+            <select name="desa" id="desa-select">
+                <option value="">Pilih Desa</option>
+                @foreach ($desa as $data)
+                <option value="{{$data->desa}}">{{$data->desa}}</option>
                 @endforeach
                 <!-- Tambahkan opsi desa lainnya sesuai kebutuhan -->
             </select>
@@ -84,8 +93,9 @@
                     var nomorUrutan = 1;
                     // jQuery
                     $(document).ready(function() {
-                        $('#kecamatan-select, #tahun-select, #bulan-select').change(function() {
+                        $('#kecamatan-select, #tahun-select, #bulan-select,#desa-select').change(function() {
                             var kecamatan = $('#kecamatan-select').val();
+                            var desa = $('#desa-select').val();
                             var tahunValue = $('#tahun-select').val();
                             var bulanValue = $('#bulan-select').val();
                             console.log(kecamatan);
@@ -96,6 +106,7 @@
                                 data: {
                                     _token: '{{ csrf_token() }}', // Tambahkan _token untuk laravel
                                     kecamatan: kecamatan,
+                                    desa: desa,
                                     tahun: tahunValue,
                                     bulan: bulanValue
                                 },

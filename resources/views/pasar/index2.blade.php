@@ -56,12 +56,24 @@
         <button class="btn btn-primary">tambah</button>
     </a>
     @endif
+    @if(auth()->user()->username == 'pip')<br>
+    <a href="{{route('harga.show','LEMAHSUGIH')}}">
+        <button class="btn btn-primary">Edit Harga</button>
+    </a>
+    @endif
     <div class="select-wrapper">
-        <label for="komoditas">Pilih Komoditas:</label>
         <select id="komoditas-select" name="komoditas-select">
+            <option value="">Pilih Subsektor</option>
             <option value="Hortikultura">Hortikultura</option>
             <option value="Pangan">Pangan</option>
             <option value="Perkebunan">Perkebunan</option>
+            <!-- Tambahkan opsi kecamatan lainnya sesuai kebutuhan -->
+        </select>
+    </div>
+    <div class="select-wrapper">
+        <select id="komoditas-select2" name="komoditas-select2">
+            <option value="">Pilih Komoditas</option>
+
             <!-- Tambahkan opsi kecamatan lainnya sesuai kebutuhan -->
         </select>
     </div>
@@ -119,6 +131,19 @@
                                     kecamatan: kecamatanValue
                                 },
                                 success: function(response) {
+                                    var hargaArray = response.harga;
+
+                                    // Clear existing options
+                                    $('#komoditas-select2').empty();
+
+                                    // Add a default option
+                                    $('#komoditas-select2').append('<option value="">Pilih Komoditas</option>');
+
+                                    // Iterate through the hargaArray and add options
+                                    $.each(hargaArray, function(index, product) {
+                                        $('#komoditas-select2').append('<option value="' + product.produk + '">' + product.produk + '</option>');
+                                    });
+                                    $('#komoditas-select2').formSelect();
                                     console.log(response);
                                     const isoDate = response.last;
 
@@ -170,6 +195,79 @@
                                     console.log(error);
                                 }
                             });
+                        });
+                    });
+                    $('#komoditas-select2').change(function() {
+                        var komoditasValue2 = $(this).val();
+                        var kecamatanValue = $('#kecamatan').val();
+                        var komoditasValue = $('#komoditas-select').val();
+
+                        console.log(kecamatanValue);
+
+                        // Kirim permintaan Ajax
+                        $.ajax({
+                            type: 'POST',
+                            url: '{{route("pasar.filter_komoditas")}}',
+                            data: {
+                                _token: '{{ csrf_token() }}',
+                                komoditas: komoditasValue,
+                                kecamatan: kecamatanValue,
+                                komoditas2: komoditasValue2,
+                            },
+                            success: function(response) {
+                                var hargaArray = response.harga;
+
+                                // Clear existing options
+                                console.log(response);
+                                const isoDate = response.last;
+
+                                // Buat objek Date dari tanggal ISO 8601
+                                const date = new Date(isoDate);
+
+                                // Daftar nama bulan dalam bahasa Indonesia
+                                const monthsInIndonesian = [
+                                    'jan', 'feb', 'mar', 'apr', 'mei', 'jun',
+                                    'jul', 'ags', 'sep', 'okt', 'nov', 'des'
+                                ];
+
+                                // Dapatkan komponen tanggal, bulan, dan tahun
+                                const day = date.getDate();
+                                const monthIndex = date.getMonth();
+                                const year = date.getFullYear();
+
+                                // Buat format tanggal '4 jan 2024'
+                                const formattedDate = `${day} ${monthsInIndonesian[monthIndex]} ${year}`;
+
+                                console.log(formattedDate);
+                                $('#last').empty();
+                                $('#last').append("Update : " + formattedDate);
+
+                                // Ambil array dari properti harga
+                                var hargaArray = response.harga;
+                                console.log(hargaArray);
+                                // Proses array jika ada data di dalamnya
+                                if (Array.isArray(hargaArray) && hargaArray.length > 0) {
+                                    // Kosongkan tabel sebelum menambahkan data baru
+                                    $('#your-table-id tbody').empty();
+
+                                    // Loop melalui array hargaArray
+                                    hargaArray.forEach(function(data) {
+                                        var newRow = '<tr>' +
+                                            '<td>' + data.kode_produk + '</td>' +
+                                            '<td>' + formatRupiah(data.harga) + '</td>' +
+                                            '</tr>';
+                                        $('#your-table-id tbody').append(newRow);
+                                    });
+                                } else {
+                                    console.log("Array harga kosong atau tidak ada data");
+                                    $('#your-table-id tbody').empty();
+
+                                    // Lakukan penanganan jika array kosong atau tidak ada data
+                                }
+                            },
+                            error: function(error) {
+                                console.log(error);
+                            }
                         });
                     });
                 </script>

@@ -6,63 +6,73 @@
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 <div class="container has-pagehead is-pagetitle">
     <div class="section">
-        <h5 class="pagetitle">Rebcana Kegiatan Penyuluhan</h5>
+        <h5 class="pagetitle">Rencana Kegiatan Penyuluhan</h5>
     </div>
 </div>
 
 <div class="container">
     <div class="select-wrapper">
         @if (auth()->user()->role == 'petugas')
-        <a href="{{route('tambah-rencana')}}"><button class="btn btn-secondary" style="width: 300px;">Tambah</button></a><br><br>
+        @php
+        // Get the current date
+        $currentDate = now();
 
-        @endif
-        <form id="filter-form">
-            <select name="tahun" id="tahun-select">
-                <option value="">Pilih Tahun</option>
-                <option value="2023">2023</option>
-                <option value="2024">2024</option>
-                <!-- Tambahkan opsi tahun lainnya sesuai kebutuhan -->
-            </select>
-            <select name="bulan" id="bulan-select">
-                <option value="">Pilih Bulan</option>
-                <option value="1">Januari</option>
-                <option value="2">Februari</option>
-                <option value="3">Maret</option>
-                <option value="4">April</option>
-                <option value="5">Mei</option>
-                <option value="6">Juni</option>
-                <option value="7">Juli</option>
-                <option value="8">Agustuus</option>
-                <option value="9">September</option>
-                <option value="10">Oktober</option>
-                <option value="11">November</option>
-                <option value="12">Desember</option>
-                <!-- Tambahkan opsi bulan lainnya sesuai kebutuhan -->
-            </select>
-
-            @if (auth()->user()->role == 'petugas')
-            <select name="kecamatan" id="kecamatan-select">
-                <option value="">Pilih Kecamatan</option>
-                @foreach ($kecamatan as $data)
-                <option value="{{$data->kecamatan}}">{{$data->kecamatan}}</option>
-                @endforeach
-                <!-- Tambahkan opsi desa lainnya sesuai kebutuhan -->
-            </select>
+        // Check if the current date is between the 1st and 7th of the month
+        $isWithinDateRange = $currentDate->day >= 1 && $currentDate->day <= 7; @endphp @if ($isWithinDateRange) <a href="{{ route('tambah-rencana') }}">
+            <button class="btn btn-secondary" style="width: 300px;">Tambah</button>
+            </a><br><br>
+            @else
+            <button class="btn btn-secondary" style="width: 300px;">Tambah</button><br><br>
+            <span style="color:red">Pengisian sudah lewat dari dari tanggal pengisian</span>
             @endif
+            @endif
+            <form id="filter-form">
+                <select name="tahun" id="tahun-select">
+                    <option value="">Pilih Tahun</option>
+                    <option value="2023">2023</option>
+                    <option value="2024">2024</option>
+                    <!-- Tambahkan opsi tahun lainnya sesuai kebutuhan -->
+                </select>
+                <select name="bulan" id="bulan-select">
+                    <option value="">Pilih Bulan</option>
+                    <option value="1">Januari</option>
+                    <option value="2">Februari</option>
+                    <option value="3">Maret</option>
+                    <option value="4">April</option>
+                    <option value="5">Mei</option>
+                    <option value="6">Juni</option>
+                    <option value="7">Juli</option>
+                    <option value="8">Agustuus</option>
+                    <option value="9">September</option>
+                    <option value="10">Oktober</option>
+                    <option value="11">November</option>
+                    <option value="12">Desember</option>
+                    <!-- Tambahkan opsi bulan lainnya sesuai kebutuhan -->
+                </select>
 
-            <select name="penyuluh" id="penyuluh-select">
-                <option value="">Penyuluh Walbin</option>
-                @foreach ($penyuluh as $data)
-                <option value="{{$data}}">{{$data}}</option>
-                @endforeach
-            </select>
+                @if (auth()->user()->role == 'dinas')
+                <select name="kecamatan" id="kecamatan-select">
+                    <option value="">Pilih Kecamatan</option>
+                    @foreach ($kecamatan as $data)
+                    <option value="{{$data->kecamatan}}">{{$data->kecamatan}}</option>
+                    @endforeach
+                    <!-- Tambahkan opsi desa lainnya sesuai kebutuhan -->
+                </select>
+                @endif
+
+                <select name="penyuluh" id="penyuluh-select">
+                    <option value="">Penyuluh Wilbin</option>
+                    @foreach ($penyuluh as $data)
+                    <option value="{{$data}}">{{$data}}</option>
+                    @endforeach
+                </select>
 
 
 
 
-        </form>
-        <br>
-        <!-- Pastikan ini di atas penutup tag </body> -->
+            </form>
+            <br>
+            <!-- Pastikan ini di atas penutup tag </body> -->
 
 
     </div>

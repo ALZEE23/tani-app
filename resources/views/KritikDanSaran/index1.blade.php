@@ -13,7 +13,7 @@
 <div class="container">
     <div class="select-wrapper">
         <form id="filter-form">
-            @if (auth()->user()->role == 'petugas' || auth()->user()->role == 'dinas')
+            @if (auth()->user()->role == 'dinas')
             <select name="kecamatan" id="kecamatan-select">
                 <option value="">Pilih Kecamatan</option>
                 @foreach ($kecamatan as $data)
@@ -73,7 +73,7 @@
                     // jQuery
                     $(document).ready(function() {
                         $('#kecamatan-select, #jenis_ternak-select, #tahun-select, #bulan-select').change(function() {
-                            var desaValue = $('#kecamatan-select').val();
+                            var desaValue = "{{auth()->user()->kecamatan}}";
                             var jenis_ternakValue = $('#jenis_ternak-select').val();
                             var tahunValue = $('#tahun-select').val();
                             var bulanValue = $('#bulan-select').val();

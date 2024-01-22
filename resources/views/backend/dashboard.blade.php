@@ -1,35 +1,124 @@
 @extends('layouts.back')
 @section('content')
-
 <div class="container-fluid">
     <div class="row">
-        <div class="col-lg-8 d-flex align-items-stretch">
-            <div class="card w-100 bg-light-info overflow-hidden shadow-none">
-                <div class="card-body position-relative">
-                    <div class="row">
-                        <div class="col-sm-7">
-                            <div class="d-flex align-items-center mb-7">
-                                <div class="rounded-circle overflow-hidden me-6">
-                                    <img src="{{asset('dist/images/profile/user-1.jpg')}}" alt="" width="40" height="40">
-                                </div>
-                                <h5 class="fw-semibold mb-0 fs-5">Welcome back {{auth()->user()->name}}</h5>
-                            </div>
-                            <!-- <div class="d-flex align-items-center">
-                                <div class="border-end pe-4 border-muted border-opacity-10">
-                                    <h3 class="mb-1 fw-semibold fs-8 d-flex align-content-center">$2,340<i class="ti ti-arrow-up-right fs-5 lh-base text-success"></i></h3>
-                                    <p class="mb-0 text-dark">Today’s Sales</p>
-                                </div>
-                                <div class="ps-4">
-                                    <h3 class="mb-1 fw-semibold fs-8 d-flex align-content-center">35%<i class="ti ti-arrow-up-right fs-5 lh-base text-success"></i></h3>
-                                    <p class="mb-0 text-dark">Overall Performance</p>
-                                </div>
-                            </div> -->
+        <div class="col-sm-6 col-xl-3">
+            <div class="card bg-light-primary shadow-none">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center">
+                        <div class="round rounded bg-primary d-flex align-items-center justify-content-center">
+                            <i class="ti ti-list-details text-white fs-7" title="BTC"></i>
                         </div>
-                        <div class="col-sm-5">
-                            <div class="welcome-bg-img mb-n7 text-end">
-                                <img src="dist/images/backgrounds/welcome-bg.svg" alt="" class="img-fluid">
-                            </div>
+                        <h6 class="mb-0 ms-2">DESA</h6>
+                        <div class="ms-auto text-primary d-flex align-items-center">
                         </div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between mt-4">
+                        <h3 class="mb-0 fw-semibold fs-7">{{$desa}}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="card bg-light-danger shadow-none">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center">
+                        <div class="round rounded bg-danger d-flex align-items-center justify-content-center">
+                            <i class="ti ti-list-details text-white fs-7" title="LTC"></i>
+                        </div>
+                        <h6 class="mb-0 ms-3">KECAMATAN</h6>
+                        <div class="ms-auto text-info d-flex align-items-center">
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between mt-4">
+                        <h3 class="mb-0 fw-semibold fs-7">{{$kecamatan}}</h3>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="card bg-light-success shadow-none">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center">
+                        <div class="round rounded bg-success d-flex align-items-center justify-content-center">
+                            <i class="ti ti-user-circle text-white fs-7" title="LTC"></i>
+                        </div>
+                        <h6 class="mb-0 ms-3">Petani</h6>
+                        <div class="ms-auto text-info d-flex align-items-center">
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between mt-4">
+                        <h3 class="mb-0 fw-semibold fs-7">{{$petani}}</h3>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="card bg-light-warning shadow-none">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center">
+                        <div class="round rounded bg-warning d-flex align-items-center justify-content-center">
+                            <i class="ti ti-list-details text-white fs-7" title="XRP"></i>
+                        </div>
+                        <h6 class="mb-0 ms-3">Alsintan</h6>
+                        <div class="ms-auto text-info d-flex align-items-center">
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between mt-4">
+                        <h3 class="mb-0 fw-semibold fs-7">{{$alsintan}}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="card bg-light-warning shadow-none">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center">
+                        <div class="round rounded bg-warning d-flex align-items-center justify-content-center">
+                            <i class="ti ti-list-details text-white fs-7" title="XRP"></i>
+                        </div>
+                        <h6 class="mb-0 ms-3">Pasar</h6>
+                        <div class="ms-auto text-info d-flex align-items-center">
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between mt-4">
+                        <h3 class="mb-0 fw-semibold fs-7">{{$pasar}}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="card bg-light-info shadow-none">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center">
+                        <div class="round rounded bg-info d-flex align-items-center justify-content-center">
+                            <i class="ti ti-list-details text-white fs-7" title="XRP"></i>
+                        </div>
+                        <h6 class="mb-0 ms-3">Poktan</h6>
+                        <div class="ms-auto text-info d-flex align-items-center">
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between mt-4">
+                        <h3 class="mb-0 fw-semibold fs-7">{{$poktan}}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="card bg-light-warning shadow-none">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center">
+                        <div class="round rounded bg-warning d-flex align-items-center justify-content-center">
+                            <i class="ti ti-list-details text-white fs-7" title="XRP"></i>
+                        </div>
+                        <h6 class="mb-0 ms-3">Gapoktan</h6>
+                        <div class="ms-auto text-info d-flex align-items-center">
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between mt-4">
+                        <h3 class="mb-0 fw-semibold fs-7">{{$gakpoktan}}</h3>
                     </div>
                 </div>
             </div>

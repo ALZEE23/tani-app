@@ -25,8 +25,8 @@
         <div class="">
             <label for="desa">Pilih Wilayah:</label>
             <select id="wilayah" name="wilayah">
-                @foreach ($kecamatan as $data)
-                <option value="{{$data->kecamatan}}">{{$data->kecamatan}}</option>
+                @foreach ($desa as $data)
+                <option value="{{$data->desa}}">{{$data->desa}}</option>
                 @endforeach
                 <!-- Tambahkan opsi kecamatan lainnya sesuai kebutuhan -->
             </select>
@@ -39,7 +39,7 @@
         <div class="file-field ">
             <div class="btn">
                 <span>Foto</span>
-                <input type="file" name="foto">
+                <input type="file" name="foto" required>
             </div>
             <div class="file-path-wrapper">
                 <input class="file-path validate" type="text">
@@ -48,7 +48,7 @@
         <div class="file-field ">
             <div class="btn">
                 <span>File RKTP</span>
-                <input type="file" name="file_rktp">
+                <input type="file" name="file_rktp" required>
             </div>
             <div class="file-path-wrapper">
                 <input class="file-path validate" type="text">
@@ -58,7 +58,7 @@
         <div class="file-field ">
             <div class="btn">
                 <span>File Program Daerah</span>
-                <input type="file" name="file_program_daerah">
+                <input type="file" name="file_program_daerah" required>
             </div>
             <div class="file-path-wrapper">
                 <input class="file-path validate" type="text">

@@ -22,6 +22,18 @@
             </select>
         </div>
         <div class="">
+            <label for="subsektor">Subsektor:</label>
+            <select id="subsektor" name="subsektor">
+                <option value="Pangan">Pangan</option>
+                <option value="Perkebunan">Perkebunan</option>
+                <option value="Hortikultura">Hortikultura</option>
+                <option value="Peternakan">Peternakan</option>
+                <option value="Perikanan">Perikanan</option>
+                <option value="KWT">KWT</option>
+                <!-- Tambahkan opsi kecamatan lainnya sesuai kebutuhan -->
+            </select>
+        </div>
+        <div class="">
             <input id="nama" type="text" name="nama_poktan" required placeholder="Nama Poktan">
         </div>
         <div class="">
@@ -48,12 +60,17 @@
             <input id="wilayah" type="text" name="titik_koordinat" required placeholder="Titik Koordinat Usaha Tani">
         </div>
         <div class="">
+            <input id="luas" type="text" name="luas" required placeholder="Luas Lahan (HA)">
+        </div>
+        <div class="">
             <input id="wilayah" type="number" name="jumlah_anggota_poktan" required placeholder="Jumlah Anggota Poktan">
         </div>
         <div class="">
             <select name="kelas_poktan" id="">
                 <option value="pemula">pemula</option>
-                <option value="pemula">suhu</option>
+                <option value="lanjut">lanjut</option>
+                <option value="madya">madya</option>
+                <option value="utama">utama</option>
             </select>
         </div>
         <div class="">

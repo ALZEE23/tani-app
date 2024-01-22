@@ -11,7 +11,7 @@
 
 <div class="container">
     <div class="row">
-        <form action="" method="POST" enctype="multipart/form-data">
+        <form action="{{route('profile.update',auth()->user()->id)}}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <label for="nama">Nama</label>
@@ -19,43 +19,37 @@
 
             <label for="jenis_kelamin">Jenis Kelamin</label>
             <div>
-            <select name="jenis_kelamin" id="jenis_kelamin">
-                <!-- Tambahkan pilihan kategori sesuai kebutuhan -->
-                <option value="pria">Pria</option>
-                <option value="wanita">Wanita</option>
-            </select>
+                <select name="jenis_kelamin" id="jenis_kelamin">
+                    <!-- Tambahkan pilihan kategori sesuai kebutuhan -->
+                    <option value="{{auth()->user()->jenis_kelamin}}">{{auth()->user()->jenis_kelamin}}</option>
+                    <option value="pria">pria</option>
+                    <option value="wanita">wanita</option>
+                </select>
             </div>
 
-            <label for="kecamatan">Pilih Kecamatan</label>
+            <label for="kecamatan">Kecamatan</label>
             <div>
-           <select name="kecamatan" id="kecamatan">
-    <!-- Isi nilai kecamatan dari model pengguna -->
-    <option value="{{ Auth::user()->kecamatan }}">{{ Auth::user()->kecamatan }}</option>
-    @foreach ($kecamatans as $kecamatan)
-        <option value="{{ $kecamatan->kecamatan }}" {{ $kecamatanFilter ?? '' == $kecamatan->kecamatan ? 'selected' : '' }}>
-            {{ $kecamatan->kecamatan }}
-        </option>
-    @endforeach
-    <!-- Pastikan bahwa pilihan lainnya juga muncul sesuai kebutuhan -->
-</select>
-
+                <input type="text" name="kecamatan" value="{{auth()->user()->kecamatan}}">
             </div>
 
-            <label for="desa">Jenis Desa</label>
+            <label for="desa">Desa</label>
             <div>
-            <select name="desa" id="desa">
-                <!-- Tambahkan pilihan kategori sesuai kebutuhan -->
-                <option value="desa1">D</option>
-            </select>
+                <select name="desa" id="desa">
+                    <!-- Tambahkan pilihan kategori sesuai kebutuhan -->
+                    <option value="{{auth()->user()->desa}}">{{auth()->user()->desa}}</option>
+
+                    @foreach ($desa as $data)
+                    <option value="{{$data->desa}}">{{$data->desa}}</option>
+                    @endforeach
+                </select>
             </div>
 
-            <label for="cover">Upload Gambar</label>
-            <div class="file-input" id="coverInput">
-                <input type="file" name="cover" id="cover" accept="image/*" required>
-                <div class="drop-zone" id="coverDropZone">Seret dan lepas file di sini</div>
+            <label for="cover">Upload Foto baru</label>
+            <div class="" id="">
+                <input type="file" name="foto" id="cover" accept="image/*" required>
             </div>
             <br>
-
+            <img style="width: 100px;" src="{{asset('storage/gambar')}}/{{auth()->user()->foto}}"><br>
             <button type="submit">Submit</button>
 
         </form>
@@ -82,7 +76,8 @@
         margin-bottom: 5px;
     }
 
-    input, select {
+    input,
+    select {
         width: 100%;
         padding: 8px;
         margin-bottom: 15px;
@@ -111,22 +106,22 @@
         border-radius: 8px;
     }
 
-    .file-input > * {
+    .file-input>* {
         grid-area: stack;
     }
 
-    .file-input > input {
+    .file-input>input {
         opacity: 0;
     }
 
-    .file-input > .drop-zone {
+    .file-input>.drop-zone {
         margin: 12px;
         border: dashed 2px #aaaaaa;
         border-radius: 4px;
         transition: margin 200ms;
     }
 
-    .file-input.active > .drop-zone {
+    .file-input.active>.drop-zone {
         margin: 14px;
         background-color: #dadada;
     }
@@ -136,7 +131,7 @@
     const label = document.querySelector('label');
     const coverInput = document.getElementById('coverInput');
     const fileInput = document.getElementById('fileInput');
-    
+
     function onEnter(element) {
         element.classList.add('active');
     }
@@ -164,13 +159,29 @@
         }
     }
 
-    label.addEventListener('dragenter', function () { onEnter(coverInput); onEnter(fileInput); });
-    label.addEventListener('dragleave', function () { onLeave(coverInput); onLeave(fileInput); });
+    label.addEventListener('dragenter', function() {
+        onEnter(coverInput);
+        onEnter(fileInput);
+    });
+    label.addEventListener('dragleave', function() {
+        onLeave(coverInput);
+        onLeave(fileInput);
+    });
 
-    coverInput.addEventListener('dragover', function (e) { e.preventDefault(); });
-    coverInput.addEventListener('drop', function (e) { e.preventDefault(); handleFile(coverInput, e); });
+    coverInput.addEventListener('dragover', function(e) {
+        e.preventDefault();
+    });
+    coverInput.addEventListener('drop', function(e) {
+        e.preventDefault();
+        handleFile(coverInput, e);
+    });
 
-    fileInput.addEventListener('dragover', function (e) { e.preventDefault(); });
-    fileInput.addEventListener('drop', function (e) { e.preventDefault(); handleFile(fileInput, e); });
+    fileInput.addEventListener('dragover', function(e) {
+        e.preventDefault();
+    });
+    fileInput.addEventListener('drop', function(e) {
+        e.preventDefault();
+        handleFile(fileInput, e);
+    });
 </script>
 @endsection

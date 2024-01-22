@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use DateTime;
+use Carbon\Carbon;
 use App\Models\Harga;
 use App\Models\Pasar;
 use App\Models\Kecamatan;
 use Illuminate\Http\Request;
+use App\Models\Produksitanaman;
+use App\Models\Produksitanaman2;
 use Illuminate\Support\Facades\Auth;
 
 class PasarController extends Controller
@@ -18,319 +22,10 @@ class PasarController extends Controller
         $kecamatan = Kecamatan::all();
         $kec1 = $kecamatan->first();
         $pasars = Pasar::where('kecamatan',Auth::user()->kecamatan)->get();
-        $harga = Harga::where('kecamatan', Auth::user()->kecamatan)->where('komoditas','Hortikultura')->get();
-        $countHortikultura = Harga::where('kecamatan', Auth::user()->kecamatan)->where('komoditas','Hortikultura')->count();
-        $countPangan = Harga::where('kecamatan', Auth::user()->kecamatan)->where('komoditas','Pangan')->count();
-        $countPerkebunan = Harga::where('kecamatan', Auth::user()->kecamatan)->where('komoditas','Perkebunan')->count();
-        $last = Harga::where('kecamatan', Auth::user()->kecamatan)
-            ->where('komoditas', 'Hortikultura')
-            ->orderBy('updated_at', 'desc') // Mengurutkan berdasarkan updated_at secara descending
-            ->first(); // Mengambil data pertama dari hasil yang telah diurutkan
-        if($countHortikultura < 1){
-            Harga::create([
-                'komoditas' => "Hortikultura",
-                'produk' => "Daun Bawang",
-                'harga' => 0,
-                'kecamatan' => Auth::user()->kecamatan,
-                'kode_produk' => "Daun Segar",
-            ]);
-            Harga::create([
-                'komoditas' => "Hortikultura",
-                'produk' => "Bawang Merah",
-                'harga' => 0,
-                'kecamatan' => Auth::user()->kecamatan,
-                'kode_produk' => "Umbi basah dengan daun (konde basah)",
-            ]);
-            Harga::create([
-                'komoditas' => "Hortikultura",
-                'produk' => "Bawang Putih",
-                'harga' => 0,
-                'kecamatan' => Auth::user()->kecamatan,
-                'kode_produk' => "Umbi basah dengan daun (konde basah)",
-            ]);
-            Harga::create([
-                'komoditas' => "Hortikultura",
-                'produk' => "Kembang Kol",
-                'harga' => 0,
-                'kecamatan' => Auth::user()->kecamatan,
-                'kode_produk' => "Sayuran Segar",
-            ]);
-            Harga::create([
-                'komoditas' => "Hortikultura",
-                'produk' => "Kentang",
-                'harga' => 0,
-                'kecamatan' => Auth::user()->kecamatan,
-                'kode_produk' => "Umbi Basah",
-            ]);
-            Harga::create([
-                'komoditas' => "Hortikultura",
-                'produk' => "Kubis",
-                'harga' => 0,
-                'kecamatan' => Auth::user()->kecamatan,
-                'kode_produk' => "Daun Krop",
-            ]);
-            Harga::create([
-                'komoditas' => "Hortikultura",
-                'produk' => "Petsai/Sawi",
-                'harga' => 0,
-                'kecamatan' => Auth::user()->kecamatan,
-                'kode_produk' => "Sayuran Segar",
-            ]);
-            Harga::create([
-                'komoditas' => "Hortikultura",
-                'produk' => "Wortel",
-                'harga' => 0,
-                'kecamatan' => Auth::user()->kecamatan,
-                'kode_produk' => "Umbi dengan daun",
-            ]);
-            Harga::create([
-                'komoditas' => "Hortikultura",
-                'produk' => "Bayam",
-                'harga' => 0,
-                'kecamatan' => Auth::user()->kecamatan,
-                'kode_produk' => "Sayuran Segar",
-            ]);
-            Harga::create([
-                'komoditas' => "Hortikultura",
-                'produk' => "Buncis",
-                'harga' => 0,
-                'kecamatan' => Auth::user()->kecamatan,
-                'kode_produk' => "Polong basah",
-            ]);
-            Harga::create([
-                'komoditas' => "Hortikultura",
-                'produk' => "Cabe Besar/TW/Teropong",
-                'harga' => 0,
-                'kecamatan' => Auth::user()->kecamatan,
-                'kode_produk' => "Buah Segar",
-            ]);
-            Harga::create([
-                'komoditas' => "Hortikultura",
-                'produk' => "Cabai Keriting",
-                'harga' => 0,
-                'kecamatan' => Auth::user()->kecamatan,
-                'kode_produk' => "Buah Segar",
-            ]);
-            Harga::create([
-                'komoditas' => "Hortikultura",
-                'produk' => "Cabe Rawit",
-                'harga' => 0,
-                'kecamatan' => Auth::user()->kecamatan,
-                'kode_produk' => "Buah Segar",
-            ]);
-            Harga::create([
-                'komoditas' => "Hortikultura",
-                'produk' => "Jamur Tiram",
-                'harga' => 0,
-                'kecamatan' => Auth::user()->kecamatan,
-                'kode_produk' => "Sayuran Segar",
-            ]);
-            Harga::create([
-                'komoditas' => "Hortikultura",
-                'produk' => "Jamur Merang",
-                'harga' => 0,
-                'kecamatan' => Auth::user()->kecamatan,
-                'kode_produk' => "Sayuran Segar",
-            ]);
-            Harga::create([
-                'komoditas' => "Hortikultura",
-                'produk' => "Jamur Lainya",
-                'harga' => 0,
-                'kecamatan' => Auth::user()->kecamatan,
-                'kode_produk' => "Sayuran Segar",
-            ]);
-            Harga::create([
-                'komoditas' => "Hortikultura",
-                'produk' => "Kacang Panjang",
-                'harga' => 0,
-                'kecamatan' => Auth::user()->kecamatan,
-                'kode_produk' => "Polong Basah",
-            ]);
-            Harga::create([
-                'komoditas' => "Hortikultura",
-                'produk' => "Kangkung",
-                'harga' => 0,
-                'kecamatan' => Auth::user()->kecamatan,
-                'kode_produk' => "Sayuran Segar",
-            ]);
-            Harga::create([
-                'komoditas' => "Hortikultura",
-                'produk' => "Mentimun",
-                'harga' => 0,
-                'kecamatan' => Auth::user()->kecamatan,
-                'kode_produk' => "Buah Segar",
-            ]);
-            Harga::create([
-                'komoditas' => "Hortikultura",
-                'produk' => "Labu Siam",
-                'harga' => 0,
-                'kecamatan' => Auth::user()->kecamatan,
-                'kode_produk' => "Buah Segar",
-            ]);
-            Harga::create([
-                'komoditas' => "Hortikultura",
-                'produk' => "Paprika",
-                'harga' => 0,
-                'kecamatan' => Auth::user()->kecamatan,
-                'kode_produk' => "Buah Segar",
-            ]);
-            Harga::create([
-                'komoditas' => "Hortikultura",
-                'produk' => "Terung",
-                'harga' => 0,
-                'kecamatan' => Auth::user()->kecamatan,
-                'kode_produk' => "Buah Segar",
-            ]);
-            Harga::create([
-                'komoditas' => "Hortikultura",
-                'produk' => "Tomat",
-                'harga' => 0,
-                'kecamatan' => Auth::user()->kecamatan,
-                'kode_produk' => "Buah Segar",
-            ]);
+        $harga = Harga::where('kecamatan', 'LEMAHSUGIH')->where('komoditas','Hortikultura')->get();
+      
 
-        }
-
-        if($countPangan < 1){
-            Harga::create([
-                'komoditas' => "Pangan",
-                'produk' => "Padi",
-                'harga' => 0,
-                'kecamatan' => Auth::user()->kecamatan,
-                'kode_produk' => "GKP",
-            ]);
-            Harga::create([
-                'komoditas' => "Pangan",
-                'produk' => "Padi",
-                'harga' => 0,
-                'kecamatan' => Auth::user()->kecamatan,
-                'kode_produk' => "GKG",
-            ]);
-            Harga::create([
-                'komoditas' => "Pangan",
-                'produk' => "Kedelai",
-                'harga' => 0,
-                'kecamatan' => Auth::user()->kecamatan,
-                'kode_produk' => "Biji Kering",
-            ]);
-            Harga::create([
-                'komoditas' => "Pangan",
-                'produk' => "Kacang Tanah",
-                'harga' => 0,
-                'kecamatan' => Auth::user()->kecamatan,
-                'kode_produk' => "Biji Kering",
-            ]);
-            Harga::create([
-                'komoditas' => "Pangan",
-                'produk' => "Kacang Hijau",
-                'harga' => 0,
-                'kecamatan' => Auth::user()->kecamatan,
-                'kode_produk' => "Biji Kering",
-            ]);
-            Harga::create([
-                'komoditas' => "Pangan",
-                'produk' => "Ubi Kayu",
-                'harga' => 0,
-                'kecamatan' => Auth::user()->kecamatan,
-                'kode_produk' => "Ubi Basah",
-            ]);
-            Harga::create([
-                'komoditas' => "Pangan",
-                'produk' => "Ubi Jalar",
-                'harga' => 0,
-                'kecamatan' => Auth::user()->kecamatan,
-                'kode_produk' => "Ubi Basah",
-            ]);
-        }
-
-        if($countPerkebunan < 1) {
-            Harga::create([
-                'komoditas' => "Perkebunan",
-                'produk' => "Teh",
-                'harga' => 0,
-                'kecamatan' => Auth::user()->kecamatan,
-                'kode_produk' => "Pucuk Teh Basah",
-            ]);
-            Harga::create([
-                'komoditas' => "Perkebunan",
-                'produk' => "Kopi",
-                'harga' => 0,
-                'kecamatan' => Auth::user()->kecamatan,
-                'kode_produk' => "Berasan Arabika",
-            ]);
-            Harga::create([
-                'komoditas' => "Perkebunan",
-                'produk' => "Kopi",
-                'harga' => 0,
-                'kecamatan' => Auth::user()->kecamatan,
-                'kode_produk' => "Berasan Robusta",
-            ]);
-            Harga::create([
-                'komoditas' => "Perkebunan",
-                'produk' => "Tebu",
-                'harga' => 0,
-                'kecamatan' => Auth::user()->kecamatan,
-                'kode_produk' => "Gula Pasir",
-            ]);
-            Harga::create([
-                'komoditas' => "Perkebunan",
-                'produk' => "Tembakau",
-                'harga' => 0,
-                'kecamatan' => Auth::user()->kecamatan,
-                'kode_produk' => "Rajangan",
-            ]);
-            Harga::create([
-                'komoditas' => "Perkebunan",
-                'produk' => "Cengkeh",
-                'harga' => 0,
-                'kecamatan' => Auth::user()->kecamatan,
-                'kode_produk' => "Bunga Kering",
-            ]);
-            Harga::create([
-                'komoditas' => "Perkebunan",
-                'produk' => "Kelapa",
-                'harga' => 0,
-                'kecamatan' => Auth::user()->kecamatan,
-                'kode_produk' => "Butiran",
-            ]);
-            Harga::create([
-                'komoditas' => "Perkebunan",
-                'produk' => "Aren",
-                'harga' => 0,
-                'kecamatan' => Auth::user()->kecamatan,
-                'kode_produk' => "Gula Merah",
-            ]);
-            Harga::create([
-                'komoditas' => "Perkebunan",
-                'produk' => "Nilai",
-                'harga' => 0,
-                'kecamatan' => Auth::user()->kecamatan,
-                'kode_produk' => "Daun Basah",
-            ]);
-            Harga::create([
-                'komoditas' => "Perkebunan",
-                'produk' => "Nilam",
-                'harga' => 0,
-                'kecamatan' => Auth::user()->kecamatan,
-                'kode_produk' => "Daun Kering",
-            ]);
-            Harga::create([
-                'komoditas' => "Perkebunan",
-                'produk' => "Lada",
-                'harga' => 0,
-                'kecamatan' => Auth::user()->kecamatan,
-                'kode_produk' => "Lada Putih",
-            ]);
-            Harga::create([
-                'komoditas' => "Perkebunan",
-                'produk' => "Kemiri",
-                'harga' => 0,
-                'kecamatan' => Auth::user()->kecamatan,
-                'kode_produk' => "Kemiri Kupas",
-            ]);
-        }
-
-        return view('pasar.index2', compact('pasars','kecamatan','harga','last'));
+        return view('pasar.index2', compact('pasars','kecamatan','harga'));
     }
 
     /**
@@ -354,7 +49,7 @@ class PasarController extends Controller
         $pasar->kontak_pemilik = $request->kontak_pemilik;
         $pasar->sub_sektor = $request->sub_sektor;
         $pasar->komoditas = $request->komoditas;
-        $pasar->kecamatan = $request->kecamatan;
+        $pasar->kecamatan = auth()->user()->kecamatan;
         if ($request->hasFile('foto')) {
             $filename = $request->file('foto');
             $filenamefoto = time() . '_' . $filename->getClientOriginalName();
@@ -415,14 +110,17 @@ class PasarController extends Controller
 
                 // Lakukan filter berdasarkan permintaan
                 if ($request->kecamatan) {
-                  $data->where('kecamatan', $request->kecamatan);
+                  $data->where('kecamatan', 'LEMAHSUGIH');
                 }
                 else{
-                $data->where('kecamatan', Auth::user()->kecamatan);
+                $data->where('kecamatan', 'LEMAHSUGIH');
 
                 }
                 if($request->komoditas){
                     $data->where('komoditas', $request->komoditas);
+                }
+                if($request->komoditas2){
+                    $data->where('produk', $request->komoditas2);
                 }
             $harga = $data->get();
             $last =
@@ -435,6 +133,47 @@ class PasarController extends Controller
 
             } catch (\Exception $e) {
                 return response()->json(['error' => $e->getMessage()]);
+        }
+    }
+
+    function filter_komoditas2(Request $request)
+    {
+        try {
+            // Get the date for the first day of the previous month
+            $previousMonth = now()->subMonth()->startOfMonth();
+            $data = Produksitanaman2::query();
+            if ($request->desa) {
+                $data->where('desa', $request->desa);
+            }
+            if ($request->komoditas) {
+                $data->where('komoditas', $request->komoditas);
+            }
+            $data2 = Produksitanaman2::query();
+
+            // Apply filters based on request
+            if ($request->desa) {
+                $data2->where('desa', $request->desa);
+            }
+            if ($request->komoditas) {
+                $data2->where('komoditas', $request->komoditas);
+            }       
+            // Filter for the previous month using a clear and efficient approach
+            $data->whereMonth('tanggal', $previousMonth->month);
+            // Calculate the start and end dates for the 90-120 day period
+            // Retrieve and count the filtered data
+            $last = $data->first();
+            $count = $data->count();
+            $panen = $data2->whereBetween('tanggal', [
+                    Carbon::now()->subDays(120)->toDateString(),
+                    Carbon::now()->subDays(90)->toDateString(),
+                ])->get();
+            $data3 = Produksitanaman2::query();
+            $gagal_panen = $data3->where('jumlah_sudah_dipanen' ,'<=',0)->get();
+            
+                
+            return response()->json(['last' => $last, 'count' => $count,'panen' => $panen,'gagal_panen' => $gagal_panen]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
         }
     }
 }

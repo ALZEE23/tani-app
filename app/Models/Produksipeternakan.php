@@ -9,4 +9,12 @@ class Produksipeternakan extends Model
 {
     use HasFactory;
     public $table = "produksipeternakans";
+    public $fillable = [
+        'desa',
+        'jumlah_ternak',
+        'jumlah_kandang',
+        'tanggal',
+        'kecamatan',
+        'jenis_ternak',
+    ];
 }

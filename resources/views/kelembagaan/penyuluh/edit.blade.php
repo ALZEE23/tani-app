@@ -26,7 +26,7 @@
         <div class="">
             <select name="wilayah" id="">
                 @foreach ($kecamatan as $data)
-                    <option value="{{$data->kecamatan}}">{{$data->kecamatan}}</option>                    
+                    <option value="{{$data->desa}}">{{$data->desa}}</option>                    
                 @endforeach
             </select>
         </div>

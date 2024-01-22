@@ -42,7 +42,7 @@
     <script>
         function redirectToSelectedKecamatan() {
             const selectedKecamatan = document.getElementById('kecamatan').value;
-            window.location.href = "{{ url('penyuluha-filter') }}/" + encodeURIComponent(selectedKecamatan);
+            window.location.href = "{{ url('penyuluh-filter') }}/" + encodeURIComponent(selectedKecamatan);
         }
     </script>
 

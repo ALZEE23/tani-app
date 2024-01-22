@@ -83,15 +83,7 @@
 
 
 
-      <a href="#" data-target="slide-settings" class="waves-effect waves-circle navicon right sidenav-trigger show-on-large">
-        @auth
-        <!-- Tambahan code untuk tombol logout -->
-        <form action="{{ route('logout') }}" method="POST">
-          @csrf
-          <button type="submit">X</button>
-        </form>
-        @endauth
-      </a>
+     
 
       <!-- <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a> -->
     </div>

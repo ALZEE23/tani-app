@@ -5,55 +5,19 @@
 
 <div class="container has-pagehead is-pagetitle">
     <div class="section">
-        <h5 class="pagetitle">Tambah Pasar</h5>
+        <h5 class="pagetitle">Tambah Prodksi peternakan</h5>
     </div>
 </div>
 <div class="container">
-    <form action="{{route('pasar.store')}}" method="POST" enctype="multipart/form-data">
+    <form action="{{route('produksi.peternakan.storeexel')}}" method="POST" enctype="multipart/form-data">
         @csrf
 
-        <div class="">
-            <input id="nama" type="text" name="nama" required placeholder="Nama Pemilik Pasar">
-            {{-- <label for="nama">&nbsp;&nbsp;Nama</label> --}}
-        </div>
+       
 
-        <div class="">
-            <input id="alamat" type="text" name="alamat" required placeholder="Alamat Lokasi Pemilik Modal">
-            {{-- <label for="alamat">&nbsp;&nbsp;alamat</label> --}}
-        </div>
-        <div class="">
-            <input id="link_gmap" type="text" name="link_gmap" required placeholder="Link Google Map">
-            {{-- <label for="link_gmap">&nbsp;&nbsp;link_gmap</label> --}}
-        </div>
-        <div class="">
-            <input id="kontak_pemilik" type="text" name="kontak_pemilik" required placeholder="Kontak Pemilik">
-            {{-- <label for="kontak_pemilik">&nbsp;&nbsp;kontak_pemilik</label> --}}
-        </div>
-        <select name="sub_sektor" id="subsektor">
-            <option value="">Pilih Subsektor</option>
-            <option value="Hortikultura">Hortikultura</option>
-            <option value="Pangan">Pangan</option>
-            <option value="Perkebunan">Perkebunan</option>
-            <!-- Tambahkan opsi kecamatan lainnya sesuai kebutuhan -->
-        </select>
-        <div class="">
-            <select name="komoditas" id="komoditas">
-                <option value="">Pilih Komoditas</option>
-            </select>
-        </div>
+        Import Excel
+        <input type="file" name="peternakan" class="form-file">
 
-
-        
-        <div class="file-field ">
-            <div class="btn">
-                <span>Foto</span>
-                <input type="file" name="foto">
-            </div>
-            <div class="file-path-wrapper">
-                <input class="file-path validate" type="text">
-            </div>
-        </div>
-
+<br>
         <button class="btn waves-effect waves-light" type="submit">Submit</button>
         <br>
         <br>
@@ -103,9 +67,7 @@
             });
         });
     });
-   
 </script>
-
 <style>
     .container {
         padding-top: 20px;

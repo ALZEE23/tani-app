@@ -60,6 +60,8 @@ class User extends Authenticatable
         'pupuk_urea_mt3',
         'pupuk_npk_mt3',
         'pupuk_npk_formula_mt3',
+        'jenis_kemain',
+        'foto',
     ];
 
 

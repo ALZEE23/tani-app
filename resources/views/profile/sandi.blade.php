@@ -1,65 +1,154 @@
-<!-- resources/views/auth/passwords/change.blade.php -->
-
-@extends('layouts.app')
+@extends('layouts.masuk')
 
 @section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">{{ __('Change Password') }}</div>
+<div class="pagehead-bg primary-bg" style="min-height: 147px;"></div>
 
-                    <div class="card-body">
-                        <form method="POST" action="{{ route('change-password') }}">
-                            @csrf
-
-                            <div class="form-group row">
-                                <label for="current_password" class="col-md-4 col-form-label text-md-right">{{ __('Current Password') }}</label>
-
-                                <div class="col-md-6">
-                                    <input id="current_password" type="password" class="form-control @error('current_password') is-invalid @enderror" name="current_password" required autocomplete="current-password">
-
-                                    @error('current_password')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="new_password" class="col-md-4 col-form-label text-md-right">{{ __('New Password') }}</label>
-
-                                <div class="col-md-6">
-                                    <input id="new_password" type="password" class="form-control @error('new_password') is-invalid @enderror" name="new_password" required autocomplete="new-password">
-
-                                    @error('new_password')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="new_password_confirmation" class="col-md-4 col-form-label text-md-right">{{ __('Confirm New Password') }}</label>
-
-                                <div class="col-md-6">
-                                    <input id="new_password_confirmation" type="password" class="form-control" name="new_password_confirmation" required autocomplete="new-password">
-                                </div>
-                            </div>
-
-                            <div class="form-group row mb-0">
-                                <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        {{ __('Change Password') }}
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="container has-pagehead is-pagetitle">
+    <div class="section">
+        <h5 class="pagetitle">Informasi Pribadi</h5>
     </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <form action="{{route('profile.updatepw',auth()->user()->id)}}" method="POST" enctype="multipart/form-data">
+            @csrf
+
+            <label for="nama">Password Baru</label>
+            <input type="password" name="password" id="nama" value="" required>
+
+            <button type="submit">Submit</button>
+
+        </form>
+    </div>
+</div>
+<br><br><br>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    form {
+        margin-top: 20px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    input,
+    select {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 15px;
+        box-sizing: border-box;
+    }
+
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+
+    .file-input {
+        display: grid;
+        grid-template-areas: "stack";
+        width: 360px;
+        height: 200px;
+        background-color: #eeeeee;
+        border-radius: 8px;
+    }
+
+    .file-input>* {
+        grid-area: stack;
+    }
+
+    .file-input>input {
+        opacity: 0;
+    }
+
+    .file-input>.drop-zone {
+        margin: 12px;
+        border: dashed 2px #aaaaaa;
+        border-radius: 4px;
+        transition: margin 200ms;
+    }
+
+    .file-input.active>.drop-zone {
+        margin: 14px;
+        background-color: #dadada;
+    }
+</style>
+
+<script>
+    const label = document.querySelector('label');
+    const coverInput = document.getElementById('coverInput');
+    const fileInput = document.getElementById('fileInput');
+
+    function onEnter(element) {
+        element.classList.add('active');
+    }
+
+    function onLeave(element) {
+        element.classList.remove('active');
+    }
+
+    function handleFile(element, event) {
+        onLeave(element);
+
+        if (event.dataTransfer.items) {
+            for (let i = 0; i < event.dataTransfer.items.length; i++) {
+                if (event.dataTransfer.items[i].kind === 'file') {
+                    const file = event.dataTransfer.items[i].getAsFile();
+                    const fileType = file.type.toLowerCase();
+
+                    if (element.id === 'coverDropZone' && fileType.startsWith('image/')) {
+                        // Handle image file
+                    } else if (element.id === 'fileDropZone' && (fileType.startsWith('video/') || fileType === 'application/pdf')) {
+                        // Handle video or PDF file
+                    }
+                }
+            }
+        }
+    }
+
+    label.addEventListener('dragenter', function() {
+        onEnter(coverInput);
+        onEnter(fileInput);
+    });
+    label.addEventListener('dragleave', function() {
+        onLeave(coverInput);
+        onLeave(fileInput);
+    });
+
+    coverInput.addEventListener('dragover', function(e) {
+        e.preventDefault();
+    });
+    coverInput.addEventListener('drop', function(e) {
+        e.preventDefault();
+        handleFile(coverInput, e);
+    });
+
+    fileInput.addEventListener('dragover', function(e) {
+        e.preventDefault();
+    });
+    fileInput.addEventListener('drop', function(e) {
+        e.preventDefault();
+        handleFile(fileInput, e);
+    });
+</script>
 @endsection

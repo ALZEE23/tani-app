@@ -61,6 +61,13 @@
               </li>
               <!-- =================== -->
               <!-- Dashboard -->
+
+
+
+              <!-- ============================= -->
+              <!-- Apps -->
+              <!-- ============================= -->
+              @if (auth()->user()->username != 'pip')
               <!-- =================== -->
               <li class="sidebar-item">
                 <a class="sidebar-link {{ request()->is('admin.dashboard') ? 'active' : '' }}" href="{{route('admin.dashboard')}}" aria-expanded="false">
@@ -70,12 +77,6 @@
                   <span class="hide-menu">Dashboard</span>
                 </a>
               </li>
-
-
-              <!-- ============================= -->
-              <!-- Apps -->
-              <!-- ============================= -->
-              @if (auth()->user()->username != 'pip')
               <li class="nav-small-cap">
                 <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                 <span class="hide-menu">Wilayah</span>
@@ -107,11 +108,19 @@
               </li>
               @if (auth()->user()->username == 'pip')
               <li class="sidebar-item">
-                <a class="sidebar-link {{ request()->is('harga.index') ? 'active' : '' }}" href="{{route('harga.index')}}" aria-expanded="false">
+                <a class="sidebar-link {{ request()->is('harga.index') ? 'active' : '' }}" href="{{route('harga.show','LEMAHSUGIH')}}" aria-expanded="false">
                   <span>
                     <i class="ti ti-report"></i>
                   </span>
                   <span class="hide-menu">Harga Pasar</span>
+                </a>
+              </li>
+              <li class="sidebar-item">
+                <a class="sidebar-link " href="{{route('home')}}" aria-expanded="false">
+                  <span>
+                    <i class="ti ti-report"></i>
+                  </span>
+                  <span class="hide-menu">Direct Jendela Tani</span>
                 </a>
               </li>
               @else
@@ -187,7 +196,7 @@
                   <span class="hide-menu">Alsintan</span>
                 </a>
               </li>
-              
+
               @endif
 
               <li class="sidebar-item">

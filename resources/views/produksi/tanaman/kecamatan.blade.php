@@ -7,14 +7,33 @@
 <div class="container has-pagehead is-pagetitle">
     <div class="section">
         <h5 class="pagetitle">Produksi Tanaman</h5>
+
     </div>
+    <br>
+    @if(count($belum_panen) > 0)
+    @foreach ($belum_panen as $belum)
+
+    <?php
+    // Mendapatkan tanggal dari variabel $belum->tanggal (misalnya "2023-10-01")
+    $tanggalPanen = $belum->tanggal;
+    // Mengonversi format tanggal ke "F Y" (Oktober 2023)
+    $tanggalOktober2023 = strftime("%B %Y", strtotime($tanggalPanen));
+
+    // Pesan dengan tanggal yang sudah diubah
+    echo "<h6 style='color:red'>Kamu belum mengisi data panen untuk bulan {$tanggalOktober2023}.</h6>";
+    ?>
+
+
+    @endforeach
+    @endif
 </div>
 
 <div class="container">
     <!-- <h6 class="text-center">Tanaman</h6> -->
     <div class="select-wrapper">
         @if (auth()->user()->role == 'petugas')
-        <a href="{{route('produksi.tanaman.tambah')}}"><button class="btn btn-secondary" style="width: 300px;">Tambah</button></a><br><br>
+        <a href="{{route('produksi.tanaman.tambah')}}"><button class="btn btn-secondary" style="width: 300px;">Tambah Satuan</button></a><br><br>
+        <!-- <a href="{{route('produksi.tanaman.tambahexel')}}"><button class="btn btn-secondary" style="width: 300px;">Tambah Exel</button></a><br><br> -->
         @endif
         <form id="filter-form">
             @if (auth()->user()->role == 'dinas')
@@ -27,18 +46,13 @@
             </select>
             @endif
 
-            <select name="komoditas" id="komoditas-select">
+            <select name="komoditas" id="subsektor">
+                <option value="">Pilih Subsektor</option>
+                <option value="Pangan">Pangan</option>
+                <option value="Hortikultura">Hortikultura</option>
+            </select>
+            <select name="komoditas2" id="komoditas2">
                 <option value="">Pilih Komoditas</option>
-                <option value="teh">TEH</option>
-                <option value="kopi">KOPI</option>
-                <option value="tebu">TEBU</option>
-                <option value="tobacco">TEMBAKAU</option>
-                <option value="cengkeh">CENGKEH</option>
-                <option value="kelapa">KELAPA</option>
-                <option value="aren">AREN</option>
-                <option value="nilam">NILAM</option>
-                <option value="lada">LADA</option>
-                <option value="kemiri">KEMIRI</option>
             </select>
 
             <select name="tahun" id="tahun-select">
@@ -92,11 +106,12 @@
                             <td class="tg-0lax" rowspan="2">no</td>
                             <td class="tg-0lax" rowspan="2">Kecamatan</td>
                             <td class="tg-0lax" rowspan="2">Desa</td>
+                            <td class="tg-0lax" rowspan="2">Bulan</td>
                             <td class="tg-0lax" colspan="2">Tanaman(HA)</td>
                             <td class="tg-0lax" colspan="2">Panen(HA)</td>
                             <td class="tg-0lax" colspan="2">Gagal Panen(HA)</td>
                             <td class="tg-0lax" colspan="2">Produksi(T)</td>
-                            <td class="tg-0lax" colspan="5">Rekap Bulan Ini</td>
+                            <td class="tg-0lax" colspan="6">Akumulasi Bulan Laporan</td>
                         </tr>
                         <tr>
                             <td class="tg-0lax">Bulan Lalu</td>
@@ -112,6 +127,7 @@
                             <td class="tg-0lax">Gagal Panen</td>
                             <td class="tg-0lax">Produksi</td>
                             <td class="tg-0lax">Provitas</td>
+                            <td class="tg-0lax">total Tanam</td>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -127,9 +143,10 @@
                     var nomorUrutan = 1;
                     // jQuery
                     $(document).ready(function() {
-                        $('#kecamatan-select, #komoditas-select, #tahun-select, #bulan-select').change(function() {
-                            var desaValue = $('#kecamatan-select').val();
-                            var komoditasValue = $('#komoditas-select').val();
+                        $('#kecamatan-select, #komoditas,#komoditas2, #tahun-select, #bulan-select').change(function() {
+                            var kecamatanValue = $('#kecamatan-select').val();
+                            var komoditasValue = $('#komoditas').val();
+                            var komoditas2Value = $('#komoditas2').val();
                             var tahunValue = $('#tahun-select').val();
                             var bulanValue = $('#bulan-select').val();
 
@@ -139,91 +156,55 @@
                                 url: '/filter-produksi',
                                 data: {
                                     _token: '{{ csrf_token() }}', // Tambahkan _token untuk laravel
-                                    desa: desaValue,
+                                    kecamatan: kecamatanValue,
                                     komoditas: komoditasValue,
+                                    komoditas2: komoditas2Value,
                                     tahun: tahunValue,
                                     bulan: bulanValue
                                 },
                                 success: function(response) {
                                     console.log(response);
-                                    var data_sekarang = response.data_sekarang || [];
-                                    var data_bulan_lalu = response.data_bulan_lalu || [];
-
-                                    var sekarangByDesa = {};
-                                    var bulanLaluByDesa = {};
-
-                                    data_sekarang.forEach(function(item) {
-                                        sekarangByDesa[item.desa] = item;
-                                    });
-
-                                    data_bulan_lalu.forEach(function(item) {
-                                        bulanLaluByDesa[item.sebelum_desa] = item;
-                                    });
-
-                                    var mergedData = [];
-
-                                    Object.keys(sekarangByDesa).forEach(function(desa) {
-                                        var mergedItem = {
-                                            desa: desa,
-                                            komoditas: sekarangByDesa[desa].komoditas || null,
-                                            tanam: sekarangByDesa[desa].tanam || 0,
-                                            panen: sekarangByDesa[desa].panen || 0,
-                                            gagal_panen: sekarangByDesa[desa].gagal_panen || 0,
-                                            produksi: sekarangByDesa[desa].produksi || 0,
-                                            provitas: sekarangByDesa[desa].provitas || 0,
-                                            kecamatan: sekarangByDesa[desa].kecamatan || 0
-                                        };
-
-                                        if (bulanLaluByDesa[desa]) {
-                                            mergedItem.sebelum_desa = bulanLaluByDesa[desa].sebelum_desa || null;
-                                            mergedItem.sebelum_komoditas = bulanLaluByDesa[desa].sebelum_komoditas || null;
-                                            mergedItem.sebelum_tanam = bulanLaluByDesa[desa].sebelum_tanam || 0;
-                                            mergedItem.sebelum_panen = bulanLaluByDesa[desa].sebelum_panen || 0;
-                                            mergedItem.sebelum_gagal_panen = bulanLaluByDesa[desa].sebelum_gagal_panen || 0;
-                                            mergedItem.sebelum_produksi = bulanLaluByDesa[desa].sebelum_produksi || 0;
-                                            mergedItem.sebelum_provitas = bulanLaluByDesa[desa].sebelum_provitas || 0;
-                                        } else {
-                                            mergedItem.sebelum_desa = null;
-                                            mergedItem.sebelum_komoditas = null;
-                                            mergedItem.sebelum_tanam = 0;
-                                            mergedItem.sebelum_panen = 0;
-                                            mergedItem.sebelum_gagal_panen = 0;
-                                            mergedItem.sebelum_produksi = 0;
-                                            mergedItem.sebelum_provitas = 0;
-                                        }
-
-                                        mergedData.push(mergedItem);
-                                    });
-
-                                    console.log(mergedData);
+                                    var data_sekarang = response.data_sekarang;
 
                                     var tableBody = $('#data-table tbody');
                                     tableBody.empty(); // Mengosongkan isi tbody sebelum memasukkan data baru
 
 
-                                    mergedData.forEach(function(item, index) {
-                                        var totalPanen = parseInt(item.panen) + parseInt(item.sebelum_panen); // Menghitung total panen
-                                        var totaltanam = parseInt(item.tanam) + parseInt(item.sebelum_tanam); // Menghitung total panen
-                                        var totalgagal_panen = parseInt(item.gagal_panen) + parseInt(item.sebelum_gagal_panen); // Menghitung total panen
-                                        var totalproduksi = parseInt(item.produksi) + parseInt(item.sebelum_produksi); // Menghitung total panen
-                                        var totalprovitas = parseInt(item.provitas) + parseInt(item.sebelum_provitas); // Menghitung total panen
+                                    data_sekarang.forEach(function(item, index) {
+                                        var date = new Date(item.tanggal);
+                                        var monthNames = [
+                                            "Januari", "Februari", "Maret",
+                                            "April", "Mei", "Juni", "Juli",
+                                            "Agustus", "September", "Oktober",
+                                            "November", "Desember"
+                                        ];
+                                        var monthIndex = date.getMonth();
+                                        var monthName = monthNames[monthIndex];
+                                        var totalPanen = parseInt(item.panen_bulan_sekarang) + parseInt(item.panen_bulan_terakhir); // Menghitung total panen
+                                        var totaltanam = parseInt(item.tanam_bulan_sekarang) + parseInt(item.tanam_bulan_lalu); // Menghitung total panen
+                                        var totalgagal_panen = parseInt(item.gagal_panen_bulan_sekarang) + parseInt(item.gagal_panen_bulan_terakhir); // Menghitung total panen
+                                        var totalproduksi = parseInt(item.produksi_bulan_sekarang) + parseInt(item.produksi_bulan_terakhir); // Menghitung total panen
+                                        var totalprovitas = totalproduksi / totalPanen; // Menghitung total panen
+                                        var total = totalPanen + totaltanam + totalgagal_panen; // Menghitung total panen
                                         var row = '<tr>' +
                                             '<td>' + (index + 1) + '</td>' +
                                             '<td>' + item.kecamatan + '</td>' +
                                             '<td>' + item.desa + '</td>' +
-                                            '<td>' + item.sebelum_tanam + '</td>' +
-                                            '<td>' + item.tanam + '</td>' +
-                                            '<td>' + item.sebelum_panen + '</td>' +
-                                            '<td>' + item.panen + '</td>' +
-                                            '<td>' + item.sebelum_gagal_panen + '</td>' +
-                                            '<td>' + item.gagal_panen + '</td>' +
-                                            '<td>' + item.sebelum_produksi + '</td>' +
-                                            '<td>' + item.produksi + '</td>' +
+                                            '<td>' + monthName + '</td>' +
+                                            '<td>' + item.tanam_bulan_lalu + '</td>' +
+                                            '<td>' + item.tanam_bulan_sekarang + '</td>' +
+                                            '<td>' + item.panen_bulan_terakhir + '</td>' +
+                                            '<td>' + item.panen_bulan_sekarang + '</td>' +
+                                            '<td>' + item.gagal_panen_bulan_terakhir + '</td>' +
+                                            '<td>' + item.gagal_panen_bulan_sekarang + '</td>' +
+                                            '<td>' + item.produksi_bulan_terakhir + '</td>' +
+                                            '<td>' + item.produksi_bulan_sekarang + '</td>' +
                                             '<td>' + totaltanam + '</td>' +
                                             '<td>' + totalPanen + '</td>' +
                                             '<td>' + totalgagal_panen + '</td>' +
                                             '<td>' + totalproduksi + '</td>' +
                                             '<td>' + totalprovitas + '</td>' +
+                                            '<td>' + total + '</td>' +
                                             '</tr>';
 
                                         tableBody.append(row);
@@ -277,6 +258,60 @@
 
                     // Tambahkan event listener pada tombol export ke PDF
                     document.getElementById('export-pdf').addEventListener('click', exportToPDF);
+                </script>
+                <script>
+                    $(document).ready(function() {
+
+                        $('#subsektor').change(function() {
+                            console.log("A")
+                            var komoditasValue = $(this).val();
+                            var kecamatanValue = "A";
+
+                            $.ajax({
+                                type: 'POST',
+                                url: '{{route("pasar.filter_komoditas")}}',
+                                data: {
+                                    _token: '{{ csrf_token() }}',
+                                    komoditas: komoditasValue,
+                                    kecamatan: kecamatanValue
+                                },
+                                success: function(response) {
+                                    var hargaArray = response.harga;
+                                    $('#komoditas2').empty();
+
+                                    // Add a default option\
+                                    var uniqueKomoditasSet = new Set();
+                                    $('#komoditas2').append('<option value="">Pilih Komoditas</option>');
+                                    if (komoditasValue === 'Hortikultura') {
+                                        const allowedKomoditas = ['Bawang Daun', 'Bawang Merah', 'Bawang Putih', 'Kembang Kol', 'Kentang', 'Kubis', 'Petsai/Sawi', 'Wortel', 'Bayam', 'Buncis', 'Kangkung'];
+
+                                        $.each(hargaArray, function(index, product) {
+                                            if (allowedKomoditas.includes(product.produk) && !uniqueKomoditasSet.has(product.produk)) {
+                                                uniqueKomoditasSet.add(product.produk);
+                                                $('#komoditas2').append('<option value="' + product.produk + '">' + product.produk + '</option>');
+                                            }
+                                        });
+                                    } else {
+                                        // Jika komoditasValue bukan Hortikultura, tambahkan semua komoditas ke opsi
+                                        $.each(hargaArray, function(index, product) {
+                                            if (!uniqueKomoditasSet.has(product.produk)) {
+                                                uniqueKomoditasSet.add(product.produk);
+                                                $('#komoditas2').append('<option value="' + product.produk + '">' + product.produk + '</option>');
+                                            }
+                                        });
+                                    }
+                                    $('#komoditas2').formSelect();
+                                    console.log(response);
+                                    const isoDate = response.last;
+
+                                    // Buat objek Date dari tanggal ISO 8601
+                                },
+                                error: function(error) {
+                                    console.log(error);
+                                }
+                            });
+                        });
+                    });
                 </script>
 
             </div>

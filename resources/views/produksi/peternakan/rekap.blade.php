@@ -18,7 +18,7 @@
 
         @endif
         <form id="filter-form">
-            @if (auth()->user()->role == 'xs')
+            @if (auth()->user()->role == 'dinas')
             <select name="kecamatan" id="kecamatan-select">
                 <option value="">Pilih Kecamatan</option>
                 @foreach ($kecamatan as $data)
@@ -43,19 +43,11 @@
             </select>
 
             <select name="bulan" id="bulan-select">
-                <option value="">Pilih Bulan</option>
-                <option value="1">Januari</option>
-                <option value="2">Februari</option>
-                <option value="3">Maret</option>
-                <option value="4">April</option>
-                <option value="5">Mei</option>
-                <option value="6">Juni</option>
-                <option value="7">Juli</option>
-                <option value="8">Agustuus</option>
-                <option value="9">September</option>
-                <option value="10">Oktober</option>
-                <option value="11">November</option>
-                <option value="12">Desember</option>
+                <option value="">Pilih Triwulan</option>
+                <option value="1">Triwulan 1 (Januari - Maret)</option>
+                <option value="2">Triwulan 2 (April - Juni)</option>
+                <option value="3">Triwulan 3 (Juli - September)</option>
+                <option value="4">Triwulan 4 (Oktober - Desember)</option>
                 <!-- Tambahkan opsi bulan lainnya sesuai kebutuhan -->
             </select>
 
@@ -86,7 +78,6 @@
                         <tr>
                             <td class="tg-0lax">no</td>
                             <td class="tg-0lax">Kecamatan</td>
-                            <td class="tg-0lax">Jenis Ternak</td>
                             <td class="tg-0lax">Jumlah Kandang</td>
                             <td class="tg-0lax">Jumlah Ternak</td>
                         </tr>
@@ -121,60 +112,19 @@
                                     bulan: bulanValue
                                 },
                                 success: function(response) {
-                                    console.log(response);
+                                    console.log(response.data_sekarang);
                                     var data_sekarang = response.data_sekarang || [];
-                                    var data_bulan_lalu = response.data_bulan_lalu || [];
-
-                                    var sekarangByDesa = {};
-                                    var bulanLaluByDesa = {};
-
-                                    data_sekarang.forEach(function(item) {
-                                        sekarangByDesa[item.desa] = item;
-                                    });
-
-                                    data_bulan_lalu.forEach(function(item) {
-                                        bulanLaluByDesa[item.sebelum_desa] = item;
-                                    });
-
-                                    var mergedData = [];
-
-                                    Object.keys(sekarangByDesa).forEach(function(desa) {
-                                        var mergedItem = {
-                                            desa: desa,
-                                            jenis_ternak: sekarangByDesa[desa].jenis_ternak || null,
-                                            jumlah_ternak: sekarangByDesa[desa].jumlah_ternak || 0,
-                                            jumlah_kandang: sekarangByDesa[desa].jumlah_kandang || 0,
-                                            kecamatan: sekarangByDesa[desa].kecamatan || 0
-                                        };
-
-                                        if (bulanLaluByDesa[desa]) {
-                                            mergedItem.sebelum_desa = bulanLaluByDesa[desa].sebelum_desa || null;
-                                            mergedItem.sebelum_jenis_ternak = bulanLaluByDesa[desa].sebelum_jenis_ternak || null;
-                                            mergedItem.sebelum_jumlah_ternak = bulanLaluByDesa[desa].sebelum_jumlah_ternak || 0;
-                                            mergedItem.sebelum_jumlah_kandang = bulanLaluByDesa[desa].sebelum_jumlah_kandang || 0;
-                                        } else {
-                                            mergedItem.sebelum_desa = null;
-                                            mergedItem.sebelum_jenis_ternak = null;
-                                            mergedItem.sebelum_jumlah_ternak = 0;
-                                            mergedItem.sebelum_jumlah_kandang = 0;
-                                        }
-
-                                        mergedData.push(mergedItem);
-                                    });
-
-                                    console.log(mergedData);
-
                                     var tableBody = $('#data-table tbody');
                                     tableBody.empty(); // Mengosongkan isi tbody sebelum memasukkan data baru
 
 
-                                    mergedData.forEach(function(item, index) {
+                                    data_sekarang.forEach(function(item, index) {
+                                        console.log(item.kecamatan);
                                         var row = '<tr>' +
                                             '<td>' + (index + 1) + '</td>' +
                                             '<td>' + item.kecamatan + '</td>' +
-                                            '<td>' + item.jenis_ternak + '</td>' +
-                                            '<td>' + item.jumlah_kandang + '</td>' +
-                                            '<td>' + item.jumlah_ternak + '</td>' +
+                                            '<td>' + item.total_kandang + '</td>' +
+                                            '<td>' + item.total_ternak + '</td>' +
                                             '</tr>';
 
                                         tableBody.append(row);

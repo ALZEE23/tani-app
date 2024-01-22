@@ -17,7 +17,7 @@ class KritikDanSaranController extends Controller
             return view('KritikDanSaran.index1',compact('kritikdansaran','kecamatan'));
 
         }
-        $desa = Desa::all();
+        $desa = Desa::where('kecamatan', auth()->user()->kecamatan)->get();
         return view('KritikDanSaran.index',compact('desa'));
     }
 

@@ -22,6 +22,15 @@
             </select>
         </div>
         <div class="">
+            <label for="subsektor">Subsektor:</label>
+            <select id="subsektor" name="subsektor">
+                <option value="Pangan">Pangan</option>
+                <option value="Perkebunan">Perkebunan</option>
+                <option value="Hortikultura">Hortikultura</option>
+                <!-- Tambahkan opsi kecamatan lainnya sesuai kebutuhan -->
+            </select>
+        </div>
+        <div class="">
             <input value="{{$poktan->nama_poktan}}" id="nama" type="text" name="nama_poktan" required placeholder="Nama Poktan">
             <input value="{{$poktan->id}}" id="id" type="hidden" name="id" required placeholder="Nama Poktan">
         </div>

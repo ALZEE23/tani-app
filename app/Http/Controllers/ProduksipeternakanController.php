@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\PeternakanImport;
 use App\Models\Desa;
 use App\Models\Kecamatan;
+use App\Imports\UsersImport;
 use Illuminate\Http\Request;
+use App\Imports\TanamanImport;
 use App\Models\Produksipeternakan;
-use App\Models\hProduksipeternakan;
 use Illuminate\Support\Facades\DB;
+use App\Models\hProduksipeternakan;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Models\RekapProduksipeternakan;
 
 class ProduksipeternakanController extends Controller
@@ -21,6 +25,9 @@ class ProduksipeternakanController extends Controller
     }
     public function peternakan()
     {
+        if(auth()->user()->role != 'dinas'){
+            return redirect()->route('produksi.peternakan.kecamatan');
+        }
         return view('produksi.peternakan');
     }
 
@@ -173,7 +180,17 @@ class ProduksipeternakanController extends Controller
         }
 
         if ($request->bulan) {
-            $data->whereMonth('tanggal', $request->bulan);
+            $monthRange = [
+                1 => [1, 2, 3],    // Triwulan 1: January, February, March
+                2 => [4, 5, 6],    // Triwulan 2: April, May, June
+                3 => [7, 8, 9],    // Triwulan 3: July, August, September
+                4 => [10, 11, 12], // Triwulan 4: October, November, December
+            ];
+
+            // Check if the current month is within the selected triwulan
+            $data->where(function ($query) use ($monthRange, $request) {
+                $query->whereIn(DB::raw('MONTH(tanggal)'), $monthRange[$request->bulan]);
+            });
         }
         if ($request->desa) {
             $data2->where('sebelum_kecamatan', $request->desa);
@@ -220,8 +237,17 @@ class ProduksipeternakanController extends Controller
         }
 
         if ($request->bulan) {
-            $data->whereMonth('tanggal', $request->bulan);
-            $data2->whereMonth('tanggal', $request->bulan - 1);
+            $monthRange = [
+                1 => [1, 2, 3],    // Triwulan 1: January, February, March
+                2 => [4, 5, 6],    // Triwulan 2: April, May, June
+                3 => [7, 8, 9],    // Triwulan 3: July, August, September
+                4 => [10, 11, 12], // Triwulan 4: October, November, December
+            ];
+
+            // Check if the current month is within the selected triwulan
+            $data->where(function ($query) use ($monthRange, $request) {
+                $query->whereIn(DB::raw('MONTH(tanggal)'), $monthRange[$request->bulan]);
+            });
         }
 
         // Grouping data dan menjalankan query
@@ -300,6 +326,29 @@ class ProduksipeternakanController extends Controller
             return response()->json(['grouped_data' => $groupedByKecamatan]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()]);
+        }
+    }
+
+    function tambah_tanamanexel()
+    {
+        $desa = Desa::where('kecamatan', auth()->user()->kecamatan)->get();
+        return view('produksi.peternakan.tambahexel', compact('desa'));
+    }
+
+   public function import(Request $request)
+    {
+        try {
+            // Validate the request to ensure it contains a valid Excel file
+            $file = $request->file('peternakan');
+
+            // Use the Excel facade to import data from the file using the TanamanImport class
+            Excel::import(new PeternakanImport, $file);
+
+            // Redirect back to the previous page with a success message
+            return redirect()->back()->with('success', 'Data berhasil diimpor!');
+        } catch (\Exception $e) {
+            // Handle any exception that might occur during the import process
+            return $e->getMessage();
         }
     }
 }

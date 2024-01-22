@@ -15,6 +15,7 @@
     <div class="select-wrapper">
         @if (auth()->user()->role == 'petugas')
         <a href="{{route('produksi.peternakan.tambah')}}"><button class="btn btn-secondary" style="width: 300px;">Tambah</button></a><br><br>
+        <a href="{{route('produksi.peternakan.tambahexcel')}}"><button class="btn btn-secondary" style="width: 300px;">Import Excel</button></a><br><br>
 
         @endif
         <form id="filter-form">
@@ -43,19 +44,11 @@
             </select>
 
             <select name="bulan" id="bulan-select">
-                <option value="">Pilih Bulan</option>
-                <option value="1">Januari</option>
-                <option value="2">Februari</option>
-                <option value="3">Maret</option>
-                <option value="4">April</option>
-                <option value="5">Mei</option>
-                <option value="6">Juni</option>
-                <option value="7">Juli</option>
-                <option value="8">Agustuus</option>
-                <option value="9">September</option>
-                <option value="10">Oktober</option>
-                <option value="11">November</option>
-                <option value="12">Desember</option>
+                <option value="">Pilih Triwulan</option>
+                <option value="1">Triwulan 1 (Januari - Maret)</option>
+                <option value="2">Triwulan 2 (April - Juni)</option>
+                <option value="3">Triwulan 3 (Juli - September)</option>
+                <option value="4">Triwulan 4 (Oktober - Desember)</option>
                 <!-- Tambahkan opsi bulan lainnya sesuai kebutuhan -->
             </select>
 

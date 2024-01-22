@@ -45,9 +45,14 @@
     </script>
 
     <!-- Card Profil -->
-    @if(auth()->user()->role == (auth()->user()->role))<br>
+    @if(auth()->user()->role == 'petugas')<br>
     <a href="{{route('pasar.tambah')}}">
         <button class="btn btn-primary">tambah</button>
+    </a>
+    @endif
+    @if(auth()->user()->username == 'pip')<br>
+    <a href="{{route('pasar.tambah')}}">
+        <button class="btn btn-primary">Edit Harga</button>
     </a>
     @endif
     <br>

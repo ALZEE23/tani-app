@@ -141,6 +141,8 @@ class PestisidaController extends Controller
         $pestisidas = Pestisida::where('opt', 'like', '%' . $request->search . '%')
             ->orWhere('bahan_aktif', 'like', '%' . $request->search . '%')
             ->orWhere('produk', 'like', '%' . $request->search . '%')
+            ->orWhere('komoditas', 'like', '%' . $request->search . '%')
+            ->orWhere('kelompok', 'like', '%' . $request->search . '%')
             ->get();
 
         return view('teknologi.pestisida.kimia', compact('pestisidas'));

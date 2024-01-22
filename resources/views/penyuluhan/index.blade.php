@@ -16,7 +16,9 @@
         <img alt="image" src="{{ asset('images/menu-petani.png') }}" style="width: 100px; height:100px">
     </div>
     <div class="select-wrapper">
-        <a href="{{route('penyuluhan-rencana')}}"><button class="btn btn-secondary" style="width: 350px;">Rencana Kegiatan Penyuluhan</button></a><br><br>
+        @if (auth()->user()->role != 'petani')
+              <a href="{{route('penyuluhan-rencana')}}"><button class="btn btn-secondary" style="width: 350px;">Rencana Kegiatan Penyuluhan</button></a><br><br>
+        @endif
         <a href="{{route('penyuluhan-dokumentasi')}}"><button class="btn btn-secondary" style="width: 350px;">Dokumentasi Kegiatan Penyuluhan</button></a><br><br>
     </div>
 </div>

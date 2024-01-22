@@ -72,11 +72,30 @@
             </select>
         </div>
         @endif
+
         <!-- @ endif -->
+        <div class="">
+            <label for="subsektor">Subsektor:</label>
+            <select id="subsektor" name="subsektor" onchange="subcek()">
+                <option value="null">Pilih</option>
+                <option {{ session('subcek') == 'Pangan' ? 'selected' : '' }} value="Pangan">Pangan</option>
+                <option {{ session('subcek') == 'Perkebunan' ? 'selected' : '' }} value="Perkebunan">Perkebunan</option>
+                <option {{ session('subcek') == 'Hortikultura' ? 'selected' : '' }} value="Hortikultura">Hortikultura</option>
+                <option {{ session('subcek') == 'Perikanan' ? 'selected' : '' }} value="Perikanan">Perikanan</option>
+                <option {{ session('subcek') == 'Peternakan' ? 'selected' : '' }} value="Peternakan">Peternakan</option>
+                <option {{ session('subcek') == 'KWT' ? 'selected' : '' }} value="KWT">KWT</option>
+                <!-- Tambahkan opsi kecamatan lainnya sesuai kebutuhan -->
+            </select>
+        </div>
         <script>
             function changekec() {
                 const kec = document.getElementById('kecamatan').value;
                 window.location.href = "{{ url('/cskecamatan/session') }}/" + encodeURIComponent(kec);
+            }
+
+            function subcek() {
+                const kec = document.getElementById('subsektor').value;
+                window.location.href = "{{ url('/subcek/session') }}/" + encodeURIComponent(kec);
             }
 
             function csdesa() {
@@ -119,25 +138,31 @@
             }
         }
     </style>
+    @if (auth()->user()->role == 'petugas')
 
     <a href="{{route('tambah-poktan')}}">
         <button class="btn btn-primary">tambah</button>
     </a>
-    <a href="{{route('export-excel-gakpoktan')}}"><button class="btn btn-secondary">Excel</button></a>
-    <a href="{{route('export-pdf-gakpoktan')}}"><button class="btn btn-secondary">Pdf</button></a>
+    @endif
+
+    @if (auth()->user()->role == 'dinas' || auth()->user()->role == 'petugas')
+    <button id="export-excel">Excel</button>
+    <button id="export-pdf"> PDF</button>
+    @endif
     <br>
     <br>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-10">
                 <div class="table-responsive">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered" id="data-table">
                         <thead>
                             <tr>
                                 <th scope="col">No</th>
                                 <th scope="col">Desa</th>
+                                <th scope="col">Nama Poktan</th>
                                 <th scope="col">Nama Ketua Poktan</th>
-                                <th scope="col">Nilai Kelas</th>
+                                <th scope="col">Luas Lahan (HA)</th>
                                 <th scope="col">Opsi</th>
                             <tr>
                         <tbody>
@@ -148,8 +173,9 @@
                             <tr>
                                 <td scope="col">{{$no++}}</td>
                                 <td scope="col">{{$data->desa}}</td>
+                                <td scope="col">{{$data->nama_poktan}}</td>
                                 <td scope="col">{{$data->ketua_poktan}}</td>
-                                <td scope="col">{{$data->nilai_kelas_poktan}}</td>
+                                <td scope="col">{{$data->luas}}</td>
                                 <td>
                                     <a class="btn btn-secondary" href="{{route('detail-poktan',$data->id)}}">Detail Profile</a>
                                 </td>
@@ -164,6 +190,81 @@
     <!-- Card Profil -->
 </div>
 <br><br><br>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
+<script>
+    function exportToExcel() {
+        var excludeColumnIndex = 5; // Index of the "Opsi" column
+
+        // Clone the table and remove the "Opsi" column
+        var originalTable = document.getElementById('data-table');
+        var clonedTable = originalTable.cloneNode(true);
+
+        // Remove the "Opsi" column header
+        var headerRow = clonedTable.querySelector('thead tr');
+        if (headerRow && headerRow.cells.length > excludeColumnIndex) {
+            headerRow.deleteCell(excludeColumnIndex);
+        }
+
+        // Remove the "Opsi" column from each data row
+        var rows = clonedTable.getElementsByTagName('tr');
+        for (var i = 0; i < rows.length; i++) {
+            var cells = rows[i].getElementsByTagName('td');
+            if (cells.length > excludeColumnIndex) {
+                cells[excludeColumnIndex].remove();
+            }
+        }
+
+        // Create a new workbook from the modified table
+        var wb = XLSX.utils.table_to_book(clonedTable, {
+            sheet: 'Sheet JS'
+        });
+
+        // Convert the workbook to binary Excel format
+        var wbout = XLSX.write(wb, {
+            bookType: 'xlsx',
+            type: 'binary'
+        });
+
+        // Function to convert binary data to a Blob
+        function s2ab(s) {
+            var buf = new ArrayBuffer(s.length);
+            var view = new Uint8Array(buf);
+            for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+            return buf;
+        }
+
+        // Save the Blob as an Excel file
+        saveAs(new Blob([s2ab(wbout)], {
+            type: "application/octet-stream"
+        }), 'data.xlsx');
+    }
+
+
+    // Tambahkan event listener pada tombol export
+    document.getElementById('export-excel').addEventListener('click', exportToExcel);
+
+    function exportToPDF() {
+        if (typeof jsPDF !== 'undefined') {
+            const doc = new jsPDF();
+
+            doc.autoTable({
+                html: '#data-table'
+            });
+
+            doc.save('data.pdf');
+        } else {
+            console.error('Error: jsPDF is not defined.');
+        }
+    }
+
+    // Tambahkan event listener pada tombol export ke PDF
+    document.getElementById('export-pdf').addEventListener('click', exportToPDF);
+</script>
 <style>
     /* Sesuaikan style card dengan desain yang diinginkan */
     .card {
