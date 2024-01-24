@@ -329,6 +329,57 @@ class ProduksipeternakanController extends Controller
         }
     }
 
+    function rekap_proses2(Request $request)
+    {
+        try {
+            $data = RekapProduksipeternakan::query();
+
+            // Lakukan filter berdasarkan permintaan
+            if ($request->jenis_ternak) {
+                $data->where('jenis_ternak', $request->jenis_ternak);
+            }
+
+            if ($request->tahun_awal && $request->tahun_akhir && $request->bulan_awal && $request->bulan_akhir) {
+                $data->whereBetween('tanggal', [
+                    $request->tahun_awal . '-' . $request->bulan_awal . '-01',
+                    $request->tahun_akhir . '-' . $request->bulan_akhir . '-31'
+                ]);
+            }
+
+            // Ambil data berdasarkan kecamatan dan bulan
+            $groupedData = $data
+                ->select('kecamatan', 'tanggal', $request->kolom)
+                ->orderBy('tanggal', "ASC")
+                ->get();
+
+            // Array untuk menyimpan hasil grup data per kecamatan
+            $groupedByKecamatan = [];
+            $test = [];
+
+            // Proses pengelompokan data per kecamatan
+            foreach ($groupedData as $item) {
+                $kecamatan = $item->kecamatan;
+                $tahun = date('Y', strtotime($item->tanggal));
+                $bulan = date('F', strtotime($item->tanggal));
+                $test[$tahun][$bulan][$kecamatan] = $item->{$request->kolom};
+
+                if (!isset($groupedByKecamatan[$kecamatan])) {
+                    $groupedByKecamatan[$kecamatan] = [];
+                }
+
+                if (!isset($groupedByKecamatan[$kecamatan][$bulan])) {
+                    $groupedByKecamatan[$kecamatan][$bulan] = 0;
+                }
+
+                $groupedByKecamatan[$kecamatan][$bulan] += $item->{$request->kolom};
+            }
+
+            return response()->json(['grouped_data' => $groupedByKecamatan, 'test' => $test]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }
+    }
+
     function tambah_tanamanexel()
     {
         $desa = Desa::where('kecamatan', auth()->user()->kecamatan)->get();

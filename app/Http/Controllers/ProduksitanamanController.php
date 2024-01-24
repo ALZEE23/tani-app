@@ -59,19 +59,67 @@ class ProduksitanamanController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Produksitanaman $produksitanaman)
+    public function edit($id)
     {
-        //
+        $produksitanaman = Produksitanaman2::find($id);
+        $desa = Desa::where('kecamatan',auth()->user()->kecamatan)->get();
+        return view('produksi.tanaman.edit',compact('desa','produksitanaman'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Produksitanaman $produksitanaman)
+    public function update(Request $request)
     {
-        //
-    }
+        $desa = Desa::where('desa', $request->desa)->first();
+        // ////////////////////////////////////////
+        $produksitanaman = Produksitanaman2::find($request->id);
+        $data = Produksitanaman2::updateOrCreate(
+            ['id' => $request->id], // Assuming 'id' is the primary key
+            [
+                'desa' => $desa->desa,
+                'kecamatan' => $desa->kecamatan,
+                'subsektor' => $request->subsektor,
+                'komoditas' => $request->komoditas,
+                'tanam_bulan_lalu' => $request->tanam_bulan_lalu,
+                'tanam_bulan_sekarang' => $request->tanam_bulan_sekarang,
+                'sisa_tanam' => $request->tanam_bulan_sekarang,
+                'panen_bulan_terakhir' => $request->panen_bulan_terakhir,
+                'panen_dari_data_tanam_yang_bulan' => $request->panen_dari_data_tanam_yang_bulan,
+                'panen_bulan_sekarang' => $request->panen_bulan_sekarang,
+                'panen_bulan_terakhir' => $request->panen_bulan_terakhir,
+                'gagal_panen_bulan_terakhir' => $request->gagal_panen_bulan_terakhir,
+                'gagal_panen_terakhir_dari_bulan' => $request->gagal_panen_dari_data_tanam_yang_bulan,
+                'gagal_panen_bulan_sekarang' => $request->gagal_panen_bulan_sekarang,
+                'produksi_bulan_terakhir' => $request->produksi_bulan_terakhir,
+                'produksi_bulan_sekarang' => $request->produksi_bulan_sekarang,
+                'tanggal' => $produksitanaman->tanggal,
+                'total_tanam' => ($request->tanam_bulan_lalu + $request->tanam_bulan_sekarang) - ($request->gagal_panen_bulan_sekarang + $request->panen_bulan_sekarang)
+            ]
+        );
 
+        $data->save();
+
+        $updatepanen = Produksitanaman2::find($request->id_panen);
+        if ($updatepanen != null) {
+            $updatepanen->jumlah_sudah_dipanen = $request->panen_bulan_sekarang;
+            $updatepanen->tanggal_panen = $bulan;
+            $updatepanen->save();
+        }
+        $updategglpanen = Produksitanaman2::find($request->id_gagal_panen);
+        if ($updategglpanen != null) {
+
+            $updategglpanen->tanggal_gagal_panen = $bulan;
+            $updategglpanen->gagal_panen_tanam_bulan_ini = $request->gagal_panen_bulan_sekarang;
+            $updategglpanen->sisa_tanam = $updategglpanen->sisa_tanam - $request->gagal_panen_bulan_sekarang;
+            $updategglpanen->save();
+
+
+
+    }
+        return redirect()->route('produksi.tanaman.kecamatann');
+
+    }
     /**
      * Remove the specified resource from storage.
      */
@@ -114,7 +162,6 @@ class ProduksitanamanController extends Controller
         $bulan = Carbon::now()->subDays(0)->toDateString(); // Mengambil bulan dari tanggal
         $desa = Desa::where('desa', $request->desa)->first();
         // ////////////////////////////////////////
-        // dd($desa);
         $data = Produksitanaman2::create([
             'desa' => $desa->desa,
             'kecamatan' => $desa->kecamatan,
@@ -122,6 +169,7 @@ class ProduksitanamanController extends Controller
             'komoditas' => $request->komoditas,
             'tanam_bulan_lalu' => $request->tanam_bulan_lalu,
             'tanam_bulan_sekarang' => $request->tanam_bulan_sekarang,
+            'sisa_tanam' => $request->tanam_bulan_sekarang,
             'panen_bulan_terakhir' => $request->panan_bulan_terakhir,
             'panen_dari_data_tanam_yang_bulan' => $request->panen_dari_data_tanam_yang_bulan,
             'panen_bulan_sekarang' => $request->panen_bulan_sekarang,
@@ -132,23 +180,31 @@ class ProduksitanamanController extends Controller
             'produksi_bulan_terakhir' => $request->produksi_bulan_terakhir,
             'produksi_bulan_sekarang' => $request->produksi_bulan_sekarang,
             'tanggal' => $bulan,
+            'total_tanam' => ($request->tanam_bulan_lalu + $request->tanam_bulan_sekarang) - ($request->gagal_panen_bulan_sekarang + $request->panen_bulan_sekarang)
             
         ]);
         $data->save();
 
         $updatepanen = Produksitanaman2::find($request->id_panen);
-        $updatepanen->jumlah_sudah_dipanen = $request->panen_bulan_sekarang;
-        $updatepanen->tanggal_panen = $bulan;
-        $updatepanen->save();
+        if($updatepanen != null){
+            $updatepanen->jumlah_sudah_dipanen = $request->panen_bulan_sekarang;
+            $updatepanen->tanggal_panen = $bulan;
+            $updatepanen->save();
 
-        $updatepanen = Produksitanaman2::find($request->id_gagal_panen);
-        $updatepanen->tanggal_gagal_panen = $bulan;
-        $updatepanen->gagal_panen_tanam_bulan_ini = $request->gagal_panen_bulan_sekarang;
-        $updatepanen->save();
+        }
+        $updategglpanen = Produksitanaman2::find($request->id_gagal_panen);
+        if ($updategglpanen != null) {
+
+        $updategglpanen->tanggal_gagal_panen = $bulan;
+        $updategglpanen->gagal_panen_tanam_bulan_ini = $request->gagal_panen_bulan_sekarang;
+        $updategglpanen->sisa_tanam = $updategglpanen->sisa_tanam - $request->gagal_panen_bulan_sekarang;
+        $updategglpanen->save();
+        }
+
 
 
         return redirect()->route('produksi.tanaman.kecamatann');
-    }
+}
 
     public function import(Request $request)
     {
@@ -189,7 +245,7 @@ class ProduksitanamanController extends Controller
         if ($request->bulan) {
             $data->whereMonth('tanggal', $request->bulan);
         }
-        $data->orderBy('tanggal');
+        $data->orderBy('tanggal',"ASC");
         $filteredData = $data->get();
         
         return response()->json(['data_sekarang' => $filteredData]);
@@ -210,18 +266,17 @@ class ProduksitanamanController extends Controller
             $data->where('komoditas', $request->komoditas);
         }
 
-        if ($request->tahun_awal && $request->tahun_akhir && $request->bulan_awal && $request->bulan_akhir) {
-            $data->where(function ($query) use ($request) {
-                $query->whereYear('tanggal', '>=', $request->tahun_awal)
-                    ->whereYear('tanggal', '<=', $request->tahun_akhir)
-                    ->whereMonth('tanggal', '>=', $request->bulan_awal)
-                    ->whereMonth('tanggal', '<=', $request->bulan_akhir);
-            });
-        }
+            if ($request->tahun_awal && $request->tahun_akhir && $request->bulan_awal && $request->bulan_akhir) {
+                $data->whereBetween('tanggal', [
+                    $request->tahun_awal . '-' . $request->bulan_awal . '-01',
+                    $request->tahun_akhir . '-' . $request->bulan_akhir . '-31'
+                ]);
+            }
 
         // Ambil data berdasarkan kecamatan dan bulan
         $groupedData = $data
             ->select('kecamatan', 'tanggal', $request->kolom)
+            ->orderBy('tanggal',"ASC")
             ->get();
 
         // Array untuk menyimpan hasil grup data per kecamatan

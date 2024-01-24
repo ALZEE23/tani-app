@@ -205,7 +205,7 @@
 
                         $('#tanam_bulan_lalu').empty();
                         $('#tanam_bulan_lalu').append(
-                            `<option value="${response.last.tanam_bulan_sekarang}">Tanam Bulan Lalu : ${response.last.tanam_bulan_sekarang}</option>`
+                            `<option value="${response.last.total_tanam}">Tanam Bulan Lalu : ${response.last.total_tanam}</option>`
                         );
 
                         $('#panen_bulan_terakhir').empty();
@@ -236,6 +236,9 @@
                             `<option value="0">Data Panen dari data Tanam Bulan : - </option>`
                         );
                         $('#panen_dari_data_tanam_yang_bulan').formSelect();
+
+                        var pannskrng = $('#panen_bulan_sekarang').val(0);
+
                     } else {
                         $('#panen_dari_data_tanam_yang_bulan').empty();
 
@@ -251,7 +254,7 @@
                             });
 
                             // Create the option string and append it directly
-                            var optionString = `<option value="${item.tanam_bulan_sekarang}">Data Panen dari data Tanam Bulan ${item.tanggal} : ${item.tanam_bulan_sekarang}</option>`;
+                            var optionString = `<option value="${item.sisa_tanam}">Data Panen dari data Tanam Bulan ${item.tanggal} : ${item.sisa_tanam}</option>`;
                             var idPanenElement = document.getElementById("id_panen");
 
                             // Tetapkan nilai yang diinginkan ke elemen input tersembunyi
@@ -283,15 +286,15 @@
                             });
 
                             // Create the option string and append it directly
-                            var optionString2 = `<option value="${item.tanam_bulan_sekarang}">Data Gagal Panen dari data Tanam Bulan ${item.tanggal} : ${item.tanam_bulan_sekarang}</option>`;
+                            var optionString2 = `<option value="${item.sisa_tanam}">Data Gagal Panen dari data Tanam Bulan ${item.tanggal} : ${item.sisa_tanam}</option>`;
                             var idPanenElement = document.getElementById("id_gagal_panen");
                             var idPanenGagalPanenElement = document.getElementById("panen_gagal_panen_dari_data_tanam_yang_bulan");
 
                             // Tetapkan nilai yang diinginkan ke elemen input tersembunyi
                             idPanenGagalPanenElement.value = item.tanam_bulan_sekarang;
                             idPanenElement.value = item.id;
-                            panen_gagal_panen_dari_data_tanam_yang_bulan = 
-                            $('#gagal_panen_dari_data_tanam_yang_bulan').append(optionString2);
+                            panen_gagal_panen_dari_data_tanam_yang_bulan =
+                                $('#gagal_panen_dari_data_tanam_yang_bulan').append(optionString2);
                         });
 
                         $('#panen_dari_data_tanam_yang_bulan').formSelect();
@@ -334,7 +337,7 @@
         var gagalpanenbulanyang = parseFloat($('#panen_gagal_panen_dari_data_tanam_yang_bulan').val());
 
 
-        if (gagal_panen_bulan_sekarang > panenbulanyang) {
+        if (gagal_panen_bulan_sekarang > gagalpanenbulanyang) {
             alert("Gagal Panen Bulan Sekarang tidak boleh lebih besar dari data Tanam Bulan yang dipilih.");
             $('#gagal_panen_bulan_sekarang').val(0);
             console.log(gagalpanenbulanyang)

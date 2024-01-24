@@ -218,10 +218,12 @@ Route::get('/produksi/kecamatann', [ProduksitanamanController::class, 'kecamatan
 Route::get('/produksi/tanaman/tambah', [ProduksitanamanController::class, 'tambah_tanaman'])->name('produksi.tanaman.tambah');
 Route::get('/produksi/tanaman/tambahexel', [ProduksipeternakanController::class, 'tambah_tanamanexel'])->name('produksi.tanaman.tambahexel');
 Route::post('/produksi/tanaman/store', [ProduksitanamanController::class, 'store_tanaman'])->name('produksi.tanaman.store');
+Route::put('/produksi/tanaman/update', [ProduksitanamanController::class, 'update'])->name('produksi.tanaman.update');
 Route::post('/produksi/tanaman/storeexel', [ProduksitanamanController::class, 'import'])->name('produksi.tanaman.storeexel');
 Route::post('/filter-produksi', [ProduksitanamanController::class, 'filterProduksi'])->name('filter.produksi');
 Route::get('/produksi/tanaman/rekap', [ProduksitanamanController::class, 'rekap_tanaman'])->name('produksi.tanaman.rekap');
 Route::post('/produksi/tanaman/rekap-filter', [ProduksitanamanController::class, 'rekap_proses'])->name('produksi.tanaman.rekap.proses');
+Route::get('/produksi/editproduksitanaman/{id}', [ProduksitanamanController::class, 'edit'])->name('produksi.tanaman.kecamatan.edit');
 
 // 
 Route::post('/produksi/peternakan/storeexel', [ProduksipeternakanController::class, 'import'])->name('produksi.peternakan.storeexel');
@@ -232,7 +234,7 @@ Route::get('/produksi/kecamatan', [ProduksipeternakanController::class, 'kecamat
 Route::get('/produksi/peternakan/tambah', [ProduksipeternakanController::class, 'tambah_peternakan'])->name('produksi.peternakan.tambah');
 Route::post('/produksi/peternakan/store', [ProduksipeternakanController::class, 'store_peternakan'])->name('produksi.peternakan.store');
 Route::post('/filter-produksi-ternak', [ProduksipeternakanController::class, 'filterProduksi'])->name('filter.produksi.peternakan');
-Route::post('/filter-produksi-ternak-kab', [ProduksipeternakanController::class, 'filterProduksi_kab'])->name('filter.produksi.peternakan-kab');
+Route::get('/filter-produksi-ternak-kab', [ProduksipeternakanController::class, 'rekap_proses2'])->name('filter.produksi.peternakan-kab');
 Route::get('/produksi/peternakan/rekap', [ProduksipeternakanController::class, 'rekap_peternakan'])->name('produksi.peternakan.rekap');
 Route::post('/produksi/peternakan/rekap-filter', [ProduksipeternakanController::class, 'rekap_proses'])->name('produksi.peternakan.rekap.proses');
 

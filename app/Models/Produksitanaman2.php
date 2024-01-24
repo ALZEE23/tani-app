@@ -25,5 +25,7 @@ class Produksitanaman2 extends Model
         'gagal_panen_bulan_sekarang',
         'produksi_bulan_terakhir',
         'produksi_bulan_sekarang',
+        'sisa_tanam',
+        'total_tanam',
     ];
 }

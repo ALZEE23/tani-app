@@ -167,7 +167,15 @@ class PasarController extends Controller
                     Carbon::now()->subDays(120)->toDateString(),
                     Carbon::now()->subDays(90)->toDateString(),
                 ])->get();
+
+                
             $data3 = Produksitanaman2::query();
+            if ($request->desa) {
+                $data3->where('desa', $request->desa);
+            }
+            if ($request->komoditas) {
+                $data3->where('komoditas', $request->komoditas);
+            }       
             $gagal_panen = $data3->where('jumlah_sudah_dipanen' ,'<=',0)->get();
             
                 

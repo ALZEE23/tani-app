@@ -6,7 +6,7 @@
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 <div class="container has-pagehead is-pagetitle">
     <div class="section">
-        <h5 class="pagetitle">Produksi</h5>
+        <h5 class="pagetitle" style="color:white">Produksi</h5>
     </div>
 </div>
 <style>
@@ -27,16 +27,11 @@
     }
 </style>
 <div class="container">
-    <h6 class="text-center">Rekap Tanaman</h6>
+    <br>
+    <h3 class="text-center">Rekap Tanaman</h3>
     <div class="select-wrapper">
         <form id="filter-form">
-            <select name="kolom" id="kolom-select">
-                <option value="">Pilih Data</option>
-                <option value="panen_bulan_sekarang">panen</option>
-                <option value="gagal_panen_bulan_sekarang">gagal_panen</option>
-                <option value="produksi_bulan_sekarang">Produksi</option>
-                <option value="tanam_bulan_sekarang">tanam</option>
-            </select>
+
             <select name="komoditas" id="subsektor">
                 <option value="">Pilih Subsektor</option>
                 <option value="Pangan">Pangan</option>
@@ -45,7 +40,13 @@
             <select name="komoditas2" id="komoditas2">
                 <option value="">Pilih Komoditas</option>
             </select>
-
+            <select name="kolom" id="kolom-select">
+                <option value="">Pilih Data</option>
+                <option value="panen_bulan_sekarang">panen</option>
+                <option value="gagal_panen_bulan_sekarang">gagal_panen</option>
+                <option value="produksi_bulan_sekarang">Produksi</option>
+                <option value="tanam_bulan_sekarang">tanam</option>
+            </select>
 
             <select name="tahun_awal" id="tahun_awal-select">
                 <option value="">Pilih Tahun Awal</option>
@@ -63,7 +64,7 @@
                 <option value="5">Mei</option>
                 <option value="6">Juni</option>
                 <option value="7">Juli</option>
-                <option value="8">Agustuus</option>
+                <option value="8">Agustus</option>
                 <option value="9">September</option>
                 <option value="10">Oktober</option>
                 <option value="11">November</option>
@@ -86,7 +87,7 @@
                 <option value="5">Mei</option>
                 <option value="6">Juni</option>
                 <option value="7">Juli</option>
-                <option value="8">Agustuus</option>
+                <option value="8">Agustus</option>
                 <option value="9">September</option>
                 <option value="10">Oktober</option>
                 <option value="11">November</option>
@@ -110,8 +111,9 @@
     @endif
 </div>
 
-<div id="output"></div>
-
+<div class="table-responsive">
+    <div id="dataTableContainer"></div>
+</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
@@ -126,120 +128,112 @@
     // jQuery
     $(document).ready(function() {
         $('#komoditas2, #kolom-select, #tahun_awal-select, #bulan_awal-select, #tahun_akhir-select, #bulan_akhir-select').change(function() {
-                const selectedKolom = document.getElementById('kolom-select').value;
-                var komoditasValue = $('#komoditas2').val();
-                var kolom = $('#kolom-select').val();
-                var tawal = $('#tahun_awal-select').val();
-                var bawal = $('#bulan_awal-select').val();
-                var takhir = $('#tahun_akhir-select').val();
-                var bakhir = $('#bulan_akhir-select').val();
-                console.log(komoditasValue);
-                // Kirim permintaan Ajax
-                $.ajax({
-                        type: 'POST',
-                        url: '{{route("produksi.tanaman.rekap.proses")}}',
-                        data: {
-                            _token: '{{ csrf_token() }}', // Tambahkan _token untuk laravel
-                            bulan_awal: bawal,
-                            bulan_akhir: bakhir,
-                            tahun_awal: tawal,
-                            tahun_akhir: takhir,
-                            kolom: kolom,
-                            komoditas: komoditasValue,
-                        },
-                        success: function(response) {
-                            console.log(response)
-                            // Mengelompokkan data berdasarkan tahun dan bulan
-                            const existingTable = document.getElementById('dataTanamTable');
-                            if (existingTable) {
-                                existingTable.remove();
-                            }
+            const selectedKolom = document.getElementById('kolom-select').value;
+            var komoditasValue = $('#komoditas2').val();
+            var kolom = $('#kolom-select').val();
+            var tawal = $('#tahun_awal-select').val();
+            var bawal = $('#bulan_awal-select').val();
+            var takhir = $('#tahun_akhir-select').val();
+            var bakhir = $('#bulan_akhir-select').val();
+            console.log(komoditasValue);
+            // Kirim permintaan Ajax
+            $.ajax({
+                type: 'POST',
+                url: '{{route("produksi.tanaman.rekap.proses")}}',
+                data: {
+                    _token: '{{ csrf_token() }}', // Tambahkan _token untuk laravel
+                    bulan_awal: bawal,
+                    bulan_akhir: bakhir,
+                    tahun_awal: tawal,
+                    tahun_akhir: takhir,
+                    kolom: kolom,
+                    komoditas: komoditasValue,
+                },
+                success: function(response) {
+                    console.log(response)
+                    displayDataTable(response.test);
+                    // Mengelompokkan data berdasarkan tahun dan bulan
 
-                            // Membuat tabel
-                            const table = document.createElement('table');
-                            table.classList.add('tg');
-                            table.id = 'dataTanamTable'; // Menambahkan ID untuk referensi
-
-                            // Membuat thead
-                            const thead = document.createElement('thead');
-                            const headerRow1 = document.createElement('tr');
-                            const headerNo = document.createElement('th');
-                            headerNo.textContent = 'no';
-                            headerRow1.appendChild(headerNo);
-
-                            const headerKecamatan = document.createElement('th');
-                            headerKecamatan.textContent = 'kecamatan';
-                            headerRow1.appendChild(headerKecamatan);
-
-                            // Looping tahun untuk header thead
-                            const headerRow2 = document.createElement('tr');
-                            for (const tahun in response.test) {
-                                const headerTahun = document.createElement('th');
-                                headerTahun.colSpan = Object.keys(response.test[tahun]).length;
-                                headerTahun.textContent = tahun;
-                                headerRow2.appendChild(headerTahun);
-                            }
-
-                            thead.appendChild(headerRow1);
-                            thead.appendChild(headerRow2);
-                            table.appendChild(thead);
-
-                            // Membuat tbody
-                            const tbody = document.createElement('tbody');
-
-                            // Looping kecamatan
-                            for (const kecamatan in response.test[Object.keys(response.test)[0]]) {
-                                const kecamatanRow = document.createElement('tr');
-
-                                // Nomor dan nama kecamatan
-                                const noCell = document.createElement('td');
-                                noCell.textContent = kecamatanRow.rowIndex; // Nomor bisa disesuaikan
-                                kecamatanRow.appendChild(noCell);
-
-                                const kecamatanCell = document.createElement('td');
-                                kecamatanCell.textContent = kecamatan;
-                                kecamatanRow.appendChild(kecamatanCell);
-
-                                // Looping tahun dan bulan untuk data tanam
-                                for (const tahun in response.test) {
-                                    for (const bulan in response.test[tahun][kecamatan]) {
-                                        const tanamCell = document.createElement('td');
-                                        tanamCell.textContent = response.test[tahun][kecamatan][bulan];
-                                        kecamatanRow.appendChild(tanamCell);
-                                    }
-                                }
-
-                                tbody.appendChild(kecamatanRow);
-                            }
-
-                            // Membuat baris total
-                            const totalRow = document.createElement('tr');
-                            const totalCell = document.createElement('td');
-                            totalCell.colSpan = 2;
-                            totalCell.textContent = 'Total';
-                            totalRow.appendChild(totalCell);
-
-                            // Looping tahun untuk total
-                            for (const tahun in response.test) {
-                                const totalTahunCell = document.createElement('td');
-                                totalTahunCell.textContent = Object.values(response.test[tahun]).reduce((acc, val) => acc + parseInt(val), 0);
-                                totalRow.appendChild(totalTahunCell);
-                            }
-
-                            tbody.appendChild(totalRow);
-
-                            table.appendChild(tbody);
-
-                            // Menambahkan tabel ke dalam body dokumen
-                            document.body.appendChild(table);
-                    },
-                    error: function(error) {
-                        console.log(error);
-                    }
-                });
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
         });
     });
 
+    function displayDataTable(data) {
+        // Mendapatkan nama kecamatan, tahun, dan bulan
+        let allKecamatans = [];
+        let allYears = [];
+        let allMonths = {};
+
+        for (let year in data) {
+            allYears.push(year);
+            allMonths[year] = [];
+
+            for (let month in data[year]) {
+                allMonths[year].push(month);
+
+                for (let kecamatan in data[year][month]) {
+                    if (!allKecamatans.includes(kecamatan)) {
+                        allKecamatans.push(kecamatan);
+                    }
+                }
+            }
+        }
+
+        // Mengurutkan nama kecamatan, tahun, dan bulan
+        allKecamatans.sort();
+        allYears.sort();
+
+        // Membuat tabel HTML
+        let tableHtml = '<table id="data-table">';
+        tableHtml += '<tr><th rowspan="2">No.</th><th rowspan="2">Kecamatan</th>'; // Kolom untuk nomor urut dan kecamatan
+
+        for (let year of allYears) {
+            tableHtml += `<th colspan="${allMonths[year].length}">${year}</th>`;
+        }
+
+        tableHtml += '</tr>';
+
+        for (let year of allYears) {
+            for (let month of allMonths[year]) {
+                tableHtml += `<th>${month}</th>`;
+            }
+        }
+
+        tableHtml += '</tr>';
+
+        allKecamatans.forEach((kecamatan, index) => {
+            tableHtml += `<tr><td>${index + 1}</td><td>${kecamatan}</td>`;
+
+            for (let year of allYears) {
+                for (let month of allMonths[year]) {
+                    let value = data[year][month][kecamatan] || 0;
+                    tableHtml += `<td>${value}</td>`;
+                }
+            }
+
+            tableHtml += '</tr>';
+        });
+
+        tableHtml += '<tr><td colspan="2">Total :</td>';
+
+        for (let year of allYears) {
+            for (let month of allMonths[year]) {
+                let monthTotal = allKecamatans.reduce((acc, kecamatan) => {
+                    return acc + parseInt(data[year][month][kecamatan] || 0, 10);
+                }, 0);
+                tableHtml += `<td>${monthTotal}</td>`;
+            }
+        }
+
+        tableHtml += '</tr></table>';
+
+        // Menampilkan tabel dalam container
+        $('#dataTableContainer').html(tableHtml);
+    }
 
     function exportToExcel() {
         var wb = XLSX.utils.table_to_book(document.getElementById('data-table'), {
@@ -283,71 +277,7 @@
     document.getElementById('export-pdf').addEventListener('click', exportToPDF);
 </script>
 <script>
-    function generateTable(data) {
-        var tableHTML = '<table>';
-        tableHTML += '<thead>';
-        tableHTML += '<tr>';
-        tableHTML += '<th rowspan="2">no</th>';
-        tableHTML += '<th rowspan="2">kecamatan</th>';
 
-        // Menambahkan kolom untuk setiap tahun dan bulan
-        Object.keys(data).forEach(function(year) {
-            Object.keys(data[year]).forEach(function(month) {
-                tableHTML += '<th>' + month + '</th>';
-            });
-        });
-
-        tableHTML += '</tr>';
-        tableHTML += '<tr>';
-
-        // Menambahkan sub-kolom untuk setiap tahun
-        Object.keys(data).forEach(function(year) {
-            tableHTML += '<th colspan="' + Object.keys(data[year]).length + '">' + year + '</th>';
-        });
-
-        tableHTML += '</tr>';
-        tableHTML += '</thead>';
-        tableHTML += '<tbody>';
-
-        var rowNum = 1;
-
-        // Menghitung total per kolom
-        var totals = {};
-        Object.keys(data).forEach(function(year) {
-            Object.keys(data[year]).forEach(function(month) {
-                if (!totals[month]) totals[month] = 0;
-                totals[month] += 1; // Dummy value, sesuaikan dengan logika yang sesuai
-            });
-        });
-
-        // Menambahkan data ke dalam tabel
-        Object.keys(data[Object.keys(data)[0]]).forEach(function(month) {
-            tableHTML += '<tr>';
-            tableHTML += '<td>' + rowNum + '</td>';
-            tableHTML += '<td>' + Object.keys(data[Object.keys(data)[0]][month])[0] + '</td>';
-
-            Object.keys(data).forEach(function(year) {
-                tableHTML += '<td>' + totals[month] + '</td>'; // Ganti dengan nilai yang sesuai
-            });
-
-            tableHTML += '</tr>';
-            rowNum++;
-        });
-
-        // Menambahkan total per kecamatan
-        tableHTML += '<tr>';
-        tableHTML += '<td colspan="2">Total</td>';
-
-        Object.keys(data).forEach(function(year) {
-            tableHTML += '<td>' + totals[Object.keys(data[year])[0]] + '</td>'; // Ganti dengan nilai yang sesuai
-        });
-
-        tableHTML += '</tr>';
-        tableHTML += '</tbody>';
-        tableHTML += '</table>';
-
-        return tableHTML;
-    }
 </script>
 <script>
     $(document).ready(function() {

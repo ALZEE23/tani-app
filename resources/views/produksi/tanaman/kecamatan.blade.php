@@ -112,6 +112,7 @@
                             <td class="tg-0lax" colspan="2">Gagal Panen(HA)</td>
                             <td class="tg-0lax" colspan="2">Produksi(T)</td>
                             <td class="tg-0lax" colspan="6">Akumulasi Bulan Laporan</td>
+                            <td class="tg-0lax" colspan="1">Opsi</td>
                         </tr>
                         <tr>
                             <td class="tg-0lax">Bulan Lalu</td>
@@ -128,6 +129,8 @@
                             <td class="tg-0lax">Produksi</td>
                             <td class="tg-0lax">Provitas</td>
                             <td class="tg-0lax">total Tanam</td>
+                            <td class="tg-0lax">Edit</td>
+                            <!-- <td class="tg-0lax">Delete</td> -->
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -178,20 +181,35 @@
                                             "Agustus", "September", "Oktober",
                                             "November", "Desember"
                                         ];
+                                        var totaltanamkanan = (parseInt(item.tanam_bulan_sekarang) + parseInt(item.tanam_bulan_lalu)) - (parseInt(item.panen_bulan_sekarang) + parseInt(item.gagal_panen_bulan_sekarang)); // Menghitung total panen
+
+
                                         var monthIndex = date.getMonth();
                                         var monthName = monthNames[monthIndex];
                                         var totalPanen = parseInt(item.panen_bulan_sekarang) + parseInt(item.panen_bulan_terakhir); // Menghitung total panen
-                                        var totaltanam = parseInt(item.tanam_bulan_sekarang) + parseInt(item.tanam_bulan_lalu); // Menghitung total panen
+                                        var totaltanamkiri = (parseInt(item.panen_bulan_terakhir) + parseInt(item.tanam_bulan_sekarang)) - (parseInt(item.panen_bulan_sekarang) + parseInt(item.gagal_panen_bulan_sekarang)); // Menghitung total panen
                                         var totalgagal_panen = parseInt(item.gagal_panen_bulan_sekarang) + parseInt(item.gagal_panen_bulan_terakhir); // Menghitung total panen
                                         var totalproduksi = parseInt(item.produksi_bulan_sekarang) + parseInt(item.produksi_bulan_terakhir); // Menghitung total panen
-                                        var totalprovitas = totalproduksi / totalPanen; // Menghitung total panen
-                                        var total = totalPanen + totaltanam + totalgagal_panen; // Menghitung total panen
+                                        if (parseInt(totalPanen) !== 0 && !isNaN(parseInt(totalPanen))) {
+                                            var totalprovitas = parseInt(totalproduksi) / parseInt(totalPanen);
+                                        } else {
+                                            // If totalPanen is zero or undefined, set totalprovitas to 0
+                                            var totalprovitas = 0;
+                                        }
+                                        var finalkiri = (index == 0) ? 0 : totaltanamkiri;
+                                        var tanam = (index == 0) ? 0 : item.tanam_bulan_lalu;
+                                        var tanam2 = (parseInt(tanam) + parseInt(item.tanam_bulan_sekarang)) - (parseInt(item.panen_bulan_sekarang) + parseInt(item.gagal_panen_bulan_sekarang)); // Menghitung total panen
+
+                                        var ts = (index == 0) ? 0 : item.tanam_bulan_lalu;
+
+                                        var t2 = (index == 0) ? 0 : item.tanam_bulan_lalu;
+                                        var total = totalPanen + parseInt(item.total_tanam) + totalgagal_panen; // Menghitung total panen
                                         var row = '<tr>' +
                                             '<td>' + (index + 1) + '</td>' +
                                             '<td>' + item.kecamatan + '</td>' +
                                             '<td>' + item.desa + '</td>' +
                                             '<td>' + monthName + '</td>' +
-                                            '<td>' + item.tanam_bulan_lalu + '</td>' +
+                                            '<td>' + ts + '</td>' +
                                             '<td>' + item.tanam_bulan_sekarang + '</td>' +
                                             '<td>' + item.panen_bulan_terakhir + '</td>' +
                                             '<td>' + item.panen_bulan_sekarang + '</td>' +
@@ -199,15 +217,20 @@
                                             '<td>' + item.gagal_panen_bulan_sekarang + '</td>' +
                                             '<td>' + item.produksi_bulan_terakhir + '</td>' +
                                             '<td>' + item.produksi_bulan_sekarang + '</td>' +
-                                            '<td>' + totaltanam + '</td>' +
+                                            '<td>' + item.total_tanam + '</td>' +
                                             '<td>' + totalPanen + '</td>' +
                                             '<td>' + totalgagal_panen + '</td>' +
                                             '<td>' + totalproduksi + '</td>' +
                                             '<td>' + totalprovitas + '</td>' +
                                             '<td>' + total + '</td>' +
+                                            '<td><a href="/produksi/editproduksitanaman/' + item.id + '">Edit</a></td>' +
+                                            // '<td><a href="/produksi/deleteproduksitanaman/' + item.id + '">Delete</a></td>' +
                                             '</tr>';
 
+
+
                                         tableBody.append(row);
+                                        console.log(index)
                                     });
                                 },
 
