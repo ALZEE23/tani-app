@@ -12,7 +12,9 @@ class Pestisida extends Model
     protected $fillable = [
         'opt',
         'bahan_aktif',
-        'produk'
+        'produk',
+        'kelompok',
+        'komoditas'
     ];
 
 }

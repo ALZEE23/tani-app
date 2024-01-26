@@ -125,6 +125,8 @@ Route::put('/update-dokumentasi/{id}', [App\Http\Controllers\PenyuluhanControlle
 Route::get('/teknologi', [TeknologiController::class, 'index'])->name('teknologi');
 Route::get('/pupuk', [PupukController::class, 'index'])->name('pupuk');
 Route::get('/pupuk-padat', [PupukController::class, 'padat'])->name('padat');
+Route::get('/pupuk-padat/{kecamatan}', [PupukController::class, 'filterpadat'])->name('filter.padat');
+Route::get('/pupuk-cair/{kecamatan}', [PupukController::class, 'filtercair'])->name('filter.cair');
 Route::get('pupuks/{id}', [PupukController::class,'proudctCart'])->name('addProduct.to.cart');
 Route::post('/pupuk-padat-create', [PupukController::class, 'tambah'])->name('tambah');
 Route::get('/tambah', [PupukController::class, 'store'])->name('store');
@@ -135,6 +137,11 @@ Route::delete('/pupuk/delete/{id}', [PupukController::class,'delete'])->name('pu
 Route::get('/pestisida', [PestisidaController::class, 'index'])->name('pestisida');
 Route::get('/pestisida/kimia', [PestisidaController::class, 'kimia'])->name('pestisida.kimia');
 Route::get('/pestisida/tambah', [PestisidaController::class, 'store'])->name('pestisida.tambah');
+
+Route::get('/pestisida/import', [PestisidaController::class, 'formexcel'])->name('pestisida.import');
+
+Route::post('/pestisida/storeexel', [PestisidaController::class, 'import'])->name('pestisida.import.storeexel');
+
 Route::post('/pestisida/tambah', [PestisidaController::class, 'tambah']);
 Route::get('/teknologi/pestisida/search', [PestisidaController::class, 'search'])->name('pestisida.search');
 Route::get('/pestisida/organik', [PestisidaController::class, 'organik'])->name('pestisida.organik');

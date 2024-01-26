@@ -57,7 +57,7 @@
 
         <div class="file-field ">
             <div class="btn">
-                <span>File Program Daerah</span>
+                <span>File Programa</span>
                 <input type="file" name="file_program_daerah" required>
             </div>
             <div class="file-path-wrapper">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kecamatan;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Models\Pupuk;
@@ -15,14 +16,39 @@ class PupukController extends Controller
 
     public function padat()
     {
-        $pupuks = Pupuk::where('kategori', 'padat')->where('kecamatan',auth()->user()->kecamatan)->get();
-        return view('teknologi.pupuk.padat', compact('pupuks'));
+        $kecamatan = Kecamatan::all();
+        if(auth()->user()->role == 'dinas')
+        {
+            $pupuks = Pupuk::where('kategori', 'padat')->get();
+        }else{
+            $pupuks = Pupuk::where('kategori', 'padat')->where('kecamatan', auth()->user()->kecamatan)->get();
+        }
+        return view('teknologi.pupuk.padat', compact('pupuks','kecamatan'));
     }
 
+    public function filterpadat($kecamatann)
+    {
+        $kecamatan = Kecamatan::all();
+        $pupuks = Pupuk::where('kategori', 'padat')->where('kecamatan',$kecamatann)->get();
+        return view('teknologi.pupuk.padat', compact('pupuks','kecamatan'));
+    }
+
+    public function filtercair($kecamatann)
+    {
+        $kecamatan = Kecamatan::all();
+        $pupuks = Pupuk::where('kategori', 'cair')->where('kecamatan', $kecamatann)->get();
+        return view('teknologi.pupuk.cair', compact('pupuks','kecamatan'));
+    }
     public function cair()
     {
-        $pupuks = Pupuk::where('kategori', 'cair')->where('kecamatan', auth()->user()->kecamatan)->get();
-        return view('teknologi.pupuk.cair', compact('pupuks'));
+        $kecamatan = Kecamatan::all();
+
+        if(auth()->user()->role == 'dinas'){
+            $pupuks = Pupuk::where('kategori', 'cair')->get();
+        }else{
+            $pupuks = Pupuk::where('kategori', 'cair')->where('kecamatan', auth()->user()->kecamatan)->get();
+        }
+        return view('teknologi.pupuk.cair', compact('pupuks','kecamatan'));
     }
 
     public function store(){

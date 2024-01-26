@@ -13,6 +13,27 @@
     <div class="col-lg-12">
         <div class="row">
             <br>
+            @if(auth()->user()->role == 'dinas')
+            <select name="kecamatan" id="kecamatanSelect">
+                @foreach ($kecamatan as $data)
+                <option value="">Pilih Kecamatan</option>
+                <option value="{{ route('filter.padat', $data->kecamatan) }}">{{ $data->kecamatan }}</option>
+                @endforeach
+            </select>
+
+            <script>
+                // Add event listener to the select element
+                document.getElementById('kecamatanSelect').addEventListener('change', function() {
+                    // Redirect to the selected route
+                    var selectedRoute = this.value;
+                    if (selectedRoute) {
+                        window.location.href = selectedRoute;
+                    }
+                });
+            </script>
+
+            @endif
+            <br>
             @if(auth()->user()->role == 'petugas')
             <a href="{{ route('store') }}"><button class="btn btn-secondary">Tambah</button></a>
             @endif

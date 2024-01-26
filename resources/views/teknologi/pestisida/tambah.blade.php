@@ -17,8 +17,14 @@
     <!-- Form Tambah Pestisida -->
     <form action="{{ route('pestisida.tambah') }}" method="POST" enctype="multipart/form-data">
         @csrf
+        <select name="komoditas" id="komoditas" class="form-select">
+            <option value="Perkebunan">Pilih Komoditas</option>
+            <option value="Perkebunan">Perkebunan</option>
+            <option value="Pangan">Pangan</option>
+            <option value="Hortikultura">Hortikultura</option>
+        </select>
         <div class="mb-3">
-            <label for="opt" class="form-label">OPT</label>
+            <label for="opt" class="form-label">Hama</label>
             <input type="text" class="form-control" id="opt" name="opt" required>
         </div>
         <div class="mb-3">
@@ -26,8 +32,12 @@
             <input type="text" class="form-control" id="bahan_aktif" name="bahan_aktif" required>
         </div>
         <div class="mb-3">
-            <label for="produk" class="form-label">Produk</label>
+            <label for="produk" class="form-label">Merek Dagang</label>
             <input type="text" class="form-control" id="produk" name="produk" required>
+        </div>
+        <div class="mb-3">
+            <label for="kelompok" class="form-label">Kelompok</label>
+            <input type="text" class="form-control" id="kelompok" name="kelompok" required>
         </div>
 
         <!-- Tombol Simpan -->

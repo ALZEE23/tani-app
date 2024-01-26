@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Http\Request;
-use App\Models\Pestisida;
-use App\Models\Organik;
 use DataTables;
+use App\Models\Organik;
+use App\Models\Pestisida;
+use Illuminate\Http\Request;
+use App\Imports\TanamanImport;
+use App\Imports\PestisidaImport;
+use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class PestisidaController extends Controller
 {
@@ -18,7 +22,7 @@ class PestisidaController extends Controller
 
     public function kimia()
     {
-        $pestisidas = Pestisida::all();
+        $pestisidas = Pestisida::paginate(10);
         return view('teknologi.pestisida.kimia', compact('pestisidas'));
     }
     public function organik()
@@ -126,6 +130,8 @@ class PestisidaController extends Controller
             'opt' => $request->opt,
             'bahan_aktif' => $request->bahan_aktif,
             'produk' => $request->produk,
+            'kelompok' => $request->kelompok,
+            'komoditas' => $request->komoditas,
             // Sesuaikan atribut dengan kolom lainnya
         ]);
 
@@ -143,10 +149,30 @@ class PestisidaController extends Controller
             ->orWhere('produk', 'like', '%' . $request->search . '%')
             ->orWhere('komoditas', 'like', '%' . $request->search . '%')
             ->orWhere('kelompok', 'like', '%' . $request->search . '%')
-            ->get();
+            ->paginate(10);
 
         return view('teknologi.pestisida.kimia', compact('pestisidas'));
     }
 
+    public function import(Request $request)
+    {
+        try {
+            // Validate the request to ensure it contains a valid Excel file
+            $file = $request->file('pestisida');
+
+            // Use the Excel facade to import data from the file using the TanamanImport class
+            Excel::import(new PestisidaImport, $file);
+
+            // Redirect back to the previous page with a success message
+            return redirect()->back()->with('success', 'Data berhasil diimpor!');
+        } catch (\Exception $e) {
+            // Handle any exception that might occur during the import process
+            return $e->getMessage();
+        }
+    }
+
+  public function formexcel(){
+    return view('teknologi.pestisida.import');
+  }
     
 }

@@ -112,7 +112,9 @@
                             <td class="tg-0lax" colspan="2">Gagal Panen(HA)</td>
                             <td class="tg-0lax" colspan="2">Produksi(T)</td>
                             <td class="tg-0lax" colspan="6">Akumulasi Bulan Laporan</td>
+                            @if(auth()->user()->role != 'petani')
                             <td class="tg-0lax" colspan="1">Opsi</td>
+                            @endif
                         </tr>
                         <tr>
                             <td class="tg-0lax">Bulan Lalu</td>
@@ -129,7 +131,10 @@
                             <td class="tg-0lax">Produksi</td>
                             <td class="tg-0lax">Provitas</td>
                             <td class="tg-0lax">total Tanam</td>
+                            @if(auth()->user()->role != 'petani')
                             <td class="tg-0lax">Edit</td>
+                            @endif
+
                             <!-- <td class="tg-0lax">Delete</td> -->
                         </tr>
                     </thead>
@@ -222,10 +227,15 @@
                                             '<td>' + totalgagal_panen + '</td>' +
                                             '<td>' + totalproduksi + '</td>' +
                                             '<td>' + totalprovitas + '</td>' +
-                                            '<td>' + total + '</td>' +
-                                            '<td><a href="/produksi/editproduksitanaman/' + item.id + '">Edit</a></td>' +
-                                            // '<td><a href="/produksi/deleteproduksitanaman/' + item.id + '">Delete</a></td>' +
-                                            '</tr>';
+                                            '<td>' + total + '</td>';
+
+                                        // Check user role and conditionally add edit link
+                                        @if(auth() - > user() - > role != "petani")
+                                        row += '<td><a href="/produksi/editproduksitanaman/' + item.id + '">Edit</a></td>';
+                                        @endif
+
+                                        row += '</tr>';
+
 
 
 

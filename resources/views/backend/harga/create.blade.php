@@ -8,7 +8,7 @@
         <div class="card-body px-4 py-3">
             <div class="row align-items-center">
                 <div class="col-9">
-                    <h4 class="fw-semibold mb-8">Form Harga Pasar Kecamatan {{session('kecamatan')}}</h4>
+                    <h4 class="fw-semibold mb-8">Form Harga Pasar</h4>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a class="text-muted text-decoration-none" href="/">Dashboard</a></li>
@@ -28,7 +28,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="card card-body">
-                    <h5 class="mb-3">Tambah kecamatan</h5>
+                    <h5 class="mb-3">Tambah Produk</h5>
                     <form action="{{ route('harga.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
