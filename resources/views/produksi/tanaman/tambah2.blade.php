@@ -30,22 +30,6 @@
         <select name="komoditas" id="komoditas">
             <option value="">Pilih Komoditas</option>
         </select>
-        <select name="bulan" id="bulan-select">
-            <option value="">Pilih Bulan</option>
-            <option value="1">Januari</option>
-            <option value="2">Februari</option>
-            <option value="3">Maret</option>
-            <option value="4">April</option>
-            <option value="5">Mei</option>
-            <option value="6">Juni</option>
-            <option value="7">Juli</option>
-            <option value="8">Agustuus</option>
-            <option value="9">September</option>
-            <option value="10">Oktober</option>
-            <option value="11">November</option>
-            <option value="12">Desember</option>
-            <!-- Tambahkan opsi bulan lainnya sesuai kebutuhan -->
-        </select>
         <div class="">
             <select name="tanam_bulan_lalu" id="tanam_bulan_lalu">
                 <option value="">Tanam Bulan Lalu</option>
@@ -174,9 +158,8 @@
     });
     $(document).ready(function() {
 
-        $('#bulan-select').change(function() {
-            var komoditasValue = $('#komoditas').val();
-            var bulan = $(this).val();
+        $('#komoditas').change(function() {
+            var komoditasValue = $(this).val();
             var DesaValue = $('#wilayah').val();
             console.log(komoditasValue)
             console.log(DesaValue)
@@ -187,8 +170,7 @@
                 data: {
                     _token: '{{ csrf_token() }}',
                     komoditas: komoditasValue,
-                    desa: DesaValue,
-                    bulan: bulan,
+                    desa: DesaValue
                 },
                 success: function(response) {
                     console.log(response);
@@ -284,11 +266,10 @@
                     }
 
                     if (response.gagal_panen.length == 0) {
-                        $('#gagal_panen_dari_data_tanam_yang_bulan').empty();
                         $('#gagal_panen_dari_data_tanam_yang_bulan').append(
                             `<option value="0">Data Panen dari data Tanam Bulan : - </option>`
                         );
-                        $('#gagal_panen_dari_data_tanam_yang_bulan').formSelect();
+                        $('#panen_dari_data_tanam_yang_bulan').formSelect();
                     } else {
                         $('#gagal_panen_dari_data_tanam_yang_bulan').empty();
 
@@ -346,20 +327,6 @@
         }
 
     });
-    $('#produksi_bulan_sekarang').on('change', function() {
-        // Get the selected value from #panen_dari_data_tanam_yang_bulan
-        var selectedValue = $(this).val();
-        var panen_bulan_sekarang = $('#panen_bulan_sekarang').val();
-
-        // Assuming the value of #panen_bulan_sekarang is numeric
-        if (selectedValue > panen_bulan_sekarang) {
-            alert("Produksi Sekarang tidak boleh lebih besar dari Panen sekarang.");
-            $(this).val(0);
-            // You might want to clear or adjust the value to meet your requirements
-            // $('#panen_bulan_sekarang').val(selectedValue);
-        }
-
-    });
     $('#gagal_panen_bulan_sekarang').on('change', function() {
         console.log("Masuk")
         // Get the selected value from #panen_dari_data_tanam_yang_bulan
@@ -367,9 +334,9 @@
 
         // Assuming the value of #panen_bulan_sekarang is numeric
         var panenbulanyang = parseFloat($('#panen_dari_data_tanam_yang_bulan').val());
-        var gagalpanenbulanyang = parseFloat($('#gagal_panen_dari_data_tanam_yang_bulan').val());
+        var gagalpanenbulanyang = parseFloat($('#panen_gagal_panen_dari_data_tanam_yang_bulan').val());
 
-        console.log($('#gagal_panen_dari_data_tanam_yang_bulan').val())
+
         if (gagal_panen_bulan_sekarang > gagalpanenbulanyang) {
             alert("Gagal Panen Bulan Sekarang tidak boleh lebih besar dari data Tanam Bulan yang dipilih.");
             $('#gagal_panen_bulan_sekarang').val(0);

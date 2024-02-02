@@ -59,7 +59,7 @@
         </div> -->
         <div class="">
             <!-- <label for="notelepon">&nbsp;&nbsp;No. Telepon</label> -->
-            <input id="notelepon" type="number" name="notelepon" required placeholder="No telepon">
+            <input id="notelepon" type="text" name="notelepon" required placeholder="No telepon">
         </div>
 
 

@@ -135,10 +135,14 @@ class ProduksitanamanController extends Controller
             Carbon::now()->subDays(120)->toDateString(),
             Carbon::now()->subDays(90)->toDateString(),
         ])->where('jumlah_sudah_dipanen', 0)->get();
-
+        
         return view('produksi.tanaman.kecamatan',compact('kecamatan','belum_panen'));
     }
     function tambah_tanaman(){
+        $desa = Desa::where('kecamatan', auth()->user()->kecamatan)->get();
+        return view('produksi.tanaman.tambah',compact('desa'));
+    }
+    function tambah_tanaman2(){
         $desa = Desa::where('kecamatan', auth()->user()->kecamatan)->get();
         return view('produksi.tanaman.tambah',compact('desa'));
     }
@@ -229,6 +233,11 @@ class ProduksitanamanController extends Controller
         // Lakukan filter berdasarkan permintaan
         if ($request->kecamatan) {
             $data->where('kecamatan', $request->kecamatan);
+        }
+
+        if(auth()->user()->role == 'petugas')
+        {
+            $data->where('kecamatan', auth()->user()->kecamatan);
         }
 
         if ($request->komoditas) {

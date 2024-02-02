@@ -87,7 +87,10 @@ Route::get('/proses-cek-anggota', [App\Http\Controllers\KelembagaanController::c
 
 Route::get('/gakpoktan', [App\Http\Controllers\KelembagaanController::class, 'gakpoktan'])->name('kelembagaan-gakpoktan');
 Route::get('/tambah-gakpoktan', [App\Http\Controllers\KelembagaanController::class, 'tambah_gakpoktan'])->name('tambah-gakpoktan');
+Route::get('/edit-gakpoktan/{id}', [App\Http\Controllers\KelembagaanController::class, 'editgakpoktan'])->name('edit-gakpoktan');
+Route::get('/delete-gakpoktan/{id}', [App\Http\Controllers\KelembagaanController::class, 'delete_gakpoktan'])->name('delete-gakpoktan');
 Route::post('/store-gakpoktan', [App\Http\Controllers\KelembagaanController::class, 'store_gakpoktan'])->name('store-gakpoktan');
+Route::put('/update-gakpoktan', [App\Http\Controllers\KelembagaanController::class, 'update_gakpoktan'])->name('update-gakpoktan');
 Route::get('/export-excel-gakpoktan', [KelembagaanController::class, 'export_excel_gakpoktans'])->name('export-excel-gakpoktan');
 Route::get('/export-excel-poktan', [KelembagaanController::class, 'export_excel_poktans'])->name('export-excel-poktan');
 Route::get('/export-pdf-gakpoktan', [KelembagaanController::class, 'export_pdf_gakpoktans'])->name('export-pdf-gakpoktan');
@@ -223,6 +226,7 @@ Route::get('/produksi', [ProduksitanamanController::class, 'index'])->name('prod
 Route::get('/produksi/tanaman', [ProduksitanamanController::class, 'tanaman'])->name('produksi.tanaman');
 Route::get('/produksi/kecamatann', [ProduksitanamanController::class, 'kecamatan'])->name('produksi.tanaman.kecamatann');
 Route::get('/produksi/tanaman/tambah', [ProduksitanamanController::class, 'tambah_tanaman'])->name('produksi.tanaman.tambah');
+Route::get('/produksi/tanaman/tambah2', [ProduksitanamanController::class, 'tambah_tanaman2'])->name('produksi.tanaman.tambah2');
 Route::get('/produksi/tanaman/tambahexel', [ProduksipeternakanController::class, 'tambah_tanamanexel'])->name('produksi.tanaman.tambahexel');
 Route::post('/produksi/tanaman/store', [ProduksitanamanController::class, 'store_tanaman'])->name('produksi.tanaman.store');
 Route::put('/produksi/tanaman/update', [ProduksitanamanController::class, 'update'])->name('produksi.tanaman.update');
@@ -254,6 +258,7 @@ Route::post('/filter-pasar-ternak', [PasarController::class, 'filterpasar'])->na
 Route::get('/delete/pasar/{id}', [PasarController::class, 'delete_pasar'])->name('delete.pasar');
 Route::post('/pasar/filter-komoditas', [PasarController::class, 'filter_komoditas'])->name('pasar.filter_komoditas');
 Route::post('/pasar/filter-komoditas2', [PasarController::class, 'filter_komoditas2'])->name('pasar.filter_komoditas2');
+Route::post('/pasar/filter-komoditas2ori', [PasarController::class, 'filter_komoditas3ori'])->name('pasar.filter_komoditas3ori');
 
 
 // Route::resource('penyuluhan', PenyuluhanController::class)->name('penyulihan', 'index');

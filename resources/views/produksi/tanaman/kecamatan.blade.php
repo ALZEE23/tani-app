@@ -230,7 +230,7 @@
                                             '<td>' + total + '</td>';
 
                                         // Check user role and conditionally add edit link
-                                        @if(auth() - > user() - > role != "petani")
+                                        @if(auth()->user()->role != "petani")
                                         row += '<td><a href="/produksi/editproduksitanaman/' + item.id + '">Edit</a></td>';
                                         @endif
 

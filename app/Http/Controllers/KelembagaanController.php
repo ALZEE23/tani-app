@@ -30,6 +30,10 @@ class KelembagaanController extends Controller
     }
     function poktan_register()
     {
+        $daftar = DaftarAnggotaPoktan::where('user_id',auth()->user()->id)->first();
+        if($daftar){
+            return redirect()->route('daftar-poktan');
+        }
         $desa = Desa::where('kecamatan', auth()->user()->kecamatan)->get();
         if(session('desa') == null){
             $desaPertama = $desa->first();
@@ -45,11 +49,19 @@ class KelembagaanController extends Controller
     function penyuluh()
     {
         $kecamatan = Kecamatan::all();
-        $desa = Desa::where('kecamatan', auth()->user()->kecamatan)->get();
-        $penyuluhs = Penyuluh::where('wilayah',)->get();
 
-        if(Auth::user()->role == 'petani'){
-            $penyuluhs = Penyuluh::where('wilayah', Auth::user()->kecamatan)->get();
+        $desa = Desa::where('kecamatan', auth()->user()->kecamatan)->get();
+
+        if (auth()->user()->role == 'petani') {
+            $wilayah_desa = $desa->pluck('desa'); // Extracting the 'wilayah' field from $desa collection
+            $penyuluhs = Penyuluh::whereIn('wilayah', $wilayah_desa)->get();
+        }
+        if(Auth::user()->role == 'petugas'){
+            $wilayah_desa = $desa->pluck('desa'); // Extracting the 'wilayah' field from $desa collection
+            $penyuluhs = Penyuluh::whereIn('wilayah', $wilayah_desa)->get();
+        }
+        if(Auth::user()->role == 'dinas'){
+            $penyuluhs = Penyuluh::all();
         }
         return view('kelembagaan.penyuluh.index', compact('penyuluhs','kecamatan'));
     }
@@ -180,6 +192,32 @@ class KelembagaanController extends Controller
         return view('kelembagaan.petani.gakpoktan', compact('kecamatan', 'gakpoktans'));
     }
 
+    function editgakpoktan($id)
+    {
+        $desa = Desa::where('kecamatan', auth()->user()->kecamatan)->get();
+        $gakpoktan = Gakpoktans::find($id);
+        return view('kelembagaan.petani.edit-gakpoktan',compact('desa','gakpoktan'));
+    }
+
+    function update_gakpoktan(Request $request){
+        $gakpoktan = Gakpoktans::find($request->id);
+        $gakpoktan->desa = $request->desa;
+        $gakpoktan->nama_gakpoktan = $request->nama_gakpoktan;
+        $gakpoktan->nama_ketua = $request->nama_ketua;
+        $gakpoktan->no_telepopn = $request->notelepon;
+        $gakpoktan->save();
+        
+        return redirect()->route('kelembagaan-gakpoktan');
+        
+    }
+
+    function delete_gakpoktan($id){
+        $gakpoktan = Gakpoktans::find($id);
+        $gakpoktan->delete();
+        return redirect()->route('kelembagaan-gakpoktan');
+
+    }
+
     function edit_penyuluh($id){
         $kecamatan = desa::where('kecamatan', auth()->user()->kecamatan)->get();
         $penyuluh = Penyuluh::find($id);
@@ -205,7 +243,7 @@ class KelembagaanController extends Controller
     function edit_poktan($id)
     {
         $poktan = Poktan::find($id);
-        $desa = Desa::all();
+        $desa = Desa::where('kecamatan',auth()->user()->kecamatan)->get();
         return view('kelembagaan.petani.edit_poktan', compact('poktan','desa'));
     }
 

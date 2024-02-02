@@ -137,12 +137,23 @@
                                     $('#komoditas-select2').empty();
 
                                     // Add a default option
+                                    var uniqueKomoditasSet = new Set();
                                     $('#komoditas-select2').append('<option value="">Pilih Komoditas</option>');
+                                    if (komoditasValue === 'Hortikultura') {
 
-                                    // Iterate through the hargaArray and add options
-                                    $.each(hargaArray, function(index, product) {
-                                        $('#komoditas-select2').append('<option value="' + product.produk + '">' + product.produk + '</option>');
-                                    });
+                                        $.each(hargaArray, function(index, product) {
+                                            uniqueKomoditasSet.add(product.produk);
+                                            $('#komoditas-select2').append('<option value="' + product.produk + '">' + product.produk + '</option>');
+                                        });
+                                    } else {
+                                        // Jika komoditasValue bukan Hortikultura, tambahkan semua komoditas ke opsi
+                                        $.each(hargaArray, function(index, product) {
+                                            if (!uniqueKomoditasSet.has(product.produk)) {
+                                                uniqueKomoditasSet.add(product.produk);
+                                                $('#komoditas-select2').append('<option value="' + product.produk + '">' + product.produk + '</option>');
+                                            }
+                                        });
+                                    }
                                     $('#komoditas-select2').formSelect();
                                     console.log(response);
                                     const isoDate = response.last;
@@ -215,7 +226,38 @@
                                 komoditas2: komoditasValue2,
                             },
                             success: function(response) {
+                                var deletePasarRoute = "{{ route('delete.pasar', 'pasar_id') }}";
                                 var hargaArray = response.harga;
+                                var pasars = response.pasarr;
+                                var authUserRole = "{{ auth()->user()->role }}";
+                                // Clear existing content
+                                $('.card-container').empty();
+
+                                // Loop through the pasars array and append each card to the container
+                                pasars.forEach(function(pasar) {
+                                    var cardHtml = `
+        <div class="card">
+            <div class="card-content">
+                <div class="row valign-wrapper">
+                    <div class="col s3">
+                        <img src="{{ asset('storage/foto/') }}/${pasar.foto}" alt="Profile Image" style="width: 75px; height: 75px;">
+                    </div>
+                    <div class="col s9">
+                        <span class="card-title">${pasar.nama_pemilik}</span>
+                        <p>${pasar.alamat_lokasi}</p>
+                        <p>Kontak: ${pasar.kontak_pemilik}</p>
+                        <a href="${pasar.link_gmap}">Klik Lokasi</a> |`;
+
+                                    if (authUserRole === 'petugas') {
+                                        cardHtml += `<a href="${deletePasarRoute.replace('pasar_id', pasar.id)}">Hapus</a>`;
+                                    }
+                                    cardHtml += `
+                    </div>
+                </div>
+            </div>
+        </div>`;
+                                    $('.card-container').append(cardHtml);
+                                });
 
                                 // Clear existing options
                                 console.log(response);
@@ -284,27 +326,29 @@
         </div>
     </div>
     @else
-    @foreach ($pasars as $data)
-    <div class="card">
-        <div class="card-content">
-            <div class="row valign-wrapper">
-                <div class="col s3">
-                    <img src="{{asset('storage/foto/'.$data->foto)}}" alt="Profile Image" style="width: 75px; height: 75px;">
-                </div>
-                <div class="col s9">
-                    <span class="card-title">{{$data->nama_pemilik}}</span>
-                    <p>{{$data->alamat_lokasi}}</p>
-                    <p>Kontak: {{$data->kontak_pemilik}}</p>
-                    <a href="{{$data->link_gmap}}">Klik Lokasi</a> |
-                    @if(auth()->user()->role == 'petugas')
-                    <a href="{{route('delete.pasar',$data->id)}}">Hapus</a>
-                    @endif
+    <div class="card-container">
+        @foreach ($pasars as $data)
+        <div class="card">
+            <div class="card-content">
+                <div class="row valign-wrapper">
+                    <div class="col s3">
+                        <img src="{{asset('storage/foto/'.$data->foto)}}" alt="Profile Image" style="width: 75px; height: 75px;">
+                    </div>
+                    <div class="col s9">
+                        <span class="card-title">{{$data->nama_pemilik}}</span>
+                        <p>{{$data->alamat_lokasi}}</p>
+                        <p>Kontak: {{$data->kontak_pemilik}}</p>
+                        <a href="{{$data->link_gmap}}">Klik Lokasi</a> |
+                        @if(auth()->user()->role == 'petugas')
+                        <a href="{{route('delete.pasar',$data->id)}}">Hapus</a>
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    @endforeach
+        @endforeach
+    </div>
     @endif
 
 </div>

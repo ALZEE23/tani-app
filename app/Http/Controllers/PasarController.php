@@ -107,6 +107,7 @@ class PasarController extends Controller
     function filter_komoditas(Request $request){
             try {
                 $data = Harga::query();
+                $pasar = Pasar::query();
 
                 // Lakukan filter berdasarkan permintaan
                 if ($request->kecamatan) {
@@ -118,17 +119,21 @@ class PasarController extends Controller
                 }
                 if($request->komoditas){
                     $data->where('komoditas', $request->komoditas);
+                    
                 }
                 if($request->komoditas2){
                     $data->where('produk', $request->komoditas2);
+                    $pasar->where('komoditas', $request->komoditas2);
+                    $pasar->where('kecamatan', auth()->user()->kecamatan);
                 }
             $harga = $data->get();
+            $pasarr = $pasar->get();
             $last =
             Harga::where('kecamatan', Auth::user()->kecamatan)
             ->where('komoditas', 'Hortikultura')
             ->orderBy('updated_at', 'desc')
             ->value('updated_at'); // Mengambil data pertama dari hasil yang telah diurutkan
-            return response()->json(['harga' => $harga,'last' => $last]);
+            return response()->json(['harga' => $harga,'last' => $last,'pasarr' => $pasarr]);
 
 
             } catch (\Exception $e) {
@@ -136,7 +141,7 @@ class PasarController extends Controller
         }
     }
 
-    function filter_komoditas2(Request $request)
+    function filter_komoditas3(Request $request)
     {
         try {
             // Get the date for the first day of the previous month
@@ -159,6 +164,62 @@ class PasarController extends Controller
             }       
             // Filter for the previous month using a clear and efficient approach
             $data->whereMonth('tanggal', $previousMonth->month);
+            // Calculate the start and end dates for the 90-120 day period
+            // Retrieve and count the filtered data
+            $last = $data->first();
+            $count = $data->count();
+            $panen = $data2->whereBetween('tanggal', [
+                    Carbon::now()->subDays(120)->toDateString(),
+                    Carbon::now()->subDays(90)->toDateString(),
+                ])->get();
+
+                
+            $data3 = Produksitanaman2::query();
+            if ($request->desa) {
+                $data3->where('desa', $request->desa);
+            }
+            if ($request->komoditas) {
+                $data3->where('komoditas', $request->komoditas);
+            }       
+            $gagal_panen = $data3->where('jumlah_sudah_dipanen' ,'<=',0)->get();
+            
+                
+            return response()->json(['last' => $last, 'count' => $count,'panen' => $panen,'gagal_panen' => $gagal_panen]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }
+    }
+    function filter_komoditas2(Request $request)
+    {
+        try {
+            // Get the date for the first day of the previous month
+            $previousMonth = now()->subMonth()->startOfMonth();
+            $data = Produksitanaman2::query();
+            if ($request->desa) {
+                $data->where('desa', $request->desa);
+            }
+            if ($request->komoditas) {
+                $data->where('komoditas', $request->komoditas);
+            }
+            $data2 = Produksitanaman2::query();
+
+            // Apply filters based on request
+            if ($request->desa) {
+                $data2->where('desa', $request->desa);
+            }
+            if ($request->komoditas) {
+                $data2->where('komoditas', $request->komoditas);
+            }       
+            if ($request->bulan) {
+                $bulan  = $request->bulan-1;
+                $data->whereMonth('tanggal', $bulan);
+            }       
+            if ($request->bulan) {
+                $bulan  = $request->bulan-1;
+                $data2->whereMonth('tanggal', $bulan);
+            }       
+            // Filter for the previous month using a clear and efficient approach
+            // $data->whereMonth('tanggal', $previousMonth->month);
             // Calculate the start and end dates for the 90-120 day period
             // Retrieve and count the filtered data
             $last = $data->first();

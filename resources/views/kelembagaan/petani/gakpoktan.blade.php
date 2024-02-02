@@ -123,6 +123,9 @@
                                 <th scope="col">Perikanan</th>
                                 <th scope="col">KWT</th>
                                 <th scope="col">No Telp</th>
+                                @if (auth()->user()->role == 'petugas')
+                                <th scope="col">Opsi</th>
+                                @endif
                             <tr>
                         <tbody>
                             @php
@@ -141,6 +144,12 @@
                                 <td scope="col">{{$data->perikanan}}</td>
                                 <td scope="col">{{$data->kwt}}</td>
                                 <td scope="col">{{$data->no_telepopn}}</td>
+                                @if (auth()->user()->role == 'petugas')
+                                <td style="white-space: nowrap">
+                                    <a style="display: inline-block; margin-right: 5px;" href="{{route('edit-gakpoktan',$data->id)}}" class="btn btn-primary">Edit</a>
+                                    <a href="{{route('delete-gakpoktan',$data->id)}}" class="btn btn-danger">Hapus</a>
+                                </td>
+                                @endif
                             </tr>
                             @endforeach
                         </tbody>
